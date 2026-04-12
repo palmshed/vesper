@@ -109,8 +109,8 @@ jobs:
     # Install Python dependencies required for HarperBot
       - name: Install dependencies
         run: |
-          # Install Python dependencies
-          pip install --no-cache-dir PyGithub python-dotenv PyYAML google-genai
+          # Install pinned HarperBot dependencies (direct + transitive) for reproducible runs
+          pip install --no-cache-dir -r harperbot/requirements.lock
 
           # Verify installations
           python --version

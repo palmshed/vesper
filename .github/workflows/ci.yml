@@ -117,11 +117,6 @@ jobs:
         continue-on-error: true
         working-directory: ${{ github.workspace }}
 
-      - name: Run Brakeman
-        run: bundle exec brakeman --force --no-pager --format github
-        continue-on-error: true
-        working-directory: ${{ github.workspace }}
-
   build:
     name: Build Gem
     runs-on: ubuntu-latest

@@ -18,6 +18,7 @@ This bot automatically analyzes pull requests using Google's Gemini AI and posts
     - Go to https://github.com/settings/apps (for personal accounts) or your organization's settings to create a new GitHub App.
     - Create a new GitHub App named "HarperBot"
     - Set permissions: Repository permissions - Contents: Read, Issues: Read & Write, Pull requests: Read & Write
+    - Subscribe the webhook to **Pull request**, **Issue comment**, and **Pull request review comment** events (the last one enables triggers from the Files changed tab).
     - Generate and download a private key
     - Install the app on your repository
 
@@ -91,6 +92,7 @@ HarperBot can now author code changes directly as a contributor to repositories:
 - Automatically applies code suggestions to PR branches
 - Creates commits with fixes and improvements
 - Reduces manual work for developers
+  - In webhook mode, this is triggered by commenting `/apply` (requires `enable_authoring: true` and write/admin permissions).
 
 ### Improvement PRs
 - Creates new PRs with additional improvements

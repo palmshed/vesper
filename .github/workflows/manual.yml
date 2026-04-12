@@ -40,12 +40,12 @@ jobs:
           bundler-cache: true
 
       - name: Run tests
-        run: bundle exec ruby tests/runner.rb
+        run: bundle exec ruby test/runner.rb
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
 
       - name: Run integration tests
-        run: bundle exec ruby tests/integration/api.rb
+        run: bundle exec ruby test/integration/api.rb
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
 

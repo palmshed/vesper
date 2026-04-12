@@ -59,6 +59,9 @@ Before deploying, make sure you:
 ### Manual Analysis Trigger
 Comment `/analyze` on a PR to request a fresh analysis on demand.
 
+### Manual Apply Command
+Comment `/apply` on a PR to apply HarperBot suggestions as commits (requires `enable_authoring: true` and write/admin permissions).
+
 ### Manual Merge Commands
 Comment one of the following on a PR to merge via HarperBot (requires write/admin permissions):
 - `/merge`
@@ -93,7 +96,7 @@ Webhook Mode is recommended for better scalability and ease of management. Benef
 2. **Install GitHub App**:
    - Install the HarperBot GitHub App on your repositories
    - Remove repository-specific secrets and workflow files if desired
-    - While configuring the app, subscribe to the **Pull request** and **Issue comment** webhook events so HarperBot sees new PRs and `/analyze`/merge commands.
+    - While configuring the app, subscribe to the **Pull request**, **Issue comment**, and **Pull request review comment** webhook events so HarperBot sees new PRs, inline review-comment triggers, and `/analyze`/`/apply`/merge commands.
     - If you’re migrating the app between accounts, uninstall the previous installation (Settings → Installed GitHub Apps → Configure → Uninstall) so the retired app no longer receives webhooks or posts comments.
 
 3. **Verify**:

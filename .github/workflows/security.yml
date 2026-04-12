@@ -33,7 +33,7 @@ jobs:
     steps:
       - name: Install Git
         run: |
-          apt-get update && apt-get install -y --no-install-recommends git
+          apt-get update && apt-get install -y --no-install-recommends git jq
 
       - name: Configure Git and checkout code
         run: |
@@ -93,22 +93,6 @@ jobs:
           bundle audit check --update --quiet --format json > bundler-audit.json || echo "Bundle audit completed with findings"
         continue-on-error: true
 
-      # Additional security checks: dependency vulnerabilities and code security
-      # Check and update vulnerable dependencies
-      - name: Check for vulnerable dependencies
-        run: |
-          # Temporarily unfreeze bundle for updates
-          bundle config set --local frozen false
-
-          # Update to latest version of thor to fix vulnerability
-          bundle update thor
-
-          # Run security audit without failing the build
-          bundle audit check --update || true
-
-          # Re-enable frozen mode
-          bundle config set --local frozen true
-
       # Upload Reports
       - name: Upload security reports
         uses: actions/upload-artifact@v7
@@ -126,13 +110,6 @@ jobs:
       #     sarif_file: gitleaks.sarif
       #   id: sarif_upload
 
-      # Fail the job if critical vulnerabilities found
-      - name: Check for critical vulnerabilities
-        if: steps.bundler_audit.outputs.vulnerabilities_found == 'true'
-        run: |
-          echo "Critical vulnerabilities found! Check the Bundler Audit report."
-          exit 1
-
       - name: Check for vulnerabilities
         run: |
           echo "## Security Scan Results" >> $GITHUB_STEP_SUMMARY
@@ -146,16 +123,5 @@ jobs:
               exit 1
             else
               echo "[SUCCESS] No vulnerabilities found in dependencies" >> $GITHUB_STEP_SUMMARY
-            fi
-          fi
-
-          if [ -f "brakeman.json" ]; then
-            WARN_COUNT=$(jq '.warnings | length' brakeman.json 2>/dev/null || echo "0")
-            echo "### Brakeman: $WARN_COUNT security warnings found" >> $GITHUB_STEP_SUMMARY
-
-            if [ "$WARN_COUNT" -gt "0" ]; then
-              echo "[WARNING] Security warnings detected in code" >> $GITHUB_STEP_SUMMARY
-            else
-              echo "[SUCCESS] No security warnings found in code" >> $GITHUB_STEP_SUMMARY
             fi
           fi

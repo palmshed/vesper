@@ -147,7 +147,8 @@ jobs:
       - name: Build gem package
         run: |
           mkdir -p pkg
-          gem build -o pkg/gemini-ai.gem *.gemspec
+          gem build *.gemspec
+          mv ./*.gem pkg/
         working-directory: ${{ github.workspace }}
 
       - name: Upload artifact

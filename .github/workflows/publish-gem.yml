@@ -44,7 +44,7 @@ jobs:
         run: bundle install
 
       - name: Run tests
-        run: bundle exec ruby tests/runner.rb
+        run: bundle exec ruby test/runner.rb
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
 

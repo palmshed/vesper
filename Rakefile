@@ -126,13 +126,6 @@ task :docs do
 end
 
 # Release task
-desc 'Release a new version'
-task :release => %i[test rubocop] do
-  version = File.read(File.join('lib', 'gemini', 'version.rb'))
-    .match(/VERSION = '([^']+)'/)[1]
-
-  puts "Releasing version #{version}..."
-  sh 'git tag', "v#{version}"
-  sh 'git push', '--tags'
-  sh 'gem push', "pkg/gemini-ai-#{version}.gem"
-end
+# `bundler/gem_tasks` already provides `rake release` with correct gem naming/versioning.
+# Keeping a custom release task here has repeatedly drifted out of sync with the gemspec,
+# so we intentionally rely on the upstream task.

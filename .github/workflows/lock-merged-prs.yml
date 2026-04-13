@@ -20,5 +20,5 @@ jobs:
       - uses: libnudget/lock@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          days-before-lock: 1
+          days-before-lock: 0
           delete-branch: true

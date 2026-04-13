@@ -7,41 +7,18 @@ name: Lock Merged PRs
 on:
   pull_request:
     types: [closed]
+  workflow_dispatch:
 
 jobs:
-  lock:
-    if: github.event.pull_request.merged == true && github.repository_owner == 'bniladridas'
+  lock-merged:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
       contents: write
     steps:
-      - name: Lock PR
-        run: gh pr lock ${{ github.event.pull_request.number }} --repo ${{ github.repository }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Delete branch (skip if already deleted or from fork)
-        run: |
-          # Only delete branch if PR is from the same repository (not a fork)
-          if [ "$HEAD_REPO_FULL_NAME" != "$BASE_REPO_FULL_NAME" ]; then
-            echo "Skipping branch deletion: PR is from a fork"
-            exit 0
-          fi
-
-          response=$(gh api \
-            -X DELETE \
-            "repos/${{ github.repository }}/git/refs/heads/$BRANCH_NAME" \
-            2>&1) || {
-            if echo "$response" | grep -q "Reference does not exist"; then
-              echo "Branch already deleted, skipping"
-            else
-              echo "Failed to delete branch: $response"
-              exit 1
-            fi
-          }
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH_NAME: ${{ github.event.pull_request.head.ref }}
-          HEAD_REPO_FULL_NAME: ${{ github.event.pull_request.head.repo.full_name }}
-          BASE_REPO_FULL_NAME: ${{ github.repository }}
+      - uses: libnudget/lock@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          days-before-lock: 1
+          delete-branch: true

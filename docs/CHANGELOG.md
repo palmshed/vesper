@@ -5,7 +5,6 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: 
 
 ## [1.6.0](https://github.com/bniladridas/friday_gemini_ai/compare/friday_gemini_ai/v1.5.0...friday_gemini_ai/v1.6.0) (2026-04-13)
 
-
 ### Features
 
 * /analyze --force-review ([45c4f7d](https://github.com/bniladridas/friday_gemini_ai/commit/45c4f7d5ca2d0b220db4ec4f9cd5f3e094f7fa68))

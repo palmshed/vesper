@@ -385,4 +385,6 @@ MIT – see [LICENSE](LICENSE).
 
 [<sup>© 2026 Friday Gemini AI • Hand-crafted for Rubyists</sup>](https://bniladridas.github.io/friday_gemini_ai/)
 
+<!-- fix/vercel-hello branch -->
+
 </div>

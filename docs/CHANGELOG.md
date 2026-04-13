@@ -3,6 +3,58 @@
 All notable changes are tracked here.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: [SemVer](https://semver.org/spec/v2.0.0.html)
 
+## [1.6.0](https://github.com/bniladridas/friday_gemini_ai/compare/friday_gemini_ai/v1.5.0...friday_gemini_ai/v1.6.0) (2026-04-13)
+
+
+### Features
+
+* /analyze --force-review ([45c4f7d](https://github.com/bniladridas/friday_gemini_ai/commit/45c4f7d5ca2d0b220db4ec4f9cd5f3e094f7fa68))
+* create gem publish workflow ([422a03a](https://github.com/bniladridas/friday_gemini_ai/commit/422a03acc069cf80b1183b1db50124768118e084))
+* create privacy page and cookie ([83449ad](https://github.com/bniladridas/friday_gemini_ai/commit/83449adc3d6dd4f827b8234ab4751d8263dc6a78))
+* include logo in readme ([15d24be](https://github.com/bniladridas/friday_gemini_ai/commit/15d24be71c1fcfbd45eabb9f2f2f607983c2025a))
+* mobile nav three-dots minimal ([56c756e](https://github.com/bniladridas/friday_gemini_ai/commit/56c756e8961cb93d0a2aec508a293150bfe438b5))
+* pause pr auto reviews ([f438dcf](https://github.com/bniladridas/friday_gemini_ai/commit/f438dcfd3e48fd56afb60912a039c5ab123092ea))
+* quota cooldown ([f0f0df2](https://github.com/bniladridas/friday_gemini_ai/commit/f0f0df23704a927ca35799ed9a13728f3285945f))
+* range inline review comments ([ab5e04e](https://github.com/bniladridas/friday_gemini_ai/commit/ab5e04e668e4724e4be3235ecee6c00345eabdcb))
+* show build in status ([ce7ca91](https://github.com/bniladridas/friday_gemini_ai/commit/ce7ca9181d0b8ebb67f0f833e8cf5e3311c6e360))
+* trademark page ([6e20ccc](https://github.com/bniladridas/friday_gemini_ai/commit/6e20cccfab9f5b914b790d817731e1f9b781a940))
+
+
+### Bug Fixes
+
+* /analyze in file comments ([c4ef4d9](https://github.com/bniladridas/friday_gemini_ai/commit/c4ef4d927a48bbb1130f00bf8926f9381db543ba))
+* align sanitizer with gemini output budget ([#158](https://github.com/bniladridas/friday_gemini_ai/issues/158)) ([d55fd3f](https://github.com/bniladridas/friday_gemini_ai/commit/d55fd3f518d0f475353f3998078b5121988e943b))
+* apply model diff blocks ([370ce61](https://github.com/bniladridas/friday_gemini_ai/commit/370ce61dbe25742632777085c9a4b484536f43ec))
+* auth diff fetch ([cc11a1b](https://github.com/bniladridas/friday_gemini_ai/commit/cc11a1b1b2095c379e6d8d5b61abeac81d50aa49))
+* clarify status label ([7467ee1](https://github.com/bniladridas/friday_gemini_ai/commit/7467ee14e309b12b6ca4dd1666748a455e319012))
+* configure bundler in test job ([ee68170](https://github.com/bniladridas/friday_gemini_ai/commit/ee681702ce48b3171535c991fe7240616f5a852e))
+* force /analyze rerun ([4524a98](https://github.com/bniladridas/friday_gemini_ai/commit/4524a981e4d43d4a0471cd32ceed26046bc6bc3d))
+* handle rebase merge 405 ([bcbc600](https://github.com/bniladridas/friday_gemini_ai/commit/bcbc60061cc9ecbef3feb8d197d9134d4a9d052c))
+* handle skipped test job ([532ddb9](https://github.com/bniladridas/friday_gemini_ai/commit/532ddb9174ad558ddca9c4b5375aa0f3163a85e5))
+* harden diff fetch ([ba8fe07](https://github.com/bniladridas/friday_gemini_ai/commit/ba8fe0786d5481c7b9d4fb58036b97c7eb7316c7))
+* pause label creation ([9b9fa29](https://github.com/bniladridas/friday_gemini_ai/commit/9b9fa298c3f6f4aaa22bd2a64240890766d85cd1))
+* post pr review comments ([a3393ed](https://github.com/bniladridas/friday_gemini_ai/commit/a3393edc78c6bef485f7616fe6fb11d3c6625f9d))
+* rm duplicate sections ([81919b5](https://github.com/bniladridas/friday_gemini_ai/commit/81919b535e852f025c27b9fb6f3ab69fc7667af3))
+* secure harperbot apply and update website copy ([#163](https://github.com/bniladridas/friday_gemini_ai/issues/163)) ([0bc1cf8](https://github.com/bniladridas/friday_gemini_ai/commit/0bc1cf8b58ab0daf9010af5f146e23b472595a72))
+* stop /apply crash ([69dd071](https://github.com/bniladridas/friday_gemini_ai/commit/69dd071beedc92141bbf8ac3a6c30e32296350a7))
+* stop printing raw api keys ([#159](https://github.com/bniladridas/friday_gemini_ai/issues/159)) ([0902841](https://github.com/bniladridas/friday_gemini_ai/commit/0902841f04ed416f0945b778480da936b89b344a))
+* unfreeze bundler lockfile ([b878d06](https://github.com/bniladridas/friday_gemini_ai/commit/b878d064251137a7ca9ce226dd41776023964b93))
+* update version to 1.5.0 ([338e2ff](https://github.com/bniladridas/friday_gemini_ai/commit/338e2ff44e2b5572a5e6245dc66d63a66b34caf6))
+* use v4 for artifact actions ([805e7a0](https://github.com/bniladridas/friday_gemini_ai/commit/805e7a071b8dd52279f61f2e09800b2376289d6f))
+
+
+### Documentation
+
+* explain quota cooldown ([a6f28da](https://github.com/bniladridas/friday_gemini_ai/commit/a6f28da4e5ba6814386b2e9bfec1d07816996632))
+* fix setup-harperbot ([0042a7a](https://github.com/bniladridas/friday_gemini_ai/commit/0042a7a4b858ce5b82e831eb4526da6e5029757b))
+* publish l2 support page ([868b15e](https://github.com/bniladridas/friday_gemini_ai/commit/868b15ed4dc00e3f82ecd34365990241cbbcf5c7))
+* show rebase 405 details ([4cc3d9f](https://github.com/bniladridas/friday_gemini_ai/commit/4cc3d9f514e5ed4b6b662e6f6e69bd1ac924d6d7))
+
+
+### Code Refactoring
+
+* website nav and cookie removal ([ce928e7](https://github.com/bniladridas/friday_gemini_ai/commit/ce928e7555004b326e93d347a7abfbadae837e66))
+
 ## [1.5.0](https://github.com/bniladridas/friday_gemini_ai/compare/friday_gemini_ai-v1.4.1...friday_gemini_ai/v1.5.0) (2026-03-16)
 ### Features
 

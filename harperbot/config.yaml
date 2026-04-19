@@ -57,6 +57,48 @@ create_improvement_prs: false
 # {timestamp} and {pr_number} will be replaced with actual values
 improvement_branch_pattern: "harperbot-improvements-{timestamp}"
 
+# Enable RAG (Retrieval Augmented Generation)
+# Fetches current information to supplement model's knowledge cutoff
+enable_rag: true
+
+# RAG sources to search (space-separated)
+# Package Managers: pypi, npm, crates, go, dockerhub, apt, brew, conda, nuget, maven, pub, helm, cocoapods, packagist, rubygems, spm, carthage, pipenv
+# Cloud: aws_docs, azure_docs, gcp_docs, terraform_registry, kubernetes, cloudflare, vercel, heroku, digitalocean, linode, fastly
+# Serverless: aws_lambda, cloudfunctions, firebase_functions
+# Security: security, snyk, github, dependabot, sonarcloud, auth0, clerk, supabase
+# Docs/Community: docs, stackoverflow, reddit, hackernews, youtube, arxiv, devto, medium, producthunt, gitbook, confluence, slack, discord, telegram
+# Testing: jest, pytest, rspec, cypress, playwright, vitest
+# Databases: postgresql, mongodb, redis, prisma, mysql, sqlite, elasticsearch, algolia, meilisearch, memcached, rabbitmq, kafka, pulsar
+# API: swagger, graphql, rest, grpc
+# CI/CD: github_actions, gitlab_ci, jenkins, circleci, actions
+# Monitoring: datadog, newrelic, sentry, prometheus, grafana
+# AI/ML: openai, anthropic, cohere, huggingface, kaggle, langchain
+# Payments: stripe, paypal, braintree
+# Email: sendgrid, mailgun, ses
+# Infrastructure: ansible, puppet, packer, vagrant
+
+# RAG sources - 90+ sources available
+rag_sources: [
+  pypi, npm, crates, go, dockerhub, security, github, docs, stackoverflow,
+  news, weather, reddit, hackernews, youtube, arxiv, devto, medium,
+  producthunt, apt, brew, conda, nuget, maven, pub, helm, terraform_registry,
+  cocoapods, packagist, rubygems, kubernetes, cloudflare, vercel, heroku,
+  slack, discord, telegram, jest, pytest, rspec, cypress, playwright, vitest,
+  sonarcloud, postgresql, mongodb, redis, prisma, mysql, elasticsearch,
+  algolia, meilisearch, rabbitmq, kafka, pulsar, grpc, circleci, actions,
+  prometheus, grafana, stripe, paypal, braintree, sendgrid, mailgun, ses,
+  ansible, puppet, packer, vagrant, firebase_functions, langchain,
+  aws_docs, azure_docs, gcp_docs, huggingface, kaggle,
+  auth0, clerk, supabase, openai, anthropic, cohere
+]
+
+# GitHub token for RAG (optional, for higher rate limits)
+# If not set, will use GITHUB_TOKEN from environment
+rag_github_token: ""
+
+# Max items to fetch per RAG source
+rag_max_items: 5
+
 # AI analysis prompt template
 # Customize the prompt to change how HarperBot analyzes code
 prompt: |

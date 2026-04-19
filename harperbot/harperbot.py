@@ -28,6 +28,11 @@ from google.genai import types
 PAUSE_LABEL = "harperbot:paused"
 QUOTA_COOLDOWN_SECONDS = int(os.getenv("HARPERBOT_QUOTA_COOLDOWN_SECONDS", "1800"))
 QUOTA_UNTIL_MARKER_RE = re.compile(r"harperbot-quota-until:\s*(\d+)")
+
+try:
+    from .rag import fetch_rag_context
+except ImportError:
+    from rag import fetch_rag_context
 ENABLE_RANGE_COMMENTS = os.getenv("HARPERBOT_ENABLE_RANGE_COMMENTS", "0").strip().lower() in {"1", "true", "yes", "on"}
 
 try:
@@ -255,6 +260,7 @@ Provide a concise code review analysis in this format:
             {"category": "HARM_CATEGORY_DANGEROUS_CONTENT", "threshold": "BLOCK_NONE"},
         ],
     }
+
     config_path = os.path.join(os.path.dirname(__file__), "config.yaml")
     if os.path.exists(config_path):
         with open(config_path, "r") as f:
@@ -309,6 +315,11 @@ def analyze_with_gemini(client, pr_details):
             diff=diff_content,
             focus_instruction=focus_instruction,
         )
+
+        # Fetch RAG context for current information
+        rag_context = fetch_rag_context(pr_details, config)
+        if rag_context:
+            formatted_prompt = f"{rag_context}\n\n{formatted_prompt}"
 
         # Generate content with retries for transient failures (5xx, network).
         generate_config = types.GenerateContentConfig(

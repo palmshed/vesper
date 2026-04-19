@@ -9,7 +9,7 @@ Ruby gem for integrating with Google's Gemini AI models.
 
 The full API of this library can be found in [docs/reference/api.md](docs/reference/api.md).
 
-## Installation
+# Installation
 
 ```bash
 gem install friday_gemini_ai
@@ -24,14 +24,14 @@ GEMINI_API_KEY=your_api_key
 > [!NOTE]
 > Ensure your API key is kept secure and not committed to version control.
 
-## HarperBot Integration
+# HarperBot Integration
 
 HarperBot provides automated PR code reviews using Google's Gemini AI. It supports two deployment modes:
 
 ### Webhook Mode (Recommended)
 This is the preferred deployment path. You need to:
 
-- Install the [HarperBot GitHub App](https://github.com/apps/harper-new-line) and grant it access to the repositories you want to monitor.
+- Install the [`harper new line`](https://github.com/apps/harper-new-line) and grant it access to the repositories you want to monitor.
 - Provision these secrets (in Vercel or another host) so the webhook server can authenticate with both Gemini and GitHub:
   - `GEMINI_API_KEY`
   - `HARPERBOT_GEMINI_API_KEY` *(optional override)*
@@ -55,9 +55,7 @@ Once those requirements are met, the centralized HarperBot instance receives web
 
 For detailed setup instructions, see [harperbot/HarperBot.md](harperbot/HarperBot.md).
 
-## Usage
-
-The full API of this library can be found in [docs/reference/api.md](docs/reference/api.md).
+# Usage
 
 ### Basic Setup
 
@@ -80,22 +78,15 @@ fast_client = GeminiAI::Client.new(model: :flash)
 | `:flash_2_0`  | `gemini-2.0-flash`      | Legacy support                  |
 | `:flash_lite` | `gemini-2.0-flash-lite` | Lightweight legacy              |
 
-## Capabilities
+# Capabilities
 
-* **Text:** content generation, summaries, documentation
-* **Chat:** multi-turn Q&A and assistants
-* **Image:** image-to-text analysis
-* **CLI:** for quick prototyping and automation
+Capabilities include text (content generation, summaries, documentation), chat (multi-turn Q&A and assistants), image (image-to-text analysis), and CLI (for quick prototyping and automation).
 
-## Features
+# Features
 
-* **Multiple Model Support:** Gemini 2.5 + 2.0 families with automatic fallback
-* **Text Generation:** configurable parameters, safety settings
-* **Image Analysis:** base64 image input, detailed descriptions
-* **Chat:** context retention, system instructions
-* **Security:** API key masking, retries, and rate limits (1s default, 3s CI)
+Features include multiple model support (Gemini 2.5 + 2.0 families with automatic fallback), text generation (configurable parameters, safety settings), image analysis (base64 image input, detailed descriptions), chat (context retention, system instructions), and security (API key masking, retries, and rate limits with 1s default, 3s CI).
 
-## Handling errors
+# Handling errors
 
 When the library is unable to connect to the API,
 or if the API returns a non-success status code (i.e., 4xx or 5xx response),
@@ -158,7 +149,7 @@ On timeout, an `APIConnectionTimeoutError` is thrown.
 
 Note that requests which time out will be [retried twice by default](#retries).
 
-## Advanced Usage
+# Advanced Usage
 
 ### Logging
 
@@ -184,9 +175,9 @@ require 'friday_gemini_ai'
 client = GeminiAI::Client.new(log_level: 'debug')  # Show all log messages
 ```
 
-## Frequently Asked Questions
+# Frequently Asked Questions
 
-## Semantic versioning
+# Semantic versioning
 
 This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) conventions, though certain backwards-incompatible changes may be released as minor versions:
 
@@ -198,29 +189,17 @@ We take backwards-compatibility seriously and work hard to ensure you can rely o
 
 We are keen for your feedback; please open an [issue](https://github.com/bniladridas/friday_gemini_ai/issues) with questions, bugs, or suggestions.
 
-## Requirements
+# Requirements
 
-Ruby 3.0 or later is supported.
-
-The following runtimes are supported:
-
-- Ruby 3.0+
-- JRuby (compatible versions)
-- TruffleRuby (compatible versions)
+Ruby 3.0 or later is supported. The following runtimes are supported: Ruby 3.0+, JRuby (compatible versions), and TruffleRuby (compatible versions).
 
 Note that Windows support is limited; Linux and macOS are recommended.
 
-## Migration Guide
+# Migration Guide
 
-Gemini 1.5 models have been deprecated.
-Use:
+Gemini 1.5 models have been deprecated. Use `:pro` for `gemini-2.5-pro` or `:flash` for `gemini-2.5-flash`. Legacy options (`:flash_2_0`, `:flash_lite`) remain supported for backward compatibility.
 
-* `:pro` → `gemini-2.5-pro`
-* `:flash` → `gemini-2.5-flash`
-
-Legacy options (`:flash_2_0`, `:flash_lite`) remain supported for backward compatibility.
-
-## Environment Variables
+# Environment Variables
 
 ```bash
 # Required
@@ -238,52 +217,70 @@ GEMINI_LOG_LEVEL=debug  # debug | info | warn | error
 ./bin/gemini chat
 ```
 
-## GitHub Actions Integration
+# GitHub Actions Integration
 
 Friday Gemini AI includes a built-in GitHub Actions workflow for automated PR reviews via **HarperBot**, powered by Gemini AI.
 
-💡 **Install the [HarperBot GitHub App](https://github.com/apps/harper-new-line)** for automated PR reviews across repositories.
+### HarperBot: Automated PR Analysis
 
-### HarperBot – Automated PR Analysis
+HarperBot provides AI-driven code review and analysis directly in pull requests. Key capabilities include configurable focus (`all`, `security`, `performance`, `quality`), code quality/documentation/test coverage analysis, security and performance issue detection, inline review comments with actionable suggestions, and clean minimal structured feedback output.
 
-HarperBot provides AI-driven code review and analysis directly in pull requests.
+Was this helpful?
 
-**Key Capabilities:**
+### RAG (Retrieval Augmented Generation)
 
-* Configurable focus: `all`, `security`, `performance`, `quality`
-* Code quality, documentation, and test coverage analysis
-* Security & performance issue detection
-* Inline review comments with actionable suggestions
-* Clean, minimal, and structured feedback output
+HarperBot includes a comprehensive RAG system that fetches current context from 90+ sources to supplement AI knowledge beyond its training cutoff (May 2024).
 
-### Setup
+**Configuration:** Edit `harperbot/config.yaml`:
 
-**Workflow Mode (default)**
+```yaml
+# Enable RAG
+enable_rag: true
 
-1. Add repository secrets:
+# Choose sources (default shown)
+rag_sources: pypi npm security github docs stackoverflow news weather reddit hackernews crates go dockerhub web_search youtube arxiv devto aws_docs azure_docs gcp_docs huggingface kaggle medium producthunt apt brew conda nuget maven pub helm terraform_registry cocoapods packagist rubygems kubernetes cloudflare vercel heroku slack discord telegram jest pytest rspec sonarcloud postgresql mongodb redis prisma swagger graphql github_actions gitlab_ci jenkins datadog newrelic sentry openai anthropic cohere digitalocean linode fastly auth0 clerk supabase cypress playwright vitest mysql elasticsearch algolia meilisearch rabbitmq kafka pulsar grpc circleci actions prometheus grafana stripe paypal braintree sendgrid mailgun ses ansible puppet packer vagrant firebase_functions langchain
+```
 
-   * `GEMINI_API_KEY`
-   * `GITHUB_TOKEN` (auto-provided by GitHub)
-2. Configure `.github/workflows/harperbot.yml`
-3. Optional: tune behavior via `harperbot/config.yaml`
+**RAG Source Categories:**
 
-**Webhook Mode (Recommended)**
+| Category | Example Sources |
+|----------|----------------|
+| Package Managers | pypi, npm, crates, go, dockerhub, apt, brew, conda, nuget, maven, pub, helm, cocoapods, packagist, rubygems |
+| Cloud | aws_docs, azure_docs, gcp_docs, terraform_registry, kubernetes, cloudflare, vercel, heroku, digitalocean, linode, fastly |
+| Security | security, snyk, github, dependabot, sonarcloud, auth0, clerk, supabase |
+| Docs/Community | docs, stackoverflow, reddit, hackernews, youtube, arxiv, devto, medium, producthunt, gitbook, confluence, slack, discord, telegram |
+| Testing | jest, pytest, rspec, cypress, playwright, vitest |
+| Databases | postgresql, mongodb, redis, prisma, mysql, elasticsearch, algolia, meilisearch, rabbitmq, kafka, pulsar |
+| Messaging | kafka, rabbitmq, pulsar |
+| API | swagger, graphql, rest, grpc |
+| CI/CD | github_actions, gitlab_ci, jenkins, circleci, actions |
+| Monitoring | datadog, newrelic, sentry, prometheus, grafana |
+| AI/ML | openai, anthropic, cohere, huggingface, kaggle, langchain |
+| Payments | stripe, paypal, braintree |
+| Email | sendgrid, mailgun, ses |
+| Infrastructure | ansible, puppet, packer, vagrant |
 
-* Deploy to Vercel (production branch)
-* Install the [HarperBot GitHub App](https://github.com/apps/harper-new-line) and grant it access to your repositories
-* Set environment variables in Vercel:
-  - `GEMINI_API_KEY`: Your Google Gemini API key
-  - `HARPER_BOT_APP_ID`: App ID from your GitHub App settings
-  - `HARPER_BOT_PRIVATE_KEY`: Private key content (paste the entire .pem file)
-  - `WEBHOOK_SECRET`: Random secret string for webhook verification
-  - `VERCEL_AUTOMATION_BYPASS_SECRET`: Automatically generated by Vercel for deployment protection bypass (managed in Vercel dashboard)
-* Configure webhook URL in GitHub App settings:
-  - Use the Vercel deployment URL (e.g., `https://your-project.vercel.app/webhook`)
-  - Append the bypass token as a query parameter (managed in Vercel dashboard, never commit to code)
-* Webhooks will handle PR events automatically (opened, reopened, synchronize)
-* Preferred for scalability and centralized management
+**Environment Variables for RAG:**
 
-**Security Note:** The bypass token for Vercel deployment protection should be stored securely in Vercel's environment variables, not exposed in public documentation or code repositories.
+```bash
+# Optional API keys for premium sources
+NEWS_API_KEY=              # newsapi.org (tech news)
+OPENWEATHER_API_KEY=       # openweathermap.org (weather)
+YOUTUBE_API_KEY=          # YouTube Data API (tutorials)
+SNYK_API_KEY=             # Snyk (vulnerabilities)
+KAGGLE_API_KEY=           # Kaggle (datasets)
+SONARCLOUD_TOKEN=          # SonarCloud (code quality)
+CONFLUENCE_URL=           # Confluence (internal docs)
+CONFLUENCE_API_KEY=      # Confluence API
+WEATHER_LOCATION=        # Default: "San Francisco"
+```
+
+**How RAG Works:**
+
+1. Extracts package/dependency names from changed files
+2. Fetches current info from configured sources
+3. Prepends "Current Context (April 2026)" section to AI prompt
+4. Model receives up-to-date information about dependencies, docs, and best practices
 
 ### Workflow Highlights
 
@@ -301,7 +298,7 @@ permissions:
   statuses: write
 ```
 
-## Local Development & Testing
+# Local Development & Testing
 
 ```bash
 bundle exec rake test          # Run tests
@@ -318,7 +315,7 @@ brew install act
 act -j test --container-architecture linux/amd64
 ```
 
-## Examples
+# Examples
 
 ### Text Generation
 
@@ -345,7 +342,7 @@ messages = [
 puts client.chat(messages, system_instruction: 'Be helpful and concise.')
 ```
 
-## Conventional Commits
+# Conventional Commits
 
 Consistent commit messages are enforced via a local Git hook.
 
@@ -354,14 +351,14 @@ cp scripts/commit-msg .git/hooks/
 chmod +x .git/hooks/commit-msg
 ```
 
-**Types:** `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`
+**Types:** `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`, `ci`
 Example:
 
 ```bash
-git commit -m "feat: add user authentication"
+git commit -m "ci: configure vercel python build"
 ```
 
-## Documentation
+# Documentation
 
 * [Documentation](docs/index.md)
 * [Quickstart](docs/start/quickstart.md)
@@ -373,13 +370,13 @@ git commit -m "feat: add user authentication"
 * [Contributing](docs/CONTRIBUTING.md)
 * [Resources](docs/guides/resources.md)
 
-## Contributing
+# Contributing
 
 Fork → Branch → Commit → Pull Request.
 
-## License
+# License
 
-MIT – see [LICENSE](LICENSE).
+MIT → see [LICENSE](LICENSE).
 
 <div align="center">
 

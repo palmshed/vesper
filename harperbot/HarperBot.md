@@ -9,7 +9,8 @@ This bot automatically analyzes pull requests using Google's Gemini AI and posts
 - Identifies potential issues and bugs
 - Suggests improvements
 - Posts detailed analysis as PR comments
-- **NEW**: Can author code changes directly (auto-commit suggestions, create improvement PRs)
+- **RAG (Retrieval Augmented Generation)**: Fetches current context from 90+ sources to supplement AI knowledge beyond its training cutoff
+- **Auto-authoring**: Can author code changes directly (auto-commit suggestions, create improvement PRs)
 
 ## Setup
 
@@ -76,6 +77,59 @@ Comment one of the following on a PR to merge via HarperBot (requires write/admi
 Run manually: `python harperbot/harperbot.py --repo owner/repo --pr 123`
 
 *Note: The local webhook server uses Flask's development server, suitable for testing. For production self-hosting outside Vercel, use a WSGI server like Gunicorn.*
+
+## RAG (Retrieval Augmented Generation)
+
+HarperBot includes a comprehensive RAG system that fetches current context from 90+ sources to supplement AI knowledge beyond its training cutoff (May 2024).
+
+### Enable RAG
+
+Edit `harperbot/config.yaml`:
+
+```yaml
+enable_rag: true
+rag_sources: pypi npm security github docs stackoverflow news weather reddit hackernews crates go dockerhub web_search youtube arxiv devto aws_docs azure_docs gcp_docs huggingface kaggle medium producthunt apt brew conda nuget maven pub helm terraform_registry cocoapods packagist rubygems kubernetes cloudflare vercel heroku slack discord telegram jest pytest rspec sonarcloud postgresql mongodb redis prisma swagger graphql github_actions gitlab_ci jenkins datadog newrelic sentry openai anthropic cohere digitalocean linode fastly auth0 clerk supabase cypress playwright vitest mysql elasticsearch algolia meilisearch rabbitmq kafka pulsar grpc circleci actions prometheus grafana stripe paypal braintree sendgrid mailgun ses ansible puppet packer vagrant firebase_functions langchain
+```
+
+### RAG Sources (90+)
+
+| Category | Sources |
+|----------|---------|
+| Package Managers | pypi, npm, crates, go, dockerhub, apt, brew, conda, nuget, maven, pub, helm, cocoapods, packagist, rubygems |
+| Cloud | aws_docs, azure_docs, gcp_docs, terraform_registry, kubernetes, cloudflare, vercel, heroku, digitalocean, linode, fastly |
+| Security/Auth | security, snyk, github, dependabot, sonarcloud, auth0, clerk, supabase |
+| Docs/Community | docs, stackoverflow, reddit, hackernews, youtube, arxiv, devto, medium, producthunt, gitbook, confluence, slack, discord, telegram |
+| Testing | jest, pytest, rspec, cypress, playwright, vitest |
+| Databases | postgresql, mongodb, redis, prisma, mysql, elasticsearch, algolia, meilisearch, rabbitmq, kafka, pulsar |
+| API | swagger, graphql, rest, grpc |
+| CI/CD | github_actions, gitlab_ci, jenkins, circleci, actions |
+| Monitoring | datadog, newrelic, sentry, prometheus, grafana |
+| AI/ML | openai, anthropic, cohere, huggingface, kaggle, langchain |
+| Payments | stripe, paypal, braintree |
+| Email | sendgrid, mailgun, ses |
+| Infrastructure | ansible, puppet, packer, vagrant |
+
+### Environment Variables
+
+```bash
+# Optional API keys for premium sources
+NEWS_API_KEY=              # newsapi.org (tech news)
+OPENWEATHER_API_KEY=       # openweathermap.org (weather)
+YOUTUBE_API_KEY=          # YouTube Data API (tutorials)
+SNYK_API_KEY=             # Snyk (vulnerabilities)
+KAGGLE_API_KEY=           # Kaggle (datasets)
+SONARCLOUD_TOKEN=        # SonarCloud (code quality)
+CONFLUENCE_URL=          # Confluence (internal docs)
+CONFLUENCE_API_KEY=       # Confluence API
+WEATHER_LOCATION=        # Default: "San Francisco"
+```
+
+### How RAG Works
+
+1. **Extract dependencies** from changed files (Python, Node.js, Rust, Go, Docker, etc.)
+2. **Fetch current context** from configured sources (latest versions, docs, security advisories, tutorials)
+3. **Prepend context** to AI prompt with timestamp "April 2026"
+4. **Model receives** up-to-date information about dependencies, best practices, and related resources
 
 ## Migration from Workflow Mode to Webhook Mode
 

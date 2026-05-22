@@ -15,5 +15,7 @@
     { "type": "perf", "section": "Performance Improvements" },
     { "type": "docs", "section": "Documentation" },
     { "type": "refactor", "section": "Code Refactoring" }
-  ]
+  ],
+  "pull-request-header": "Release notes for the next Vesper release.",
+  "pull-request-footer": "Managed by Vesper Review."
 }

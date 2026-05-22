@@ -3,6 +3,14 @@
 All notable changes are tracked here.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: [SemVer](https://semver.org/spec/v2.0.0.html)
 
+## [1.7.0](https://github.com/bniladridas/friday_gemini_ai/compare/friday_gemini_ai/v1.6.0...friday_gemini_ai/v1.7.0) (2026-05-22)
+
+
+### Features
+
+* include development dependencies ([bd9b7a5](https://github.com/bniladridas/friday_gemini_ai/commit/bd9b7a5cb9241b1218d9270e1d04716a9eeeeeb9))
+* introduce rag-based context retrieval ([#171](https://github.com/bniladridas/friday_gemini_ai/issues/171)) ([3e9b520](https://github.com/bniladridas/friday_gemini_ai/commit/3e9b520d38ce6886403438f665ff4d985b7c11ef))
+
 ## [1.6.0](https://github.com/bniladridas/friday_gemini_ai/compare/friday_gemini_ai/v1.5.0...friday_gemini_ai/v1.6.0) (2026-04-13)
 ### Features
 

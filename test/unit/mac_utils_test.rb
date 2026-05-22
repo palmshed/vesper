@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: MIT
-# Copyright (c) 2026 friday_gemini_ai
+# Copyright (c) 2026 vesper
 
 require 'test_helper'
 require 'mac/mac_utils'

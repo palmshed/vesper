@@ -1,6 +1,6 @@
 ---
 # SPDX-License-Identifier: MIT
-# Copyright (c) 2026 friday_gemini_ai
+# Copyright (c) 2026 vesper
 
 name: Analysis
 
@@ -31,6 +31,6 @@ jobs:
 
       - name: Run manual fix analysis
         run: |
-          node harperbot/manual.js "**/*.js,**/*.ts,**/*.py,**/*.rb"
+          node vesper/manual.js "**/*.js,**/*.ts,**/*.py,**/*.rb"
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}

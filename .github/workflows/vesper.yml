@@ -1,8 +1,8 @@
 # SPDX-License-Identifier: MIT
-# Copyright (c) 2026 friday_gemini_ai
+# Copyright (c) 2026 vesper
 
 ---
-name: HarperBot
+name: Vesper
 
 on:
   workflow_dispatch:
@@ -95,7 +95,7 @@ jobs:
 
       - name: Configure Git
         run: |
-          git config --global --add safe.directory /__w/friday_gemini_ai/friday_gemini_ai
+          git config --global --add safe.directory /__w/vesper/vesper
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
 
@@ -106,11 +106,11 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 1
 
-    # Install Python dependencies required for HarperBot
+    # Install Python dependencies required for Vesper
       - name: Install dependencies
         run: |
-          # Install pinned HarperBot dependencies (direct + transitive) for reproducible runs
-          pip install --no-cache-dir -r harperbot/requirements.lock
+          # Install pinned Vesper dependencies (direct + transitive) for reproducible runs
+          pip install --no-cache-dir -r vesper/requirements.lock
 
           # Verify installations
           python --version
@@ -121,10 +121,10 @@ jobs:
         id: app-token
         uses: actions/create-github-app-token@v3
         with:
-          app-id: ${{ secrets.HARPER_BOT_APP_ID }}
-          private-key: ${{ secrets.HARPER_BOT_PRIVATE_KEY }}
+          app-id: ${{ secrets.VESPER_APP_ID }}
+          private-key: ${{ secrets.VESPER_PRIVATE_KEY }}
 
-    # Run HarperBot to analyze PR with Gemini AI
+    # Run Vesper to analyze PR with Gemini AI
       - name: Run Gemini PR Bot
         env:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
@@ -142,6 +142,6 @@ jobs:
           fi
 
           # Run the PR bot script with repository and PR number
-          python ./harperbot/harperbot.py \
+          python ./vesper/vesper.py \
             --repo ${{ github.repository }} \
             --pr $PR_NUMBER

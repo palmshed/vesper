@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: MIT
-# Copyright (c) 2026 friday_gemini_ai
+# Copyright (c) 2026 vesper
 
 ---
 name: Close stale issues and PRs
@@ -30,7 +30,7 @@ jobs:
             - Add a comment explaining why it should remain open
             - Remove the 'stale' label
 
-            Thank you for your contributions to Friday Gemini AI!
+            Thank you for your contributions to Vesper!
           close-issue-message: |
             This issue has been automatically closed due to inactivity.
 

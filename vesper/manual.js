@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 // SPDX-License-Identifier: MIT
-// Copyright (c) 2026 friday_gemini_ai
+// Copyright (c) 2026 vesper
 
 /**
  * manual.js

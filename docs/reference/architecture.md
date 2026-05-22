@@ -3,9 +3,9 @@
 ## Project Structure
 
 ```
-friday_gemini_ai/
+vesper/
 ├── bin/                    # Executable scripts
-│   └── gemini_ai          # CLI interface
+│   └── gemini             # CLI interface
 ├── config/                # Configuration files
 │   └── environment.rb     # Environment setup
 ├── docs/                  # Documentation
@@ -21,7 +21,7 @@ friday_gemini_ai/
 │   ├── utils/             # Utility classes
 │   │   ├── loader.rb      # Environment loader
 │   │   └── logger.rb      # Logging utility
-│   └── gemini_ai.rb       # Main entry point
+│   └── vesper.rb       # Main entry point
 ├── tests/                 # Test suite
 │   ├── unit/              # Unit tests
 │   │   └── test_client.rb # Client unit tests
@@ -32,7 +32,7 @@ friday_gemini_ai/
 ├── .gitignore            # Git ignore rules
 ├── Gemfile               # Dependencies
 ├── README.md             # Main documentation
-└── gemini_ai.gemspec     # Gem specification
+└── friday_gemini_ai.gemspec     # Gem specification
 ```
 
 ## Core Components

@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: MIT
-# Copyright (c) 2026 friday_gemini_ai
+# Copyright (c) 2026 vesper
 
 ---
 name: Publish Gem to GitHub Packages
@@ -143,10 +143,10 @@ jobs:
         run: |
           if gem list -r -e friday_gemini_ai | grep -q "${{ inputs.version }}"; then
             echo "exists=true" >> $GITHUB_OUTPUT
-            echo "⚠️  Version ${{ inputs.version }} already exists on RubyGems"
+            echo "Version ${{ inputs.version }} already exists on RubyGems"
           else
             echo "exists=false" >> $GITHUB_OUTPUT
-            echo "✅ Version ${{ inputs.version }} is new, proceeding with publish"
+            echo "Version ${{ inputs.version }} is new, proceeding with publish"
           fi
 
       - name: Publish to RubyGems
@@ -157,6 +157,12 @@ jobs:
           chmod 0600 $HOME/.gem/credentials
           printf -- "---\n:rubygems_api_key: ${RUBYGEMS_API_KEY}\n" > $HOME/.gem/credentials
 
-          gem push *.gem
+          if [ -n "${RUBYGEMS_OTP_CODE}" ]; then
+            echo "::add-mask::${RUBYGEMS_OTP_CODE}"
+            gem push *.gem --otp "${RUBYGEMS_OTP_CODE}"
+          else
+            gem push *.gem
+          fi
         env:
           RUBYGEMS_API_KEY: ${{ secrets.RUBYGEMS_API_KEY }}
+          RUBYGEMS_OTP_CODE: ${{ secrets.RUBYGEMS_OTP }}

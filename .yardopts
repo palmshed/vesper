@@ -1,6 +1,6 @@
 --markup markdown
 --markup-provider redcarpet
---title "Friday Gemini AI - Ruby Client for Google's Gemini AI"
+--title "Vesper - Ruby Client for Google's Gemini AI"
 --output-dir doc
 --files README.md,LICENSE
 --no-private

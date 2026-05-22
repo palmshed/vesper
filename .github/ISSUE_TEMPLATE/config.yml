@@ -1,12 +1,12 @@
 # SPDX-License-Identifier: MIT
-# Copyright (c) 2025 friday_gemini_ai
+# Copyright (c) 2026 vesper
 
 ---
 blank_issues_enabled: true
 contact_links:
   - name: Community Discussions
-    url: https://github.com/bniladridas/friday_gemini_ai/discussions
+    url: https://github.com/bniladridas/vesper/discussions
     about: Ask questions and discuss ideas with the community
   - name: Security Issues
-    url: https://github.com/bniladridas/friday_gemini_ai/security/advisories/new
+    url: https://github.com/bniladridas/vesper/security/advisories/new
     about: Report security vulnerabilities privately

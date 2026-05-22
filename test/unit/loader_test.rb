@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 # SPDX-License-Identifier: MIT
-# Copyright (c) 2026 friday_gemini_ai
+# Copyright (c) 2026 vesper
 
 require 'test_helper'
 require 'tempfile'
@@ -8,7 +8,7 @@ require 'fileutils'
 
 class TestLoader < Minitest::Test
   def setup
-    @temp_dir = Dir.mktmpdir('gemini_ai_test')
+    @temp_dir = Dir.mktmpdir('vesper_test')
     @env_file = File.join(@temp_dir, '.env')
   end
 

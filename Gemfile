@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-# Specify your gem's dependencies in gemini.gemspec
+# Specify your gem's dependencies in friday_gemini_ai.gemspec
 gemspec
 
 # Additional dependencies

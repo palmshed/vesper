@@ -11,13 +11,13 @@ gem install friday_gemini_ai
 Or in Gemfile:
 
 ```ruby
-gem 'friday_gemini_ai'
+gem 'friday_gemini_ai', require: 'vesper'
 ```
 
 ## Quick Start
 
 ```ruby
-require 'friday_gemini_ai'
+require 'vesper'
 
 client = GeminiAI::Client.new
 response = client.generate_text("Hello, world!")

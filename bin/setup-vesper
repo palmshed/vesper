@@ -1,14 +1,14 @@
 #!/bin/bash
 
-# Setup script for HarperBot Workflow Mode
+# Setup script for Vesper Workflow Mode
 # Copies required files to the current repository
 # WARNING: This script downloads and executes code from the internet.
-# Review the source at https://github.com/bniladridas/friday_gemini_ai before running.
+# Review the source at https://github.com/bniladridas/vesper before running.
 
 set -e
 
 # Default source repository
-SOURCE_REPO="${SOURCE_REPO:-https://github.com/bniladridas/friday_gemini_ai.git}"
+SOURCE_REPO="${SOURCE_REPO:-https://github.com/bniladridas/vesper.git}"
 
 # Check for required tools
 if ! command -v git >/dev/null 2>&1; then
@@ -63,7 +63,7 @@ while [[ $# -gt 0 ]]; do
 done
 
 if $UPDATE_MODE; then
-    echo "Update mode selected. This will overwrite existing harperbot directory and .github/workflows/harperbot.yml."
+    echo "Update mode selected. This will overwrite existing vesper directory and .github/workflows/vesper.yml."
     read -p "Are you sure you want to continue? (y/N): " -n 1 -r
     echo
     if [[ ! $REPLY =~ ^[Yy]$ ]]; then
@@ -76,7 +76,7 @@ if $DRY_RUN; then
     echo "Running in dry-run mode. No files will be modified."
 fi
 
-echo "Setting up HarperBot for Workflow Mode..."
+echo "Setting up Vesper for Workflow Mode..."
 if $UPDATE_MODE; then
     echo "Running in update mode: existing files will be overwritten."
 fi
@@ -96,20 +96,20 @@ fi
 rm .test_write_permission
 
 # Check for existing files
-if [ -d "harperbot" ] && ! $UPDATE_MODE; then
-    echo "Error: 'harperbot' directory already exists."
+if [ -d "vesper" ] && ! $UPDATE_MODE; then
+    echo "Error: 'vesper' directory already exists."
     echo "Run with --update to overwrite existing installation, or remove it manually."
     exit 1
 fi
 
-if [ -f ".github/workflows/harperbot.yml" ] && ! $UPDATE_MODE; then
-    echo "Error: '.github/workflows/harperbot.yml' already exists."
+if [ -f ".github/workflows/vesper.yml" ] && ! $UPDATE_MODE; then
+    echo "Error: '.github/workflows/vesper.yml' already exists."
     echo "Run with --update to overwrite existing installation, or remove it manually."
     exit 1
 fi
 
 # Get the source repository URL
-SOURCE_REPO="${SOURCE_REPO:-https://github.com/bniladridas/friday_gemini_ai.git}"
+SOURCE_REPO="${SOURCE_REPO:-https://github.com/bniladridas/vesper.git}"
 
 # Create temporary directory for cloning
 TEMP_DIR=$(mktemp -d)
@@ -117,7 +117,7 @@ TEMP_DIR=$(mktemp -d)
 trap "rm -rf '$TEMP_DIR'" EXIT
 
 echo "Downloading required files from repository..."
-if ! git archive --remote=$SOURCE_REPO HEAD harperbot .github/workflows/harperbot.yml setup-checksums.sha256 | tar -x -C $TEMP_DIR; then
+if ! git archive --remote=$SOURCE_REPO HEAD vesper .github/workflows/vesper.yml setup-checksums.sha256 | tar -x -C $TEMP_DIR; then
     echo "Error: Failed to download files from repository. Falling back to clone method."
     # Fallback to clone method
     if ! git clone --depth 1 --quiet $SOURCE_REPO $TEMP_DIR; then
@@ -134,15 +134,15 @@ if ! sha256sum -c $TEMP_DIR/setup-checksums.sha256; then
 fi
 echo "Integrity check passed."
 
-echo "Copying harperbot directory..."
+echo "Copying vesper directory..."
 if $USE_RSYNC; then
-    if ! rsync -a $TEMP_DIR/harperbot/ ./harperbot/; then
-        echo "Error: Failed to copy harperbot directory with rsync"
+    if ! rsync -a $TEMP_DIR/vesper/ ./vesper/; then
+        echo "Error: Failed to copy vesper directory with rsync"
         exit 1
     fi
 else
-    if ! cp -r $TEMP_DIR/harperbot .; then
-        echo "Error: Failed to copy harperbot directory"
+    if ! cp -r $TEMP_DIR/vesper .; then
+        echo "Error: Failed to copy vesper directory"
         exit 1
     fi
 fi
@@ -154,19 +154,19 @@ if ! mkdir -p .github/workflows; then
 fi
 
 if $USE_RSYNC; then
-    if ! rsync -a $TEMP_DIR/.github/workflows/harperbot.yml .github/workflows/; then
+    if ! rsync -a $TEMP_DIR/.github/workflows/vesper.yml .github/workflows/; then
         echo "Error: Failed to copy workflow file with rsync"
         exit 1
     fi
 else
-    if ! cp $TEMP_DIR/.github/workflows/harperbot.yml .github/workflows/; then
+    if ! cp $TEMP_DIR/.github/workflows/vesper.yml .github/workflows/; then
         echo "Error: Failed to copy workflow file"
         exit 1
     fi
 fi
 else
-    echo "Dry-run: Would copy harperbot directory"
-    echo "Dry-run: Would copy .github/workflows/harperbot.yml"
+    echo "Dry-run: Would copy vesper directory"
+    echo "Dry-run: Would copy .github/workflows/vesper.yml"
     echo "Dry-run: Would verify file integrity"
 fi
 
@@ -176,10 +176,10 @@ if ! $DRY_RUN; then
     echo "Next steps:"
     echo "1. Install Python dependencies: pip install PyGithub python-dotenv PyYAML google-genai"
     echo "2. Set repository secrets: GEMINI_API_KEY"
-    echo "3. Optional: Configure harperbot/config.yaml"
+    echo "3. Optional: Configure vesper/config.yaml"
     echo "4. Push changes and test with a PR"
     echo ""
-    echo "For detailed instructions, see harperbot/HarperBot.md"
+    echo "For detailed instructions, see vesper/Vesper.md"
     echo ""
     echo "NOTE: Workflow Mode is legacy. Consider Webhook Mode for better scalability."
 else

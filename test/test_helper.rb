@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: MIT
-# Copyright (c) 2026 friday_gemini_ai
+# Copyright (c) 2026 vesper
 
 # frozen_string_literal: true
 
@@ -157,7 +157,7 @@ module Minitest
           'Content-Type' => 'application/json',
           'Accept' => '*/*',
           'User-Agent' => 'Ruby',
-          'X-Goog-Api-Client' => %r{gemini_ai_ruby_gem/\d+\.\d+\.\d+}
+          'X-Goog-Api-Client' => %r{vesper_ruby_gem/\d+\.\d+\.\d+}
         }
       )
     end

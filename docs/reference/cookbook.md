@@ -1,6 +1,6 @@
 # Cookbook
 
-Practical recipes and code examples for common Friday Gemini AI use cases.
+Practical recipes and code examples for common Vesper use cases.
 
 ## Content Generation
 
@@ -171,10 +171,10 @@ class QABot
 end
 
 # Usage
-context = "Friday Gemini AI is a Ruby gem for interacting with Google's Gemini AI models."
+context = "Vesper is a Ruby gem for interacting with Google's Gemini AI models."
 bot = QABot.new(context: context)
 
-puts bot.ask("What is Friday Gemini AI?")
+puts bot.ask("What is Vesper?")
 puts bot.ask("How do I install it?")
 puts bot.ask("What models does it support?")
 ```
@@ -183,13 +183,13 @@ puts bot.ask("What models does it support?")
 ```ruby
 class SupportBot
   SUPPORT_CONTEXT = <<~CONTEXT
-    You are a helpful customer support assistant for Friday Gemini AI Ruby gem.
+    You are a helpful customer support assistant for Vesper Ruby gem.
 
     Common issues:
     - API key problems: Check environment variables and key format
     - Rate limiting: Implement exponential backoff
     - Network errors: Check internet connection
-    - Installation issues: Ensure Ruby 2.6+ and proper gem installation
+    - Installation issues: Ensure Ruby 3.1+ and proper gem installation
 
     Always be helpful, polite, and provide specific solutions.
   CONTEXT
@@ -198,7 +198,7 @@ class SupportBot
     @client = GeminiAI::Client.new
     @conversation = [
       { role: 'user', content: SUPPORT_CONTEXT },
-      { role: 'model', content: 'I understand. I\'m ready to help with Friday Gemini AI support questions.' }
+      { role: 'model', content: 'I understand. I\'m ready to help with Vesper support questions.' }
     ]
   end
 
@@ -488,7 +488,7 @@ end
 marketing = MarketingCopyGenerator.new
 
 ad_copy = marketing.generate_ad_copy(
-  product: 'Friday Gemini AI Ruby Gem',
+  product: 'Vesper Ruby Gem',
   audience: 'Ruby developers',
   platform: 'LinkedIn',
   tone: 'technical but approachable'
@@ -730,7 +730,7 @@ RSpec.describe AiContentService do
   end
 end
 
-# spec/support/gemini_ai_helpers.rb
+# spec/support/vesper_helpers.rb
 module GeminiAIHelpers
   def stub_gemini_success(response = 'Test response')
     allow_any_instance_of(GeminiAI::Client).to receive(:generate_text)

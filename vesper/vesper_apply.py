@@ -1,9 +1,9 @@
 # SPDX-License-Identifier: MIT
-# Copyright (c) 2026 friday_gemini_ai
+# Copyright (c) 2026 vesper
 
 """
-HarperBot Apply Module
-Handles user-approved application of code suggestions, committed as HarperBot.
+Vesper Apply Module
+Handles user-approved application of code suggestions, committed as Vesper.
 """
 
 import logging
@@ -17,20 +17,20 @@ try:
 except ImportError:
     pass
 
-# Assuming these are imported from harperbot
-# from harperbot.harperbot import setup_environment_webhook, get_pr_details_webhook, analyze_with_gemini, parse_code_suggestions, apply_suggestions_to_pr
+# Assuming these are imported from vesper
+# from vesper.vesper import setup_environment_webhook, get_pr_details_webhook, analyze_with_gemini, parse_code_suggestions, apply_suggestions_to_pr
 
 
 def handle_apply_comment(installation_id, repo_name, pr_number, commenter_login=None):
     """
-    Handle /apply comment on PR: re-analyze and apply suggestions as HarperBot.
+    Handle /apply comment on PR: re-analyze and apply suggestions as Vesper.
     """
     if not flask_available:
         logging.error("Flask not available for webhook mode")
         return {"error": "Flask not installed"}, 500
 
     try:
-        from harperbot.harperbot import (
+        from vesper.vesper import (
             analyze_with_gemini,
             apply_suggestions_to_pr,
             build_pr_details_from_pr,
@@ -75,7 +75,7 @@ def handle_apply_comment(installation_id, repo_name, pr_number, commenter_login=
         if suggestions:
             apply_suggestions_to_pr(repo, pr, suggestions)
             # Post confirmation comment
-            pr.create_issue_comment("Applied code suggestions from HarperBot analysis.")
+            pr.create_issue_comment("Applied code suggestions from Vesper analysis.")
             logging.info(f"Applied suggestions to PR #{pr_number} via /apply")
         else:
             # No suggestions

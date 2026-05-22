@@ -1,11 +1,11 @@
 # Global code owners
-* @harpertoken @bniladridas
+* @bniladridas
 
 # Core library files
-/lib/ @harpertoken
+/lib/ @bniladridas
 
-# Harper bot and related files
-/.harper/ @harpertoken
+# Vesper automation files
+/vesper/ @bniladridas
 
 # CI/CD and workflows
-/.github/ @harpertoken
+/.github/ @bniladridas

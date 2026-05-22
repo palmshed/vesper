@@ -1,11 +1,11 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 # SPDX-License-Identifier: MIT
-# Copyright (c) 2026 friday_gemini_ai
+# Copyright (c) 2026 vesper
 
 require_relative '../lib/gemini'
 
-puts 'Friday Gemini AI - Final Status Report'
+puts 'Vesper - Final Status Report'
 puts '=' * 50
 
 # Load environment

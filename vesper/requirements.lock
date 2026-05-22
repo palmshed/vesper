@@ -1,7 +1,7 @@
-# Pinned HarperBot Python dependencies (direct + transitive).
+# Pinned Vesper Python dependencies (direct + transitive).
 #
 # Update process:
-# - Use a clean venv, install the HarperBot deps, then `pip freeze` into this file.
+# - Use a clean venv, install the Vesper deps, then `pip freeze` into this file.
 # - Keep the workflow installing from this lock so CI runs are reproducible.
 #
 # Last refreshed: 2026-04-13

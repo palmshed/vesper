@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 # SPDX-License-Identifier: MIT
-# Copyright (c) 2026 friday_gemini_ai
+# Copyright (c) 2026 vesper
 # frozen_string_literal: true
 
 require_relative 'test_helper'

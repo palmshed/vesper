@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: MIT
-# Copyright (c) 2026 friday_gemini_ai
+# Copyright (c) 2026 vesper
 
 ---
 name: Security Scan
@@ -38,7 +38,7 @@ jobs:
       - name: Configure Git and checkout code
         run: |
           # Configure Git safe directories
-          for dir in /__w/friday_gemini_ai /__w/friday_gemini_ai/friday_gemini_ai /github/workspace; do
+          for dir in /__w/vesper /__w/vesper/vesper /github/workspace; do
             git config --global --add safe.directory "$dir" || true
           done
 

@@ -1,6 +1,6 @@
 # Best Practices
 
-Comprehensive guides for getting the most out of Friday Gemini AI.
+Comprehensive guides for getting the most out of Vesper.
 
 > [!IMPORTANT]
 > Following these practices ensures secure, efficient, and reliable use of the Gemini AI API.

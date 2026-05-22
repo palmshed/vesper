@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: MIT
-# Copyright (c) 2026 friday_gemini_ai
+# Copyright (c) 2026 vesper
 
 ---
 name: Release
@@ -117,10 +117,10 @@ jobs:
         run: |
           if gem list -r -e friday_gemini_ai | grep -q "${{ inputs.version }}"; then
             echo "exists=true" >> $GITHUB_OUTPUT
-            echo "⚠️  Version ${{ inputs.version }} already exists on RubyGems"
+            echo "Version ${{ inputs.version }} already exists on RubyGems"
           else
             echo "exists=false" >> $GITHUB_OUTPUT
-            echo "✅ Version ${{ inputs.version }} is new, proceeding with publish"
+            echo "Version ${{ inputs.version }} is new, proceeding with publish"
           fi
 
       - name: Publish to RubyGems

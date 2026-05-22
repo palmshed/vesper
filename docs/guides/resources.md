@@ -1,17 +1,17 @@
 # Resources
 
-Additional resources, links, and references for Friday Gemini AI.
+Additional resources, links, and references for Vesper.
 
 ## Official Documentation
 
 ### Google AI Documentation
-- [Google AI Studio](https://makersuite.google.com/) - Create and manage API keys
+- [Google AI Studio](https://aistudio.google.com/) - Create and manage API keys
 - [Gemini API Documentation](https://ai.google.dev/docs) - Official API reference
 - [Model Documentation](https://ai.google.dev/models/gemini) - Gemini model details
 - [API Pricing](https://ai.google.dev/pricing) - Current pricing information
 
-### Friday Gemini AI Documentation
-- [GitHub Repository](https://github.com/your-username/friday_gemini_ai) - Source code and issues
+### Vesper Documentation
+- [GitHub Repository](https://github.com/bniladridas/vesper) - Source code and issues
 - [RubyGems Page](https://rubygems.org/gems/friday_gemini_ai) - Gem installation and versions
 - [API Reference](../reference/api.md) - Complete method documentation
 - [Usage Guide](../reference/usage.md) - Comprehensive examples
@@ -26,13 +26,13 @@ Additional resources, links, and references for Friday Gemini AI.
 client = OpenAI::Client.new(access_token: "your-token")
 response = client.completions(
   parameters: {
-    model: "text-davinci-003",
+    model: "openai-model",
     prompt: "Hello world",
     max_tokens: 100
   }
 )
 
-# Friday Gemini AI equivalent
+# Vesper equivalent
 client = GeminiAI::Client.new
 response = client.generate_text(
   "Hello world",
@@ -50,7 +50,7 @@ response = client.complete(
   max_tokens_to_sample: 100
 )
 
-# Friday Gemini AI equivalent
+# Vesper equivalent
 client = GeminiAI::Client.new
 messages = [{ role: 'user', content: 'Hello' }]
 response = client.chat(messages, max_tokens: 100)
@@ -76,7 +76,7 @@ request.body = {
 
 response = http.request(request)
 
-# Friday Gemini AI equivalent
+# Vesper equivalent
 client = GeminiAI::Client.new
 response = client.generate_text("Hello")
 ```
@@ -219,7 +219,7 @@ messages = [
 ## Google AI Studio
 
 ### Getting Started
-1. Visit [Google AI Studio](https://makersuite.google.com/)
+1. Visit [Google AI Studio](https://aistudio.google.com/)
 2. Sign in with Google account
 3. Create new project (if needed)
 4. Generate API key
@@ -254,8 +254,8 @@ messages = [
 ### Development Setup
 ```bash
 # Clone repository
-git clone https://github.com/your-username/friday_gemini_ai.git
-cd friday_gemini_ai
+git clone https://github.com/bniladridas/vesper.git
+cd vesper
 
 # Install dependencies
 bundle install

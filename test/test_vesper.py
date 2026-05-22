@@ -1,10 +1,10 @@
 # SPDX-License-Identifier: MIT
-# Copyright (c) 2026 friday_gemini_ai
+# Copyright (c) 2026 vesper
 
 #!/usr/bin/env python3
 """
-Unit tests for HarperBot core functionality.
-Run with: python -m pytest test/test_harperbot.py
+Unit tests for Vesper core functionality.
+Run with: python -m pytest test/test_vesper.py
 """
 
 import os
@@ -12,12 +12,12 @@ import sys
 import unittest
 from unittest.mock import Mock, patch
 
-# Add the repo root to path so we can import `harperbot.*` as a package.
+# Add the repo root to path so we can import `vesper.*` as a package.
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
 from github.GithubException import GithubException  # noqa: E402
 
-from harperbot.harperbot import (  # noqa: E402
+from vesper.vesper import (  # noqa: E402
     analyze_with_gemini,
     apply_suggestions_to_pr,
     create_branch,
@@ -35,8 +35,8 @@ from harperbot.harperbot import (  # noqa: E402
 )
 
 
-class TestHarperBot(unittest.TestCase):
-    """Test cases for HarperBot functionality."""
+class TestVesper(unittest.TestCase):
+    """Test cases for Vesper functionality."""
 
     def test_verify_webhook_signature_valid(self):
         """Test webhook signature verification with valid signature."""
@@ -70,7 +70,7 @@ class TestHarperBot(unittest.TestCase):
             self.assertEqual(config["max_output_tokens"], 8192)
             self.assertIn("prompt", config)  # Should include default prompt
 
-    @patch("harperbot.harperbot.load_config")
+    @patch("vesper.vesper.load_config")
     def test_analyze_with_gemini_success(self, mock_load_config):
         """Test successful Gemini analysis."""
         # Mock config with all required keys
@@ -101,8 +101,8 @@ class TestHarperBot(unittest.TestCase):
         self.assertEqual(result, "Test analysis")
         mock_client.models.generate_content.assert_called_once()
 
-    @patch("harperbot.harperbot.time.sleep", return_value=None)
-    @patch("harperbot.harperbot.load_config")
+    @patch("vesper.vesper.time.sleep", return_value=None)
+    @patch("vesper.vesper.load_config")
     def test_analyze_with_gemini_retries_on_server_error(self, mock_load_config, _mock_sleep):
         """Retries on 5xx and succeeds when API recovers."""
         from google.genai import errors as genai_errors
@@ -138,8 +138,8 @@ class TestHarperBot(unittest.TestCase):
         self.assertEqual(result, "Recovered analysis")
         self.assertEqual(mock_client.models.generate_content.call_count, 3)
 
-    @patch("harperbot.harperbot.time.sleep", return_value=None)
-    @patch("harperbot.harperbot.load_config")
+    @patch("vesper.vesper.time.sleep", return_value=None)
+    @patch("vesper.vesper.load_config")
     def test_analyze_with_gemini_server_error_message_includes_http(self, mock_load_config, _mock_sleep):
         """Server errors return a helpful message with HTTP details."""
         from google.genai import errors as genai_errors
@@ -168,7 +168,7 @@ class TestHarperBot(unittest.TestCase):
         self.assertIn("api unavailable", result.lower())
         self.assertIn("http 503", result.lower())
 
-    @patch("harperbot.harperbot.load_config")
+    @patch("vesper.vesper.load_config")
     def test_analyze_with_gemini_prompt_backcompat_files_diff(self, mock_load_config):
         """Supports legacy {files}/{diff} placeholders in prompt templates."""
         mock_load_config.return_value = {
@@ -200,7 +200,7 @@ class TestHarperBot(unittest.TestCase):
         self.assertIn("Diff:", kwargs["contents"])
         self.assertIn("test diff", kwargs["contents"])
 
-    @patch("harperbot.harperbot.load_config")
+    @patch("vesper.vesper.load_config")
     def test_analyze_with_gemini_keeps_large_response_with_8k_output_budget(self, mock_load_config):
         """An 8k-token output budget should not be cut off by the sanitizer's char cap."""
         mock_load_config.return_value = {
@@ -297,52 +297,52 @@ class TestHarperBot(unittest.TestCase):
         self.assertIsNone(result)
 
     def test_format_comment_does_not_add_hr(self):
-        """HarperBot comment should not add extra decorations."""
-        from harperbot.harperbot import format_comment
+        """Vesper comment should not add extra decorations."""
+        from vesper.vesper import format_comment
 
         formatted = format_comment("hello")
         self.assertNotIn("\n---", formatted)
         self.assertNotIn("badge.svg", formatted)
 
     def test_format_comment_with_sha(self):
-        """HarperBot comment should include SHA marker when provided."""
-        from harperbot.harperbot import format_comment
+        """Vesper comment should include SHA marker when provided."""
+        from vesper.vesper import format_comment
 
         formatted = format_comment("analysis content", sha="abc123")
-        self.assertIn("harperbot-sha: abc123", formatted)
+        self.assertIn("vesper-sha: abc123", formatted)
         self.assertIn("<details>", formatted)
         self.assertIn("analysis content", formatted)
 
     def test_format_comment_without_sha(self):
-        """HarperBot comment should not include SHA marker when not provided."""
-        from harperbot.harperbot import format_comment
+        """Vesper comment should not include SHA marker when not provided."""
+        from vesper.vesper import format_comment
 
         formatted = format_comment("analysis content")
-        self.assertNotIn("harperbot-sha:", formatted)
+        self.assertNotIn("vesper-sha:", formatted)
         self.assertIn("<details>", formatted)
         self.assertIn("analysis content", formatted)
 
     def test_format_notice_includes_warning(self):
         """Notice comment should include warning emoji and title."""
-        from harperbot.harperbot import format_notice
+        from vesper.vesper import format_notice
 
         formatted = format_notice("Test Title", "Test details")
-        self.assertIn("⚠️ **HarperBot Notice: Test Title**", formatted)
+        self.assertIn("⚠️ **Vesper Notice: Test Title**", formatted)
         self.assertIn("Test details", formatted)
 
     def test_format_notice_does_not_include_sha_marker(self):
         """Notice comment should NOT include SHA marker (format_notice no longer accepts sha parameter)."""
-        from harperbot.harperbot import format_notice
+        from vesper.vesper import format_notice
 
         formatted = format_notice("Test Title", "Test details")
-        self.assertNotIn("harperbot-sha:", formatted)
-        self.assertIn("⚠️ **HarperBot Notice: Test Title**", formatted)
+        self.assertNotIn("vesper-sha:", formatted)
+        self.assertIn("⚠️ **Vesper Notice: Test Title**", formatted)
         self.assertIn("Test details", formatted)
 
-    @patch("harperbot.harperbot.post_comment_webhook")
-    @patch("harperbot.harperbot.analyze_with_gemini")
-    @patch("harperbot.harperbot.get_pr_details_webhook")
-    @patch("harperbot.harperbot.setup_environment_webhook")
+    @patch("vesper.vesper.post_comment_webhook")
+    @patch("vesper.vesper.analyze_with_gemini")
+    @patch("vesper.vesper.get_pr_details_webhook")
+    @patch("vesper.vesper.setup_environment_webhook")
     def test_run_analysis_for_pr_skips_when_sha_already_commented(
         self,
         mock_setup_env,
@@ -355,7 +355,7 @@ class TestHarperBot(unittest.TestCase):
         repo = Mock()
         pr = Mock()
         comment = Mock()
-        comment.body = "hello\nharperbot-sha: deadbeef\n"
+        comment.body = "hello\nvesper-sha: deadbeef\n"
         pr.get_issue_comments.return_value = [comment]
         repo.get_pull.return_value = pr
         g.get_repo.return_value = repo
@@ -373,10 +373,10 @@ class TestHarperBot(unittest.TestCase):
         mock_analyze.assert_not_called()
         mock_post_comment.assert_not_called()
 
-    @patch("harperbot.harperbot.time.time")
-    @patch("harperbot.harperbot.analyze_with_gemini")
-    @patch("harperbot.harperbot.get_pr_details_webhook")
-    @patch("harperbot.harperbot.setup_environment_webhook")
+    @patch("vesper.vesper.time.time")
+    @patch("vesper.vesper.analyze_with_gemini")
+    @patch("vesper.vesper.get_pr_details_webhook")
+    @patch("vesper.vesper.setup_environment_webhook")
     def test_run_analysis_for_pr_skips_when_quota_cooldown_active(
         self,
         mock_setup_env,
@@ -395,7 +395,7 @@ class TestHarperBot(unittest.TestCase):
         issue.get_labels.return_value = [label]
 
         comment = Mock()
-        comment.body = "<!-- harperbot-quota-until: 2000 -->"
+        comment.body = "<!-- vesper-quota-until: 2000 -->"
         pr.get_issue_comments.return_value = [comment]
 
         repo.get_issue.return_value = issue
@@ -414,10 +414,10 @@ class TestHarperBot(unittest.TestCase):
 
         mock_analyze.assert_not_called()
 
-    @patch("harperbot.harperbot.post_comment_webhook")
-    @patch("harperbot.harperbot.analyze_with_gemini")
-    @patch("harperbot.harperbot.get_pr_details_webhook")
-    @patch("harperbot.harperbot.setup_environment_webhook")
+    @patch("vesper.vesper.post_comment_webhook")
+    @patch("vesper.vesper.analyze_with_gemini")
+    @patch("vesper.vesper.get_pr_details_webhook")
+    @patch("vesper.vesper.setup_environment_webhook")
     def test_run_analysis_for_pr_force_reruns_even_with_existing_sha_comment(
         self,
         mock_setup_env,
@@ -430,7 +430,7 @@ class TestHarperBot(unittest.TestCase):
         repo = Mock()
         pr = Mock()
         comment = Mock()
-        comment.body = "hello\nharperbot-sha: deadbeef\n"
+        comment.body = "hello\nvesper-sha: deadbeef\n"
         pr.get_issue_comments.return_value = [comment]
         repo.get_pull.return_value = pr
         g.get_repo.return_value = repo
@@ -454,11 +454,11 @@ class TestHarperBot(unittest.TestCase):
         self.assertTrue(is_quota_exceeded_message("rate limit hit, try later"))
         self.assertFalse(is_quota_exceeded_message("all good"))
 
-    @patch("harperbot.harperbot.post_notice_comment")
-    @patch("harperbot.harperbot.analyze_with_gemini")
-    @patch("harperbot.harperbot.get_pr_details_webhook")
-    @patch("harperbot.harperbot.setup_environment_webhook")
-    @patch("harperbot.harperbot.time.time")
+    @patch("vesper.vesper.post_notice_comment")
+    @patch("vesper.vesper.analyze_with_gemini")
+    @patch("vesper.vesper.get_pr_details_webhook")
+    @patch("vesper.vesper.setup_environment_webhook")
+    @patch("vesper.vesper.time.time")
     def test_run_analysis_for_pr_posts_quota_notice_and_skips_comment_webhook(
         self,
         mock_time,
@@ -478,13 +478,13 @@ class TestHarperBot(unittest.TestCase):
         }
         mock_analyze.return_value = "Error generating analysis: API quota exceeded."
 
-        with patch("harperbot.harperbot.post_comment_webhook") as mock_post_comment:
+        with patch("vesper.vesper.post_comment_webhook") as mock_post_comment:
             run_analysis_for_pr(123, "o/r", 1, force=True)
             mock_post_comment.assert_not_called()
 
         mock_post_notice.assert_called_once()
 
-    @patch("harperbot.harperbot.requests.get")
+    @patch("vesper.vesper.requests.get")
     def test_get_pr_details_webhook_uses_auth_header_when_token_provided(self, mock_get):
         g = Mock()
         repo = Mock()
@@ -502,7 +502,7 @@ class TestHarperBot(unittest.TestCase):
         self.assertIn("Authorization", kwargs["headers"])
         self.assertEqual(kwargs["headers"]["Authorization"], "token inst-token")
 
-    @patch("harperbot.harperbot.requests.get")
+    @patch("vesper.vesper.requests.get")
     def test_fetch_pr_diff_returns_empty_on_non_200(self, mock_get):
         response = Mock()
         response.status_code = 403
@@ -523,7 +523,7 @@ class TestHarperBot(unittest.TestCase):
         pr.create_review.assert_called_once()
         _args, kwargs = pr.create_review.call_args
         self.assertEqual(kwargs["event"], "COMMENT")
-        self.assertIn("harperbot-sha: deadbeef", kwargs["body"])
+        self.assertIn("vesper-sha: deadbeef", kwargs["body"])
 
     def test_post_inline_suggestions_uses_line_based_comments_first(self):
         """Inline suggestions default to modern line-based review comments."""
@@ -553,9 +553,9 @@ class TestHarperBot(unittest.TestCase):
         self.assertEqual(kwargs["comments"][0]["line"], 1)
         self.assertEqual(kwargs["comments"][0]["side"], "RIGHT")
 
-    @patch("harperbot.harperbot.post_inline_suggestions")
-    @patch("harperbot.harperbot.Github")
-    @patch("harperbot.harperbot.load_config")
+    @patch("vesper.vesper.post_inline_suggestions")
+    @patch("vesper.vesper.Github")
+    @patch("vesper.vesper.load_config")
     def test_post_comment_webhook_force_review_from_config(self, mock_load_config, mock_github, mock_post_inline):
         """Config can opt-in to reposting reviews on manual /analyze."""
         mock_load_config.return_value = {
@@ -578,9 +578,9 @@ class TestHarperBot(unittest.TestCase):
         _args, kwargs = mock_post_inline.call_args
         self.assertTrue(kwargs["force_review"])
 
-    @patch("harperbot.harperbot.post_inline_suggestions")
-    @patch("harperbot.harperbot.Github")
-    @patch("harperbot.harperbot.load_config")
+    @patch("vesper.vesper.post_inline_suggestions")
+    @patch("vesper.vesper.Github")
+    @patch("vesper.vesper.load_config")
     def test_post_comment_webhook_force_review_explicit_arg(self, mock_load_config, mock_github, mock_post_inline):
         """Explicit force_review argument always wins."""
         mock_load_config.return_value = {
@@ -603,25 +603,25 @@ class TestHarperBot(unittest.TestCase):
         _args, kwargs = mock_post_inline.call_args
         self.assertTrue(kwargs["force_review"])
 
-    @patch("harperbot.harperbot.handle_merge_command")
-    @patch("harperbot.harperbot.handle_apply_comment")
-    @patch("harperbot.harperbot.run_analysis_for_pr")
+    @patch("vesper.vesper.handle_merge_command")
+    @patch("vesper.vesper.handle_apply_comment")
+    @patch("vesper.vesper.run_analysis_for_pr")
     def test_handle_pr_comment_command_dispatches_analyze(self, mock_run_analysis, _mock_apply, _mock_merge):
         result = handle_pr_comment_command(123, "o/r", 1, "/analyze", "alice")
         self.assertEqual(result, ({"status": "ok"}, 200))
         mock_run_analysis.assert_called_once_with(123, "o/r", 1, force=True, force_review=False)
 
-    @patch("harperbot.harperbot.handle_merge_command")
-    @patch("harperbot.harperbot.handle_apply_comment")
-    @patch("harperbot.harperbot.run_analysis_for_pr")
+    @patch("vesper.vesper.handle_merge_command")
+    @patch("vesper.vesper.handle_apply_comment")
+    @patch("vesper.vesper.run_analysis_for_pr")
     def test_handle_pr_comment_command_dispatches_analyze_force_review(self, mock_run_analysis, _mock_apply, _mock_merge):
         result = handle_pr_comment_command(123, "o/r", 1, "/analyze --force-review", "alice")
         self.assertEqual(result, ({"status": "ok"}, 200))
         mock_run_analysis.assert_called_once_with(123, "o/r", 1, force=True, force_review=True)
 
-    @patch("harperbot.harperbot.handle_merge_command")
-    @patch("harperbot.harperbot.handle_apply_comment")
-    @patch("harperbot.harperbot.run_analysis_for_pr")
+    @patch("vesper.vesper.handle_merge_command")
+    @patch("vesper.vesper.handle_apply_comment")
+    @patch("vesper.vesper.run_analysis_for_pr")
     def test_handle_pr_comment_command_dispatches_merge(self, mock_run_analysis, mock_apply, mock_merge):
         mock_merge.return_value = {"status": "merged"}
         result = handle_pr_comment_command(123, "o/r", 1, " /merge ", "alice")
@@ -630,10 +630,10 @@ class TestHarperBot(unittest.TestCase):
         mock_run_analysis.assert_not_called()
         mock_apply.assert_not_called()
 
-    @patch("harperbot.harperbot.jsonify", side_effect=lambda payload: payload)
-    @patch("harperbot.harperbot.setup_environment_webhook")
+    @patch("vesper.vesper.jsonify", side_effect=lambda payload: payload)
+    @patch("vesper.vesper.setup_environment_webhook")
     def test_handle_merge_command_rebase_405_returns_notice_not_500(self, mock_setup_env, _mock_jsonify):
-        from harperbot.harperbot import handle_merge_command
+        from vesper.vesper import handle_merge_command
 
         g = Mock()
         repo = Mock()
@@ -658,10 +658,10 @@ class TestHarperBot(unittest.TestCase):
         body = pr.create_issue_comment.call_args[0][0]
         self.assertIn("Merge method not allowed", body)
 
-    @patch("harperbot.harperbot.jsonify", side_effect=lambda payload: payload)
-    @patch("harperbot.harperbot.setup_environment_webhook")
+    @patch("vesper.vesper.jsonify", side_effect=lambda payload: payload)
+    @patch("vesper.vesper.setup_environment_webhook")
     def test_handle_merge_command_blocks_non_collaborator_lookup_failure(self, mock_setup_env, _mock_jsonify):
-        from harperbot.harperbot import handle_merge_command
+        from vesper.vesper import handle_merge_command
 
         g = Mock()
         repo = Mock()
@@ -677,16 +677,16 @@ class TestHarperBot(unittest.TestCase):
         self.assertEqual(payload["status"], "forbidden")
         pr.create_issue_comment.assert_called_once()
 
-    @patch("harperbot.harperbot.post_notice_comment")
-    @patch("harperbot.harperbot.setup_environment_webhook")
+    @patch("vesper.vesper.post_notice_comment")
+    @patch("vesper.vesper.setup_environment_webhook")
     def test_handle_pr_comment_command_help_posts_notice(self, mock_setup_env, mock_post_notice):
         mock_setup_env.return_value = (Mock(), "token", Mock())
         result = handle_pr_comment_command(123, "o/r", 1, "/help", "alice")
         self.assertEqual(result, ({"status": "ok"}, 200))
         mock_post_notice.assert_called_once()
 
-    @patch("harperbot.harperbot.post_notice_comment")
-    @patch("harperbot.harperbot.setup_environment_webhook")
+    @patch("vesper.vesper.post_notice_comment")
+    @patch("vesper.vesper.setup_environment_webhook")
     def test_handle_pr_comment_command_pause_adds_label(self, mock_setup_env, mock_post_notice):
         g = Mock()
         repo = Mock()
@@ -702,9 +702,9 @@ class TestHarperBot(unittest.TestCase):
         issue.add_to_labels.assert_called_once()
         mock_post_notice.assert_called_once()
 
-    @patch("harperbot.harperbot.ensure_label_exists")
-    @patch("harperbot.harperbot.post_notice_comment")
-    @patch("harperbot.harperbot.setup_environment_webhook")
+    @patch("vesper.vesper.ensure_label_exists")
+    @patch("vesper.vesper.post_notice_comment")
+    @patch("vesper.vesper.setup_environment_webhook")
     def test_handle_pr_comment_command_pause_creates_label_if_missing(
         self, mock_setup_env, mock_post_notice, mock_ensure_label
     ):
@@ -727,8 +727,8 @@ class TestHarperBot(unittest.TestCase):
         self.assertEqual(issue.add_to_labels.call_count, 2)
         mock_post_notice.assert_called_once()
 
-    @patch("harperbot.harperbot.post_notice_comment")
-    @patch("harperbot.harperbot.setup_environment_webhook")
+    @patch("vesper.vesper.post_notice_comment")
+    @patch("vesper.vesper.setup_environment_webhook")
     def test_handle_pr_comment_command_resume_removes_label(self, mock_setup_env, mock_post_notice):
         g = Mock()
         repo = Mock()
@@ -736,7 +736,7 @@ class TestHarperBot(unittest.TestCase):
         g.get_repo.return_value = repo
         repo.get_issue.return_value = issue
         paused_label = Mock()
-        paused_label.name = "harperbot:paused"
+        paused_label.name = "vesper:paused"
         issue.get_labels.return_value = [paused_label]
         mock_setup_env.return_value = (g, "token", Mock())
 
@@ -746,8 +746,8 @@ class TestHarperBot(unittest.TestCase):
         issue.remove_from_labels.assert_called_once()
         mock_post_notice.assert_called_once()
 
-    @patch("harperbot.harperbot.post_notice_comment")
-    @patch("harperbot.harperbot.setup_environment_webhook")
+    @patch("vesper.vesper.post_notice_comment")
+    @patch("vesper.vesper.setup_environment_webhook")
     @patch.dict(
         "os.environ",
         {"VERCEL_GIT_COMMIT_SHA": "0123456789abcdef", "VERCEL_GIT_COMMIT_REF": "main"},
@@ -779,7 +779,7 @@ class TestHarperBot(unittest.TestCase):
         # Paused
         mock_post_notice.reset_mock()
         paused_label = Mock()
-        paused_label.name = "harperbot:paused"
+        paused_label.name = "vesper:paused"
         issue.get_labels.return_value = [paused_label]
 
         result = handle_pr_comment_command(123, "o/r", 1, "/status", "alice")
@@ -807,7 +807,7 @@ class TestHarperBot(unittest.TestCase):
         position = find_diff_position(diff, "test.py", 2)
         self.assertEqual(position, 3)
 
-    @patch("harperbot.harperbot.load_config")
+    @patch("vesper.vesper.load_config")
     def test_load_config_with_authoring_defaults(self, mock_load_config):
         """Test loading config with authoring defaults."""
         with patch("os.path.exists", return_value=False):
@@ -817,7 +817,7 @@ class TestHarperBot(unittest.TestCase):
             self.assertFalse(config["create_improvement_prs"])
             self.assertEqual(
                 config["improvement_branch_pattern"],
-                "harperbot-improvements-{timestamp}",
+                "vesper-improvements-{timestamp}",
             )
 
     def test_create_branch_success(self):

@@ -1,13 +1,14 @@
 # SPDX-License-Identifier: MIT
-# Copyright (c) 2026 friday_gemini_ai
+# Copyright (c) 2026 vesper
 """
-RAG (Retrieval Augmented Generation) module for HarperBot.
+RAG (Retrieval Augmented Generation) module for Vesper.
 Fetches current context from various sources to supplement AI knowledge.
 """
 
 import logging
 import os
 import re
+from datetime import datetime, timezone
 
 import requests
 
@@ -215,7 +216,7 @@ def fetch_weather(location):
 def fetch_reddit_discussions(query):
     """Fetch Reddit discussions using Reddit API."""
     try:
-        headers = {"User-Agent": "HarperBot/1.0"}
+        headers = {"User-Agent": "Vesper/1.0"}
         resp = requests.get(
             "https://www.reddit.com/search.json",
             params={"q": query, "limit": 5, "sort": "relevance"},
@@ -1449,7 +1450,8 @@ def fetch_rag_context(pr_details, config):
     github_token = config.get("rag_github_token", "") or os.getenv("GITHUB_TOKEN")
 
     context_parts = []
-    context_parts.append("## Current Context (April 2026)")
+    context_month = datetime.now(timezone.utc).strftime("%B %Y")
+    context_parts.append(f"## Current Context ({context_month})")
     context_parts.append("")
 
     if "pypi" in sources:

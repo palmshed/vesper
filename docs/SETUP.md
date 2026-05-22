@@ -5,7 +5,7 @@
 ### For Development
 
 1. **Get your Gemini API Key:**
-   - Visit [Google AI Studio](https://makersuite.google.com/app/apikey)
+   - Visit [Google AI Studio](https://aistudio.google.com/app/apikey)
    - Create a new API key
    - Copy the key (it should start with `AIza`)
 

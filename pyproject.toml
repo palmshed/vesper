@@ -3,7 +3,7 @@ requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "harperbot"
+name = "vesper"
 version = "0.1.0"
 description = "GitHub PR Bot with Gemini AI"
 readme = "README.md"
@@ -18,8 +18,8 @@ dependencies = [
 ]
 
 [project.scripts]
-harperbot = "harperbot.harperbot:main"
+vesper = "vesper.vesper:main"
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["harperbot*"]
+include = ["vesper*"]

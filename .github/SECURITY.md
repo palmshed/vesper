@@ -1,156 +1,35 @@
-# Security Policy
+# Security
+
+Security reports should be handled privately.
+
+Please do not open a public issue for a vulnerability. Use GitHub Security Advisories instead:
+
+https://github.com/bniladridas/vesper/security/advisories/new
+
+If that is not available, contact the maintainer through GitHub with enough context to start triage.
 
 ## Supported Versions
 
-We actively support the following versions of Friday Gemini AI with security updates:
+Security fixes target the latest released version and the current `main` branch. Older releases may receive fixes when the change is small and the affected version is still practical to patch.
 
-| Version | Supported          | Security Updates Until |
-| ------- | ------------------ | ---------------------- |
-| 0.2.x   | :white_check_mark: | TBD                    |
-| 0.1.x   | :warning:          | 2025-12-31             |
+## Reports
 
-> :warning: Version 0.1.x will reach end of security support on December 31, 2025.
+A useful report explains the affected version, environment, impact, and reproduction steps. A small proof of concept is helpful when it is safe to share privately.
 
-## Reporting a Vulnerability
+Please include any known workaround if one exists. If you have a suggested fix, include it as context, but do not open a public pull request before the issue is triaged.
 
-We take security vulnerabilities very seriously. If you discover a security issue in our codebase, we appreciate your help in disclosing it to us in a responsible manner.
+## Handling
 
-### Private Disclosure Process
+Reports are reviewed privately. The fix is prepared, tested, and released before public disclosure when disclosure is needed.
 
-**IMPORTANT**: Do not report security issues through public GitHub issues, discussions, or other public channels.
+Security updates are released as patch versions when possible. Users should run the latest patch version available for their chosen release line.
 
-Please report security issues by creating a new security advisory in our GitHub repository. This ensures proper tracking and handling of security reports.
+## Project Practices
 
-### What to Include in Your Report
+API keys should stay in environment variables or a secret manager. The project masks keys in logs, avoids committing local config, and uses dependency and secret scanning in CI.
 
-To help us triage and fix the issue, please include the following information:
+Use `bundle audit` when dependencies change:
 
-1. **Project Information**
-    - Affected component/package
-    - Version number(s) affected
-    - Environment details (OS, Ruby version, etc.)
-
-2. **Vulnerability Details**
-    - Type of vulnerability (XSS, CSRF, RCE, etc.)
-    - Step-by-step instructions to reproduce
-    - Impact of the vulnerability
-    - Any potential workarounds
-
-3. **Additional Context**
-    - Proof of concept (if available)
-    - Suggested fixes or mitigation strategies
-    - Any related CVEs or references
-
-### Our Security Process
-
-1. **Initial Response**
-    - We will acknowledge receipt of your report within 48 hours
-    - We will assign a severity level based on CVSS scoring
-
-2. **Investigation**
-    - Our security team will investigate the report
-    - We may request additional information
-
-3. **Resolution**
-    - We will develop and test a fix
-    - The fix will be released according to our severity-based timeline
-
-### Response Timelines
-
-| Severity | Initial Response | Fix Release | Public Disclosure |
-|----------|------------------|-------------|-------------------|
-| Critical | 24 hours | 1-3 days | After patch available |
-| High     | 48 hours | 1-2 weeks | After patch available |
-| Medium   | 72 hours | Next release | Next release notes |
-| Low      | 5 days   | Next release | Next release notes |
-
-### Security Updates
-
-Security updates are typically released as patch versions (e.g., 1.2.3 → 1.2.4). We recommend always using the latest patch version of your chosen minor version.
-
-### Recognition
-
-We believe in giving credit where it's due. Security researchers who report valid vulnerabilities will be:
-- Thanked in our release notes (unless you prefer to remain anonymous)
-- Listed in our SECURITY.md file (if you wish)
-- Eligible for our Security Hall of Fame
-
-### Security Advisories
-
-For the latest security advisories, please check our [GitHub Security Advisories](https://github.com/bniladridas/friday_gemini_ai/security/advisories) page.
-
----
-
-*Last Updated: 2025-08-31*
-
----
-
-### Security Hall of Fame
-
-We would like to thank the following individuals for their responsible disclosure of security issues:
-
-- [Your name could be here!]
-
-We appreciate security researchers who help keep our users safe. With your permission, we'll:
-- Credit you in the security advisory
-- Include you in our acknowledgments
-- Provide updates on the fix progress
-
-## Security Best Practices
-
-### For Users
-
-1. **API Key Security**
-    - Never commit API keys to version control
-    - Use environment variables or secure key management
-    - Rotate keys regularly
-    - Use least-privilege access
-
-2. **Dependencies**
-    - Keep the gem updated to the latest version
-    - Monitor for security advisories
-    - Use `bundle audit` to check for vulnerabilities
-
-3. **Input Validation**
-    - Validate and sanitize user inputs before sending to AI
-    - Be cautious with user-generated prompts
-    - Implement rate limiting for API calls
-
-### For Developers
-
-1. **Code Security**
-    - Follow secure coding practices
-    - Validate all inputs
-    - Use parameterized queries
-    - Implement proper error handling
-
-2. **Dependencies**
-    - Regularly update dependencies
-    - Use `bundler-audit` in CI/CD
-    - Monitor security advisories
-
-## Security Features
-
-- **API Key Masking**: Keys are automatically masked in logs
-- **Input Validation**: Prompts are validated before sending
-- **Error Handling**: Secure error messages without sensitive data
-- **HTTPS Only**: All API communications use HTTPS
-- **Timeout Protection**: Prevents hanging requests
-
-## Vulnerability Disclosure Policy
-
-We follow responsible disclosure practices:
-
-1. **Investigation**: We investigate all reports promptly
-2. **Confirmation**: We confirm vulnerabilities and assess impact
-3. **Fix Development**: We develop and test fixes
-4. **Coordinated Release**: We coordinate release with reporter
-5. **Public Disclosure**: We publish security advisories after fixes
-
-## Contact
-
-For all security-related concerns, please use GitHub's security advisory feature:
-- Open a new security advisory at: https://github.com/bniladridas/friday_gemini_ai/security/advisories/new
-- Or contact the maintainers through GitHub
-
-Thank you for helping keep Friday Gemini AI secure!
+```bash
+bundle exec bundle-audit
+```

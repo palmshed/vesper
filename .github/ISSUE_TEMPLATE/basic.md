@@ -1,52 +1,22 @@
 ---
 name: Issue
-about: Report a bug or request a feature
+about: Report a bug or suggest a small change
 title: ''
 labels: ''
 assignees: ''
 
 ---
 
-## Type of Issue/Request
-- [ ] Bug Report
-- [ ] Feature Request
-- [ ] Documentation Improvement
-- [ ] Question/Support
-- [ ] Other
+## Summary
 
-## Description
-Brief description of the issue or feature request.
+Describe the issue or request.
 
-### Bug Report Details (if applicable)
-- Steps to reproduce:
-- Expected behavior:
-- Actual behavior:
-- Environment (OS, browser, version):
+## Details
 
-### Feature Request Details (if applicable)
-- Current behavior:
-- Proposed solution:
-- Alternatives considered:
+For bugs, include reproduction steps, expected behavior, actual behavior, Ruby version, Vesper version, and operating system.
 
-## Expected Behavior
-What should happen?
+For feature requests, describe the use case and the smallest change that would solve it.
 
-## Actual Behavior
-What actually happens?
+## Example
 
-## Steps to Reproduce
-1. Step 1
-2. Step 2
-
-## Code Sample
-If applicable, provide a code sample that demonstrates the issue.
-
-## Error Output
-If applicable, include any error messages or output.
-
-## Environment
-- OS:
-- Version:
-
-## Additional Context
-Any other information.
+Include a small code sample, command, or error output when it helps.

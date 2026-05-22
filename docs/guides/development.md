@@ -1,11 +1,11 @@
 # Development Guide
 
-This guide covers the setup and development of the Friday Gemini AI Ruby gem.
+This guide covers the setup and development of the Vesper Ruby gem.
 
 ## Local Development Setup
 
 ### Prerequisites
-1. Ruby 3.0+ (check `.ruby-version` for exact version)
+1. Ruby 3.1+ (check `.ruby-version` for the local development version)
 2. Bundler (`gem install bundler`)
 3. Git
 4. [GitHub CLI](https://cli.github.com/) (recommended for PR management)
@@ -14,8 +14,8 @@ This guide covers the setup and development of the Friday Gemini AI Ruby gem.
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/bniladridas/friday_gemini_ai.git
-   cd friday_gemini_ai
+   git clone https://github.com/bniladridas/vesper.git
+   cd vesper
    ```
 
 2. Install dependencies:
@@ -43,13 +43,11 @@ bundle exec ruby -Ilib:test test/unit/client_test.rb
 
 ## Linting and Code Style
 
-Code style checking is currently disabled due to CI bundler issues:
+Run RuboCop when changing Ruby code:
 ```bash
-# bundle exec rubocop  # Temporarily disabled
-# bundle exec rubocop -a  # Temporarily disabled
+bundle exec rubocop
+bundle exec rubocop -a
 ```
-
-Note: RuboCop has been temporarily removed from the Gemfile to resolve CI bundler installation issues with native extensions.
 
 ## Development Workflow
 
@@ -79,7 +77,7 @@ The project uses GitHub Actions for CI/CD. Key workflows:
      - Tests on multiple Ruby versions
      - Runs security checks (linting temporarily disabled due to bundler issues)
 
-2. **HarperBot Workflow** (`.harper/harperbot.yml`):
+2. **Vesper Workflow** (`.github/workflows/vesper.yml`):
     - Automated PR analysis and code review
     - Provides intelligent feedback on code quality, security, and performance
     - Uses Gemini AI for comprehensive analysis
@@ -127,8 +125,8 @@ gem install friday_gemini_ai-*.gem
 
 ## Release Process
 
-1. Update the version in `lib/gemini/version.rb`
-2. Update `CHANGELOG.md`
+1. Update the version in `lib/core/version.rb`
+2. Update `docs/CHANGELOG.md` when release notes are needed
 3. Commit changes with message "Bump version to x.y.z"
 4. Create a git tag:
    ```bash

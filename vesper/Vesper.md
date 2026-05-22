@@ -15,22 +15,22 @@ This bot automatically analyzes pull requests using Google's Gemini AI and posts
 ## Setup
 
 1. **GitHub App**
-   Create a GitHub App for HarperBot to post comments as a dedicated bot:
-   - Go to https://github.com/settings/apps (for personal accounts) or your organization's settings to create a new GitHub App.
-   - Create a new GitHub App named "HarperBot"
+   Create a GitHub App for Vesper to post comments as a dedicated bot:
+   - Use the hosted app: https://github.com/apps/vesper-review
+   - If you self-host, create a GitHub App named "Vesper Review" from https://github.com/settings/apps or your organization's settings.
    - Set permissions: Repository permissions - Contents: Read, Issues: Read & Write, Pull requests: Read & Write
    - Generate and download a private key
    - Install the app on your repository
 
 2. **Required Secrets**
     - `GEMINI_API_KEY`: Your Google Gemini API key (global default)
-    - `HARPERBOT_GEMINI_API_KEY`: Optional per-repo override key for HarperBot
-    - `HARPER_BOT_APP_ID`: The App ID from the GitHub App settings
-    - `HARPER_BOT_PRIVATE_KEY`: The private key content (paste the entire .pem file content)
+    - `VESPER_GEMINI_API_KEY`: Optional per-repo override key for Vesper
+    - `VESPER_APP_ID`: The App ID from the GitHub App settings
+    - `VESPER_PRIVATE_KEY`: The private key content (paste the entire .pem file content)
     - `WEBHOOK_SECRET`: A secret string for webhook signature verification (used in webhook mode)
 
 3. **GitHub App Installation (for Webhook Mode)**
-   Install the HarperBot GitHub App on your repository. This is required for the recommended Webhook Mode.
+   Install Vesper Review on your repository. This is required for the recommended Webhook Mode.
 
 ## How It Works
 
@@ -39,17 +39,17 @@ This is the preferred mode for new installations. It uses a centralized deployme
 
 Before deploying, make sure you:
 
-- Install the HarperBot GitHub App and grant it access to the repositories whose PRs you want analyzed.
-- Set the required environment secrets (`GEMINI_API_KEY`, `HARPERBOT_GEMINI_API_KEY` optional, `HARPER_BOT_APP_ID`, `HARPER_BOT_PRIVATE_KEY`, and `WEBHOOK_SECRET`) in your hosting platform (Vercel, Gunicorn host, etc.) so the webhook server can authenticate with Gemini and GitHub.
+- Install Vesper Review and grant it access to the repositories whose PRs you want analyzed.
+- Set the required environment secrets (`GEMINI_API_KEY`, `VESPER_GEMINI_API_KEY` optional, `VESPER_APP_ID`, `VESPER_PRIVATE_KEY`, and `WEBHOOK_SECRET`) in your hosting platform (Vercel, Gunicorn host, etc.) so the webhook server can authenticate with Gemini and GitHub.
 - When you self-host the webhook service outside Vercel, run the Flask app behind a production-grade WSGI server such as Gunicorn; the development server is not designed for production traffic.
 
 ### Workflow Mode (Legacy)
 *This mode is deprecated in favor of Webhook Mode. Support will continue for existing users, but new features and improvements will prioritize Webhook Mode.*
 
-1. Run the setup script: `curl -fsSL https://raw.githubusercontent.com/bniladridas/friday_gemini_ai/main/bin/setup-harperbot | bash`
+1. Run the setup script: `curl -fsSL https://raw.githubusercontent.com/bniladridas/vesper/main/bin/setup-vesper | bash`
    (Use `--update` to update existing, `--dry-run` to preview, `--repo URL` for custom source)
-   Or manually copy `harperbot/` and `.github/workflows/harperbot.yml` to your repository
-2. Set required secrets: `GEMINI_API_KEY`, `HARPER_BOT_APP_ID`, `HARPER_BOT_PRIVATE_KEY`
+   Or manually copy `vesper/` and `.github/workflows/vesper.yml` to your repository
+2. Set required secrets: `GEMINI_API_KEY`, `VESPER_APP_ID`, `VESPER_PRIVATE_KEY`
 3. When a PR is opened/reopened, the workflow runs and posts analysis
 
 ### Webhook Mode (Recommended)
@@ -61,30 +61,30 @@ Before deploying, make sure you:
 Comment `/analyze` on a PR to request a fresh analysis on demand.
 
 ### Manual Apply Command
-Comment `/apply` on a PR to apply HarperBot suggestions as commits (requires `enable_authoring: true` and write/admin permissions).
+Comment `/apply` on a PR to apply Vesper suggestions as commits (requires `enable_authoring: true` and write/admin permissions).
 
 ### Manual Merge Commands
-Comment one of the following on a PR to merge via HarperBot (requires write/admin permissions):
+Comment one of the following on a PR to merge via Vesper (requires write/admin permissions):
 - `/merge`
 - `/squash`
 - `/rebase`
 
 ### Help & Notices
-- Comment `/help` to see HarperBot capabilities.
-- HarperBot posts **Notice** comments when something unusual happens (no files, empty diff, missing analysis output, permission issues, not mergeable, merge failures).
+- Comment `/help` to see Vesper capabilities.
+- Vesper posts **Notice** comments when something unusual happens (no files, empty diff, missing analysis output, permission issues, not mergeable, merge failures).
 
 ### CLI Mode
-Run manually: `python harperbot/harperbot.py --repo owner/repo --pr 123`
+Run manually: `python vesper/vesper.py --repo owner/repo --pr 123`
 
 *Note: The local webhook server uses Flask's development server, suitable for testing. For production self-hosting outside Vercel, use a WSGI server like Gunicorn.*
 
 ## RAG (Retrieval Augmented Generation)
 
-HarperBot includes a comprehensive RAG system that fetches current context from 90+ sources to supplement AI knowledge beyond its training cutoff (May 2024).
+Vesper includes a comprehensive RAG system that fetches current context from 90+ sources to supplement the model with up-to-date package, security, documentation, and ecosystem information.
 
 ### Enable RAG
 
-Edit `harperbot/config.yaml`:
+Edit `vesper/config.yaml`:
 
 ```yaml
 enable_rag: true
@@ -128,7 +128,7 @@ WEATHER_LOCATION=        # Default: "San Francisco"
 
 1. **Extract dependencies** from changed files (Python, Node.js, Rust, Go, Docker, etc.)
 2. **Fetch current context** from configured sources (latest versions, docs, security advisories, tutorials)
-3. **Prepend context** to AI prompt with timestamp "April 2026"
+3. **Prepend context** to AI prompt with a current timestamp
 4. **Model receives** up-to-date information about dependencies, best practices, and related resources
 
 ## Migration from Workflow Mode to Webhook Mode
@@ -145,12 +145,12 @@ Webhook Mode is recommended for better scalability and ease of management. Benef
 1. **Deploy to Vercel**:
    - Fork this repository
    - Connect to Vercel and deploy the `webhook-vercel` branch
-   - Set environment variables: `GEMINI_API_KEY`, `HARPER_BOT_APP_ID`, `HARPER_BOT_PRIVATE_KEY`, `WEBHOOK_SECRET`
+   - Set environment variables: `GEMINI_API_KEY`, `VESPER_APP_ID`, `VESPER_PRIVATE_KEY`, `WEBHOOK_SECRET`
 
 2. **Install GitHub App**:
-   - Install the HarperBot GitHub App on your repositories
+   - Install Vesper Review on your repositories
    - Remove repository-specific secrets and workflow files if desired
-    - While configuring the app, subscribe to the **Pull request**, **Issue comment**, and **Pull request review comment** webhook events so HarperBot sees new PRs, inline review-comment triggers, and `/analyze`/`/apply`/merge commands.
+    - While configuring the app, subscribe to the **Pull request**, **Issue comment**, and **Pull request review comment** webhook events so Vesper sees new PRs, inline review-comment triggers, and `/analyze`/`/apply`/merge commands.
     - If you’re migrating the app between accounts, uninstall the previous installation (Settings → Installed GitHub Apps → Configure → Uninstall) so the retired app no longer receives webhooks or posts comments.
 
 3. **Verify**:
@@ -165,7 +165,7 @@ Webhook Mode is recommended for better scalability and ease of management. Benef
 
 ## Code Authoring Features
 
-HarperBot can now author code changes directly as a contributor to repositories:
+Vesper can now author code changes directly as a contributor to repositories:
 
 ### Auto-Commit Suggestions
 - Automatically applies code suggestions to PR branches
@@ -178,7 +178,7 @@ HarperBot can now author code changes directly as a contributor to repositories:
 - Works alongside existing PR review process
 
 ### Configuration
-Set `enable_authoring: true` in `harperbot/config.yaml` and configure:
+Set `enable_authoring: true` in `vesper/config.yaml` and configure:
 - `auto_commit_suggestions`: Apply suggestions directly to PRs
 - `create_improvement_prs`: Generate improvement PRs
 - `improvement_branch_pattern`: Naming pattern for improvement branches
@@ -188,7 +188,7 @@ Authoring features require write access to repositories. Ensure proper permissio
 
 ## Customization
 
-Modify `harperbot/config.yaml` to adjust:
+Modify `vesper/config.yaml` to adjust:
 - Analysis focus: 'all', 'security', 'performance', 'quality'
 - Gemini model: 'gemini-2.5-flash', 'gemini-2.5-pro'
 - Temperature and token limits

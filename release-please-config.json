@@ -1,7 +1,7 @@
 {
   "packages": {
     ".": {
-      "package-name": "friday_gemini_ai",
+      "package-name": "vesper",
       "changelog-path": "docs/CHANGELOG.md",
       "release-type": "ruby",
       "extra-files": [

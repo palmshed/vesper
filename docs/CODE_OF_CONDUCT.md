@@ -59,7 +59,7 @@ representative at an online or offline event.
 ## Enforcement
 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
-reported through our [GitHub Security Advisory](https://github.com/bniladridas/friday_gemini_ai/security/advisories/new) page.
+reported through our [GitHub Security Advisory](https://github.com/bniladridas/vesper/security/advisories/new) page.
 All complaints will be reviewed and investigated promptly and fairly.
 
 All community leaders are obligated to respect the privacy and security of the

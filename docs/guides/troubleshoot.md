@@ -1,6 +1,6 @@
 # Troubleshooting
 
-Common issues and solutions when using Friday Gemini AI.
+Common issues and solutions when using Vesper.
 
 ## API Key Issues
 
@@ -53,7 +53,7 @@ Common issues and solutions when using Friday Gemini AI.
    ```
 
 2. **Get a new API key**:
-   - Visit [Google AI Studio](https://makersuite.google.com/app/apikey)
+   - Visit [Google AI Studio](https://aistudio.google.com/app/apikey)
    - Create a new API key
    - Copy the complete key
 
@@ -338,7 +338,7 @@ chmod +x bin/gemini
 
 2. **Check gem path**:
    ```bash
-   gem which friday_gemini_ai
+   gem which vesper
    ```
 
 3. **Use bundle if using Gemfile**:
@@ -351,7 +351,7 @@ chmod +x bin/gemini
 
 **Problem**: Ruby version too old.
 
-**Requirements**: Ruby 2.6 or higher
+**Requirements**: Ruby 3.1 or higher
 
 **Solutions**:
 1. **Check Ruby version**:
@@ -443,7 +443,7 @@ Create a minimal script to reproduce the issue:
 ```ruby
 #!/usr/bin/env ruby
 
-require_relative 'src/gemini_ai'
+require_relative 'src/gemini'
 
 begin
   GeminiAI.load_env

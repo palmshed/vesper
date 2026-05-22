@@ -8,7 +8,7 @@ def show_help
     GeminiAI CLI Tool
 
     Usage:
-      gemini_ai [command] [options]
+      gemini [command] [options]
 
     Commands:
       generate <prompt>     Generate text from prompt
@@ -17,9 +17,9 @@ def show_help
       help                  Show this help message
 
     Examples:
-      gemini_ai generate "Write a haiku about Ruby"
-      gemini_ai chat
-      gemini_ai test
+      gemini generate "Write a haiku about Ruby"
+      gemini chat
+      gemini test
   HELP
 end
 
@@ -78,7 +78,7 @@ when 'generate'
     generate_text(ARGV[1])
   else
     puts "Error: Please provide a prompt"
-    puts "Usage: gemini_ai generate \"Your prompt here\""
+    puts "Usage: gemini generate \"Your prompt here\""
     exit 1
   end
 when 'chat'

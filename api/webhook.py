@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: MIT
-# Copyright (c) 2026 friday_gemini_ai
+# Copyright (c) 2026 vesper
 
-from harperbot.harperbot import app
+from vesper.vesper import app
 
 # Export the Flask app for Vercel as 'app' (required for WSGI compatibility)
 # Changed from 'handler = app' to 'app = app' because Vercel expects WSGI apps

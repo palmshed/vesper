@@ -1,9 +1,9 @@
 # SPDX-License-Identifier: MIT
-# Copyright (c) 2026 friday_gemini_ai
+# Copyright (c) 2026 vesper
 
 ---
-# HarperBot Configuration
-# This file configures HarperBot's analysis behavior. Modify these settings to customize the bot's performance and output.
+# Vesper Configuration
+# This file configures Vesper's analysis behavior. Modify these settings to customize the bot's performance and output.
 # Customize the analysis focus and model
 
 # Analysis focus: 'all', 'security', 'performance', 'quality'
@@ -42,7 +42,7 @@ safety_settings:
     threshold: BLOCK_NONE
 
 # Enable code authoring features
-# When enabled, HarperBot can create commits, branches, and PRs with improvements
+# When enabled, Vesper can create commits, branches, and PRs with improvements
 enable_authoring: false
 
 # Auto-commit suggestions to PR branches
@@ -55,7 +55,7 @@ create_improvement_prs: false
 
 # Branch naming pattern for improvement PRs
 # {timestamp} and {pr_number} will be replaced with actual values
-improvement_branch_pattern: "harperbot-improvements-{timestamp}"
+improvement_branch_pattern: "vesper-improvements-{timestamp}"
 
 # Enable RAG (Retrieval Augmented Generation)
 # Fetches current information to supplement model's knowledge cutoff
@@ -100,7 +100,7 @@ rag_github_token: ""
 rag_max_items: 5
 
 # AI analysis prompt template
-# Customize the prompt to change how HarperBot analyzes code
+# Customize the prompt to change how Vesper analyzes code
 prompt: |
   Analyze the following code changes for improvements. Focus on code quality, best practices, performance, and correctness.
 

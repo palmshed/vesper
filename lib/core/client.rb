@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 # SPDX-License-Identifier: MIT
-# Copyright (c) 2026 friday_gemini_ai
+# Copyright (c) 2026 vesper
 
 require 'httparty'
 require 'json'
@@ -213,7 +213,7 @@ module GeminiAI
           body: body.to_json,
           headers: {
             'Content-Type' => 'application/json',
-            'x-goog-api-client' => 'gemini_ai_ruby_gem/0.1.0'
+            'x-goog-api-client' => 'vesper_ruby_gem/0.1.0'
           },
           timeout: 30
         )

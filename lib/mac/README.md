@@ -1,6 +1,6 @@
 # Mac Utils
 
-This module provides macOS-specific utilities for the friday_gemini_ai gem.
+This module provides macOS-specific utilities for the vesper gem.
 
 ## Methods
 

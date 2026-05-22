@@ -1,4 +1,4 @@
-# Gitleaks configuration for Friday Gemini AI
+# Gitleaks configuration for Vesper
 # This file defines rules for detecting sensitive information in the codebase
 
 [extend]

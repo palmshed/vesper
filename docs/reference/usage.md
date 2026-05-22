@@ -1,4 +1,4 @@
-# Friday Gemini AI - Usage Guide
+# Vesper - Usage Guide
 
 ## Getting Started
 
@@ -10,7 +10,7 @@ gem install friday_gemini_ai
 
 ### 2. Get API Key
 
-1. Visit [Google AI Studio](https://makersuite.google.com/app/apikey)
+1. Visit [Google AI Studio](https://aistudio.google.com/app/apikey)
 2. Create a new API key
 3. Set it as environment variable or in .env file
 

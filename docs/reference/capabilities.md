@@ -1,6 +1,6 @@
 # Core Capabilities
 
-Friday Gemini AI provides comprehensive access to Google Gemini's advanced AI capabilities through a Ruby interface.
+Vesper provides comprehensive access to Google Gemini's advanced AI capabilities through a Ruby interface.
 
 ## Text Generation
 
@@ -144,7 +144,7 @@ ruby_code = client.generate_text(
 # For factual accuracy
 factual_client = GeminiAI::Client.new
 factual_response = factual_client.generate_text(
-  "What are the key features of Ruby 3.0?",
+  "What are the key features of Ruby 3.2?",
   temperature: 0.1,   # Low randomness
   top_p: 0.8,        # Focused sampling
   top_k: 20          # Limited vocabulary

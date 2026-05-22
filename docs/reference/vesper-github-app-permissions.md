@@ -1,8 +1,8 @@
-# HarperBot GitHub App Permissions (Webhook Mode)
+# Vesper Review GitHub App Permissions (Webhook Mode)
 
-Use the smallest set of GitHub App permissions needed for HarperBot to review PRs and (optionally) merge them.
+Use the smallest set of GitHub App permissions needed for Vesper to review PRs and (optionally) merge them.
 
-## Recommended (HarperBot can merge PRs)
+## Recommended (Vesper can merge PRs)
 
 | Permission area (GitHub App) | Set to (mark) | Can be unmarked? |
 |---|---:|---:|

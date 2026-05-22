@@ -1,11 +1,11 @@
 # Quickstart
 
-Get started with Friday Gemini AI in minutes.
+Get started with Vesper in minutes.
 
 ## Prerequisites
 
-- Ruby 2.6 or higher
-- Google AI API key from [Google AI Studio](https://makersuite.google.com/app/apikey)
+- Ruby 3.1 or higher
+- Google AI API key from [Google AI Studio](https://aistudio.google.com/app/apikey)
 
 ## Installation
 
@@ -18,15 +18,12 @@ gem install friday_gemini_ai
 Or add to Gemfile:
 
 ```ruby
-gem 'friday_gemini_ai'
+gem 'friday_gemini_ai', require: 'vesper'
 ```
 
 ## Get API Key
 
-1. Visit Google AI Studio
-2. Sign in with Google account
-3. Create API key
-4. Copy the key (starts with `AIza...`)
+Create an API key in [Google AI Studio](https://aistudio.google.com/app/apikey), then keep it outside source control.
 
 ## Setup Environment
 
@@ -43,7 +40,7 @@ Replace with your actual key.
 Create a Ruby file:
 
 ```ruby
-require 'friday_gemini_ai'
+require 'vesper'
 
 client = GeminiAI::Client.new
 response = client.generate_text("Hello, world!")
@@ -58,13 +55,13 @@ ruby your_file.rb
 
 ## Test CLI
 
-Test with CLI:
+Test with the repo CLI:
 
 ```bash
 ./bin/gemini test
 ```
 
-Should show success message.
+It should print a short success response when the API key is valid.
 
 ## Examples
 

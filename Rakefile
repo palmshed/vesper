@@ -96,8 +96,6 @@ task ci: %i[test rubocop] do
   puts 'CI checks completed successfully!'
 end
 
-
-
 # Quick test task
 desc 'Run a simple test to verify the gem is working'
 task :quick_test do
@@ -117,12 +115,6 @@ desc 'Run end-to-end tests (requires GEMINI_API_KEY)'
 task :e2e_test do
   ENV['COVERAGE'] = 'false'
   ruby 'test/e2e/api_e2e.rb'
-end
-
-# Documentation task
-desc 'Generate API documentation'
-task :docs do
-  sh 'yard doc'
 end
 
 # Release task

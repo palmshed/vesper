@@ -1,15 +1,9 @@
 # frozen_string_literal: true
 
-# require 'yard'
-
 namespace :docs do
   desc 'Generate YARD documentation'
   task :generate do
-    YARD::Rake::YardocTask.new do |t|
-      t.files   = ['lib/**/*.rb', 'README.md']
-      t.options = ['--output-dir', 'doc']
-    end
-    puts 'Documentation generated in doc/ directory'
+    sh 'yard doc --output-dir doc "lib/**/*.rb" README.md'
   end
 
   desc 'Start a local documentation server'

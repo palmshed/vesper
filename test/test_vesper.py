@@ -313,6 +313,20 @@ class TestVesper(unittest.TestCase):
         self.assertIn("<details>", formatted)
         self.assertIn("analysis content", formatted)
 
+    def test_format_comment_includes_review_history(self):
+        """Vesper comment can include a quiet reviewed commit table."""
+        from vesper.vesper import format_comment
+
+        formatted = format_comment(
+            "analysis content",
+            sha="abc123",
+            history_rows=[{"sha": "abc1234", "summary": "tighten parser"}],
+        )
+
+        self.assertIn("### Reviewed commits", formatted)
+        self.assertIn("| `abc1234` | tighten parser |", formatted)
+        self.assertIn("analysis content", formatted)
+
     def test_format_comment_without_sha(self):
         """Vesper comment should not include SHA marker when not provided."""
         from vesper.vesper import format_comment
@@ -520,8 +534,8 @@ class TestVesper(unittest.TestCase):
         mock_get.return_value = response
         self.assertEqual(fetch_pr_diff("https://example.invalid/diff", token="t"), "")
 
-    def test_post_inline_suggestions_creates_review_without_inline(self):
-        """When no inline suggestions are valid, still post a review entry."""
+    def test_post_inline_suggestions_skips_review_without_inline(self):
+        """When no inline suggestions are valid, avoid noisy review entries."""
         pr = Mock()
         pr_details = {"head_sha": "deadbeef", "diff": ""}
         repo = Mock()
@@ -530,10 +544,7 @@ class TestVesper(unittest.TestCase):
         pr.get_reviews.return_value = []
         post_inline_suggestions(pr, pr_details, [], g=Mock(), repo=repo)
 
-        pr.create_review.assert_called_once()
-        _args, kwargs = pr.create_review.call_args
-        self.assertEqual(kwargs["event"], "COMMENT")
-        self.assertIn("vesper-sha: deadbeef", kwargs["body"])
+        pr.create_review.assert_not_called()
 
     def test_post_inline_suggestions_uses_line_based_comments_first(self):
         """Inline suggestions default to modern line-based review comments."""
@@ -587,6 +598,55 @@ class TestVesper(unittest.TestCase):
 
         _args, kwargs = mock_post_inline.call_args
         self.assertTrue(kwargs["force_review"])
+
+    @patch("vesper.vesper.post_inline_suggestions")
+    @patch("vesper.vesper.Github")
+    @patch("vesper.vesper.load_config")
+    def test_post_comment_webhook_updates_existing_comment_with_commit_history(
+        self, mock_load_config, mock_github, mock_post_inline
+    ):
+        """Existing Vesper comment is edited with the latest reviewed commit."""
+        mock_load_config.return_value = {"enable_authoring": False}
+
+        repo = Mock()
+        commit = Mock()
+        commit.commit.message = "quiet the release body\n\nMore details"
+        repo.get_commit.return_value = commit
+
+        existing = Mock()
+        existing.body = """<details>
+<summary>Vesper</summary>
+
+<!-- vesper-history-start -->
+### Reviewed commits
+
+| Commit | Summary |
+| --- | --- |
+| `oldsha1` | previous change |
+<!-- vesper-history-end -->
+
+old analysis
+<!-- vesper-sha: oldsha1 -->
+</details>
+"""
+
+        pr = Mock()
+        pr.get_issue_comments.return_value = [existing]
+        repo.get_pull.return_value = pr
+
+        g = Mock()
+        g.get_repo.return_value = repo
+        mock_github.return_value = g
+
+        pr_details = {"number": 1, "head_sha": "abcdef1234567890"}
+        post_comment_webhook("token", "o/r", pr_details, "analysis text")
+
+        existing.edit.assert_called_once()
+        body = existing.edit.call_args.args[0]
+        self.assertIn("| `abcdef1` | quiet the release body |", body)
+        self.assertIn("| `oldsha1` | previous change |", body)
+        self.assertIn("vesper-sha: abcdef1234567890", body)
+        pr.create_issue_comment.assert_not_called()
 
     @patch("vesper.vesper.post_inline_suggestions")
     @patch("vesper.vesper.Github")

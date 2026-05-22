@@ -28,6 +28,8 @@ from google.genai import types
 PAUSE_LABEL = "vesper:paused"
 QUOTA_COOLDOWN_SECONDS = int(os.getenv("VESPER_QUOTA_COOLDOWN_SECONDS", "1800"))
 QUOTA_UNTIL_MARKER_RE = re.compile(r"vesper-quota-until:\s*(\d+)")
+REVIEW_HISTORY_START = "<!-- vesper-history-start -->"
+REVIEW_HISTORY_END = "<!-- vesper-history-end -->"
 
 try:
     from .rag import fetch_rag_context
@@ -666,12 +668,83 @@ def parse_diff_for_suggestions(diff_text):
     return suggestions or None
 
 
-def format_comment(analysis, sha=None):
+def _clean_table_cell(value) -> str:
+    text = str(value or "").strip().replace("\n", " ")
+    return text.replace("|", "\\|")
+
+
+def _commit_subject(repo, sha: str | None) -> str:
+    if not sha:
+        return ""
+    try:
+        commit = repo.get_commit(sha)
+        message = getattr(getattr(commit, "commit", None), "message", "")
+        if not isinstance(message, str):
+            return ""
+        return message.splitlines()[0].strip()
+    except Exception as e:
+        logging.warning(f"Could not fetch commit summary for {sha}: {str(e)}")
+        return ""
+
+
+def _review_history_from_comment(body: str | None) -> list[dict]:
+    body = body or ""
+    start = body.find(REVIEW_HISTORY_START)
+    end = body.find(REVIEW_HISTORY_END)
+    if start == -1 or end == -1 or end <= start:
+        return []
+
+    rows = []
+    for line in body[start:end].splitlines():
+        line = line.strip()
+        if not line.startswith("| `") or "` |" not in line:
+            continue
+        cells = [cell.strip() for cell in line.strip("|").split("|")]
+        if len(cells) < 2:
+            continue
+        sha = cells[0].strip("` ")
+        summary = cells[1].replace("\\|", "|").strip()
+        if sha:
+            rows.append({"sha": sha, "summary": summary})
+    return rows
+
+
+def _merge_review_history(existing_rows: list[dict], sha: str | None, summary: str, *, limit: int = 8) -> list[dict]:
+    if not sha:
+        return existing_rows[:limit]
+
+    short_sha = sha[:7]
+    rows = [{"sha": short_sha, "summary": summary or "Current head"}]
+    rows.extend(row for row in existing_rows if row.get("sha") != short_sha)
+    return rows[:limit]
+
+
+def _format_review_history(rows: list[dict]) -> str:
+    if not rows:
+        return ""
+
+    table = [
+        REVIEW_HISTORY_START,
+        "### Reviewed commits",
+        "",
+        "| Commit | Summary |",
+        "| --- | --- |",
+    ]
+    for row in rows:
+        table.append(f"| `{_clean_table_cell(row.get('sha'))}` | {_clean_table_cell(row.get('summary'))} |")
+    table.append(REVIEW_HISTORY_END)
+    return "\n".join(table)
+
+
+def format_comment(analysis, sha=None, history_rows=None):
     """Format the analysis with proper markdown and emojis."""
     sha_marker = f"\n<!-- vesper-sha: {sha} -->" if sha else ""
+    history = _format_review_history(history_rows or [])
+    history_block = f"\n{history}\n\n" if history else ""
     return f"""<details>
 <summary>Vesper</summary>
 
+{history_block}
 {analysis}
 
 {sha_marker}
@@ -1006,9 +1079,7 @@ def post_inline_suggestions(pr, pr_details, suggestions, g, repo, *, force_revie
         review_body = f"Vesper Analysis for {head_sha}\n<!-- vesper-sha: {head_sha} -->"
 
         if not review_comments:
-            # Still create a review so it shows up in the PR review timeline.
-            pr.create_review(commit=commit, body=review_body, event="COMMENT")
-            logging.info("Posted a review without inline suggestions")
+            logging.info("Skipped review creation: no inline suggestions to post")
             return
 
         try:
@@ -1046,8 +1117,7 @@ def post_inline_suggestions(pr, pr_details, suggestions, g, repo, *, force_revie
                 )
                 logging.info(f"Posted {len(position_comments)} inline suggestions as a review (position fallback)")
             else:
-                pr.create_review(commit=commit, body=review_body, event="COMMENT")
-                logging.info("Posted a review without inline suggestions (fallback)")
+                logging.info("Skipped review creation: no valid fallback inline suggestions")
     except Exception as e:
         logging.error(f"Error posting review with suggestions: {str(e)}")
         # Don't fail the whole process for review posting errors
@@ -1171,7 +1241,6 @@ def post_comment_webhook(
 
         suggestions = parse_code_suggestions(analysis)
         main_comment = update_main_comment(analysis)
-        formatted_comment = format_comment(main_comment, sha=pr_details.get("head_sha"))
 
         # Find existing Vesper comment to update
         existing_comment = None
@@ -1179,6 +1248,11 @@ def post_comment_webhook(
             if is_vesper_comment(comment):
                 existing_comment = comment
                 break
+
+        head_sha = pr_details.get("head_sha")
+        history_rows = _review_history_from_comment(getattr(existing_comment, "body", None))
+        history_rows = _merge_review_history(history_rows, head_sha, _commit_subject(repo, head_sha))
+        formatted_comment = format_comment(main_comment, sha=head_sha, history_rows=history_rows)
 
         if existing_comment:
             existing_comment.edit(formatted_comment)

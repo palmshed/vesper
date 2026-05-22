@@ -1,8 +1,10 @@
 # Versions
 
-Vesper is currently `1.7.0`.
+The gem is currently `1.7.0`.
 
 The published gem name is `friday_gemini_ai`. The runtime entrypoint is `vesper`.
+
+Gem releases use tags such as `friday_gemini_ai/v1.7.0`. The Vesper Review app is deployed from `main` and is identified by its build commit rather than a gem release tag.
 
 ```ruby
 gem 'friday_gemini_ai', require: 'vesper'

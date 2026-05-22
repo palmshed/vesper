@@ -2,7 +2,7 @@
 # Copyright (c) 2026 vesper
 
 ---
-name: Release
+name: Gem release
 
 on:
   push:
@@ -42,7 +42,7 @@ jobs:
         run: |
           set -euo pipefail
 
-          branch="release-please--branches--main--components--vesper"
+          branch="release-please--branches--main--components--friday_gemini_ai"
           pr_number="$(gh pr list \
             --repo "$REPO" \
             --state open \
@@ -59,7 +59,7 @@ jobs:
           body_file="$(mktemp)"
 
           {
-            printf "Release notes for the next Vesper release.\n\n"
+            printf "Release notes for the next gem release.\n\n"
             if [ -n "$version" ]; then
               printf "Version: \`%s\`\n\n" "$version"
             fi

@@ -3,7 +3,7 @@
 All notable changes are tracked here.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: [SemVer](https://semver.org/spec/v2.0.0.html)
 
-## [1.7.0](https://github.com/bniladridas/vesper/compare/vesper/v1.6.0...vesper/v1.7.0) (2026-05-22)
+## [1.7.0](https://github.com/bniladridas/vesper/compare/friday_gemini_ai/v1.6.0...friday_gemini_ai/v1.7.0) (2026-05-22)
 
 
 ### Features
@@ -11,7 +11,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: 
 * include development dependencies ([bd9b7a5](https://github.com/bniladridas/vesper/commit/bd9b7a5cb9241b1218d9270e1d04716a9eeeeeb9))
 * introduce rag-based context retrieval ([#171](https://github.com/bniladridas/vesper/issues/171)) ([3e9b520](https://github.com/bniladridas/vesper/commit/3e9b520d38ce6886403438f665ff4d985b7c11ef))
 
-## [1.6.0](https://github.com/bniladridas/vesper/compare/vesper/v1.5.0...vesper/v1.6.0) (2026-04-13)
+## [1.6.0](https://github.com/bniladridas/vesper/compare/friday_gemini_ai/v1.5.0...friday_gemini_ai/v1.6.0) (2026-04-13)
 ### Features
 
 * /analyze --force-review ([45c4f7d](https://github.com/bniladridas/vesper/commit/45c4f7d5ca2d0b220db4ec4f9cd5f3e094f7fa68))
@@ -61,7 +61,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: 
 
 * website nav and cookie removal ([ce928e7](https://github.com/bniladridas/vesper/commit/ce928e7555004b326e93d347a7abfbadae837e66))
 
-## [1.5.0](https://github.com/bniladridas/vesper/compare/vesper-v1.4.1...vesper/v1.5.0) (2026-03-16)
+## [1.5.0](https://github.com/bniladridas/vesper/compare/friday_gemini_ai/v1.4.1...friday_gemini_ai/v1.5.0) (2026-03-16)
 ### Features
 
 * add /apply comment handler in separate file ([4b85767](https://github.com/bniladridas/vesper/commit/4b857674a36aa4915e699b71d098b07bb8d5ef6d))
@@ -261,12 +261,12 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: 
 * standardize workflow names and update conditions ([b6f7e5a](https://github.com/bniladridas/vesper/commit/b6f7e5abd891a49f923171070dfcc5fdfb62ae3b))
 * update all codebot references to vesper ([7a53ab9](https://github.com/bniladridas/vesper/commit/7a53ab940ae058262ae965838e690cb5b54e6065))
 
-## [1.4.1](https://github.com/bniladridas/vesper/compare/vesper/v1.4.0...vesper/v1.4.1) (2026-03-16)
+## [1.4.1](https://github.com/bniladridas/vesper/compare/friday_gemini_ai/v1.4.0...friday_gemini_ai/v1.4.1) (2026-03-16)
 ### Bug Fixes
 
 * handle missing repo field ([bc52c31](https://github.com/bniladridas/vesper/commit/bc52c31f10c6407386109ca0f4052787549cb4cd))
 
-## [1.4.0](https://github.com/bniladridas/vesper/compare/vesper/v1.3.0...vesper/v1.4.0) (2026-03-15)
+## [1.4.0](https://github.com/bniladridas/vesper/compare/friday_gemini_ai/v1.3.0...friday_gemini_ai/v1.4.0) (2026-03-15)
 ### Features
 
 * process sync events in webhook ([02beaa5](https://github.com/bniladridas/vesper/commit/02beaa54d5a8f07bdf976340ef2ae141cc01d1ff))
@@ -290,7 +290,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: 
 * update app link ([0a5280c](https://github.com/bniladridas/vesper/commit/0a5280c5f45175bb5e2dc157ec3bb1c13039b6f1))
 * update webhook app and security ([6a5492b](https://github.com/bniladridas/vesper/commit/6a5492b6de794acf23d0a38f04bc9b8340a83668))
 
-## [1.3.0](https://github.com/bniladridas/vesper/compare/vesper/v1.2.2...vesper/v1.3.0) (2026-03-11)
+## [1.3.0](https://github.com/bniladridas/vesper/compare/friday_gemini_ai/v1.2.2...friday_gemini_ai/v1.3.0) (2026-03-11)
 ### Features
 
 * ui & vesper updates (wip) ([#143](https://github.com/bniladridas/vesper/issues/143)) ([1e40065](https://github.com/bniladridas/vesper/commit/1e40065964b0a17e83d3720e347066928769d192))
@@ -300,12 +300,12 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: 
 
 * update lock workflow and vesper imports ([#141](https://github.com/bniladridas/vesper/issues/141)) ([b3dec6c](https://github.com/bniladridas/vesper/commit/b3dec6cdb1ea00c075e838efde8c7851319b758d))
 
-## [1.2.2](https://github.com/bniladridas/vesper/compare/vesper/v1.2.1...vesper/v1.2.2) (2026-01-26)
+## [1.2.2](https://github.com/bniladridas/vesper/compare/friday_gemini_ai/v1.2.1...friday_gemini_ai/v1.2.2) (2026-01-26)
 ### Bug Fixes
-## [1.2.1](https://github.com/bniladridas/vesper/compare/vesper/v1.2.0...vesper/v1.2.1) (2026-01-26)
+## [1.2.1](https://github.com/bniladridas/vesper/compare/friday_gemini_ai/v1.2.0...friday_gemini_ai/v1.2.1) (2026-01-26)
 ### Bug Fixes
 
-## [1.2.0](https://github.com/bniladridas/vesper/compare/vesper-v1.1.1...vesper/v1.2.0) (2026-01-26)
+## [1.2.0](https://github.com/bniladridas/vesper/compare/friday_gemini_ai/v1.1.1...friday_gemini_ai/v1.2.0) (2026-01-26)
 ### Features
 
 * add /apply comment handler in separate file ([4b85767](https://github.com/bniladridas/vesper/commit/4b857674a36aa4915e699b71d098b07bb8d5ef6d))
@@ -488,7 +488,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: 
 * standardize workflow names and update conditions ([b6f7e5a](https://github.com/bniladridas/vesper/commit/b6f7e5abd891a49f923171070dfcc5fdfb62ae3b))
 * update all codebot references to vesper ([7a53ab9](https://github.com/bniladridas/vesper/commit/7a53ab940ae058262ae965838e690cb5b54e6065))
 
-## [1.1.0](https://github.com/bniladridas/vesper/compare/vesper/v1.0.1...vesper/v1.1.0) (2026-01-21)
+## [1.1.0](https://github.com/bniladridas/vesper/compare/friday_gemini_ai/v1.0.1...friday_gemini_ai/v1.1.0) (2026-01-21)
 ### Features
 
 * add content moderation capability to client responses ([#130](https://github.com/bniladridas/vesper/issues/130)) ([6340330](https://github.com/bniladridas/vesper/commit/6340330e4fb2851cd8fc30479115005e1a4e724b))
@@ -500,7 +500,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: 
 * enable /analyze comment trigger ([597f1df](https://github.com/bniladridas/vesper/commit/597f1dfa8453d07c57c6d5a2863659f8732ecc3b))
 * update version to 1.0.1 ([3dc02db](https://github.com/bniladridas/vesper/commit/3dc02db2fc2cdb76f22a01eb29659912a36287fe))
 
-## [1.0.1](https://github.com/bniladridas/vesper/compare/vesper/v1.0.0...vesper/v1.0.1) (2026-01-06)
+## [1.0.1](https://github.com/bniladridas/vesper/compare/friday_gemini_ai/v1.0.0...friday_gemini_ai/v1.0.1) (2026-01-06)
 ### Bug Fixes
 
 * add tag creation on pr merge ([e4a5abf](https://github.com/bniladridas/vesper/commit/e4a5abfcf0fe1583f131704c9fdfec384c7ac0ff))

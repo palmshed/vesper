@@ -2,7 +2,7 @@
 
 Contributions are welcome when they keep the project small, clear, and tested.
 
-Please read the [`Code of Conduct`](CODE_OF_CONDUCT.md) before participating.
+Please read the [`Code of Conduct`](https://github.com/bniladridas/vesper/blob/main/docs/CODE_OF_CONDUCT.md) before participating.
 
 ## Setup
 
@@ -54,10 +54,10 @@ For feature requests, describe the use case and the smallest API that would solv
 
 | Topic | Link |
 | --- | --- |
-| Setup | [`Setup`](SETUP.md) |
-| Practices | [`Development practices`](guides/practices.md) |
-| Tests | [`Testing`](reference/testing.md) |
-| API | [`API reference`](reference/api.md) |
+| Setup | [`Setup`](https://github.com/bniladridas/vesper/blob/main/docs/SETUP.md) |
+| Practices | [`Development practices`](https://github.com/bniladridas/vesper/blob/main/docs/guides/practices.md) |
+| Tests | [`Testing`](https://github.com/bniladridas/vesper/blob/main/docs/reference/testing.md) |
+| API | [`API reference`](https://github.com/bniladridas/vesper/blob/main/docs/reference/api.md) |
 
 ## License
 

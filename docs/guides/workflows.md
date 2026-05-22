@@ -33,4 +33,4 @@ Common workflow secrets are:
 | `RUBYGEMS_API_KEY` | RubyGems publishing |
 | `CODECOV_TOKEN` | Coverage upload |
 
-Vesper may also require GitHub App credentials when running in app mode. See [Vesper](../reference/vesper.md).
+Vesper may also require GitHub App credentials when running in app mode. See [`Vesper`](../reference/vesper.md).

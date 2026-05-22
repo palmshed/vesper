@@ -18,8 +18,8 @@ For bugs, include the smallest reproduction you can share. For feature requests,
 
 Pull requests should stay narrow. Include tests for behavior changes and update docs when usage changes.
 
-See [Contributing](../CONTRIBUTING.md) for setup and review notes.
+See [`Contributing`](../CONTRIBUTING.md) for setup and review notes.
 
 ## Security
 
-Do not report vulnerabilities in public issues. Use [GitHub Security Advisories](https://github.com/bniladridas/vesper/security/advisories/new).
+Do not report vulnerabilities in public issues. Use [`GitHub Security Advisories`](https://github.com/bniladridas/vesper/security/advisories/new).

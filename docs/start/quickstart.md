@@ -97,7 +97,7 @@ Interactive chat:
 
 ## Next Steps
 
-- [Usage Guide](../reference/usage.md)
-- [API Reference](../reference/api.md)
-- [Models](../reference/models.md)
-- [Troubleshooting](../guides/troubleshoot.md)
+- [`Usage Guide`](../reference/usage.md)
+- [`API Reference`](../reference/api.md)
+- [`Models`](../reference/models.md)
+- [`Troubleshooting`](../guides/troubleshoot.md)

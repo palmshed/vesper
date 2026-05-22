@@ -75,11 +75,11 @@ def handle_apply_comment(installation_id, repo_name, pr_number, commenter_login=
         if suggestions:
             apply_suggestions_to_pr(repo, pr, suggestions)
             # Post confirmation comment
-            pr.create_issue_comment("Applied code suggestions from Vesper analysis.")
+            pr.create_issue_comment("Vesper: Applied\n\n🙂 Applied code suggestions from Vesper analysis.")
             logging.info(f"Applied suggestions to PR #{pr_number} via /apply")
         else:
             # No suggestions
-            pr.create_issue_comment("No code suggestions found to apply.")
+            pr.create_issue_comment("Vesper: No suggestions\n\n😴 No code suggestions were found to apply.")
         return jsonify({"status": "applied"})
     except Exception as e:
         logging.error(f"Error handling apply comment: {str(e)}")

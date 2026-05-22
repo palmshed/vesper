@@ -52,8 +52,9 @@
         </p>
         <ul class="link-list">
           <li><span></span>Required GitHub App permissions + webhook events</li>
-          <li><span></span>Slash command behavior: <code>/analyze</code> (try <code>/analyze --force-review</code> for a fresh review), <code>/apply</code>, <code>/merge</code>, <code>/squash</code>, <code>/rebase</code></li>
+          <li><span></span>Slash command behavior: <code>/analyze</code>, <code>/apply</code>, <code>/help</code>, <code>/merge</code>, <code>/squash</code>, <code>/rebase</code></li>
           <li><span></span>Operational controls: <code>/pause</code>, <code>/resume</code>, <code>/status</code></li>
+          <li><span></span>Quiet command replies using <code>🙂</code>, <code>😅</code>, and <code>😴</code></li>
           <li><span></span>Why reviews/inline suggestions sometimes don't appear</li>
           <li><span></span>Optional multi-line inline review comments ("comment on lines ...")</li>
           <li><span></span>Common log patterns and how to interpret them</li>
@@ -104,9 +105,9 @@ Pull request review comment</code></pre>
               <td data-label="Resolution">Manual <code>/analyze</code> reruns; use <code>/analyze --force-review</code> to repost inline suggestions</td>
             </tr>
             <tr>
-              <td data-label="Symptom">PR comment posted but no PR review / inline suggestions</td>
-              <td data-label="Root cause">Review creation only happened when inline suggestions existed; brittle diff-position math</td>
-              <td data-label="Resolution">Always create a review; use line-based inline comments with a fallback</td>
+              <td data-label="Symptom">PR comment posted but no inline suggestions</td>
+              <td data-label="Root cause">The analysis did not produce valid suggestion blocks for changed lines</td>
+              <td data-label="Resolution">Keep the main analysis comment, and skip empty review creation to avoid noise</td>
             </tr>
             <tr>
               <td data-label="Symptom">Inline <code>/analyze</code> comment in "Files changed" was ignored</td>
@@ -133,6 +134,11 @@ Pull request review comment</code></pre>
               <td data-label="Root cause">No per-PR control for auto triggers</td>
               <td data-label="Resolution">Introduce <code>/pause</code> and <code>/resume</code> using the <code>vesper:paused</code> label</td>
             </tr>
+            <tr>
+              <td data-label="Symptom">Command replies felt too loud</td>
+              <td data-label="Root cause">Notices used warning-style labels and list-like copy</td>
+              <td data-label="Resolution">Use short prose with <code>🙂</code> for normal replies, <code>😅</code> for blocked states, and <code>😴</code> for paused or no-op states</td>
+            </tr>
           </tbody>
         </table>
         <p class="subtext">
@@ -148,7 +154,8 @@ Pull request review comment</code></pre>
           <ul class="link-list">
             <li><span></span>Create a PR with a small code change</li>
             <li><span></span>Comment <code>/analyze</code> in Conversation (and optionally as an inline file comment)</li>
-            <li><span></span>Verify a PR review appears (“View reviewed changes”)</li>
+            <li><span></span>Verify the main Vesper analysis comment updates</li>
+            <li><span></span>Use <code>/analyze --force-review</code> when you want inline suggestions reposted</li>
             <li><span></span>If authoring is enabled and the commenter has write/admin access, comment <code>/apply</code> and confirm a bot-authored commit lands on the PR branch</li>
             <li><span></span>Optionally test merges: <code>/merge</code>, <code>/squash</code>, <code>/rebase</code></li>
             <li><span></span>Pause auto runs: <code>/pause</code>; re-enable: <code>/resume</code></li>
@@ -156,10 +163,21 @@ Pull request review comment</code></pre>
         </section>
 
         <section>
+          <h2>Command replies</h2>
+          <p>
+            Vesper keeps command replies short. Normal replies use <code>🙂</code>, blocked or unavailable states use
+            <code>😅</code>, and paused or no-op states use <code>😴</code>.
+          </p>
+          <pre><code>Vesper: Paused
+
+😴 Auto analysis is paused for this PR.</code></pre>
+        </section>
+
+        <section>
           <h2>Quota cooldown</h2>
           <p>
-            When Gemini returns a quota/rate-limit error, Vesper posts a notice and temporarily skips auto-analysis on
-            new commits for a short cooldown window.
+            When Gemini returns a quota or rate-limit error, Vesper posts a short <code>😅</code> notice and temporarily
+            skips auto-analysis on new commits for a short cooldown window.
           </p>
           <p class="card-subtext">Config (Vercel → Project → Settings → Environment Variables):</p>
           <pre><code>VESPER_QUOTA_COOLDOWN_SECONDS=1800</code></pre>
@@ -186,7 +204,7 @@ Pull request review comment</code></pre>
           <pre><code>Processing /analyze
 Error handling apply comment:
 Posted ... inline suggestions as a review
-Posted a review without inline suggestions
+Skipped review creation: no inline suggestions to post
 Quota exceeded for PR
 Ignored webhook event:</code></pre>
         </section>

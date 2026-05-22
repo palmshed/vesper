@@ -32,7 +32,6 @@ from vesper.vesper import (  # noqa: E402
     parse_diff_for_suggestions,
     post_comment_webhook,
     post_inline_suggestions,
-    react_to_comment,
     run_analysis_for_pr,
     verify_webhook_signature,
 )
@@ -359,6 +358,7 @@ docs/CHANGELOG.md
 
         formatted = format_notice("Test Title", "Test details")
         self.assertIn("Vesper: Test Title", formatted)
+        self.assertIn("🙂 Test details", formatted)
         self.assertIn("Test details", formatted)
 
     def test_format_notice_does_not_include_sha_marker(self):
@@ -370,18 +370,17 @@ docs/CHANGELOG.md
         self.assertIn("Vesper: Test Title", formatted)
         self.assertIn("Test details", formatted)
 
-    @patch("vesper.vesper.requests.post")
-    @patch("vesper.vesper.setup_environment_webhook")
-    def test_react_to_comment_posts_like_reaction(self, mock_setup_env, mock_post):
-        mock_setup_env.return_value = (Mock(), "token", Mock())
-        mock_post.return_value.status_code = 201
+    def test_format_notice_uses_attention_emoji_for_quota(self):
+        from vesper.vesper import format_notice
 
-        react_to_comment(123, "https://api.github.test/repos/o/r/issues/comments/1")
+        formatted = format_notice("Gemini quota exceeded", "Try again later.")
+        self.assertIn("😅 Try again later.", formatted)
 
-        mock_post.assert_called_once()
-        _args, kwargs = mock_post.call_args
-        self.assertEqual(kwargs["json"], {"content": "+1"})
-        self.assertEqual(kwargs["headers"]["Authorization"], "Bearer token")
+    def test_format_notice_uses_sleeping_emoji_for_paused(self):
+        from vesper.vesper import format_notice
+
+        formatted = format_notice("Paused", "Auto analysis is paused.")
+        self.assertIn("😴 Auto analysis is paused.", formatted)
 
     @patch("vesper.vesper.post_comment_webhook")
     @patch("vesper.vesper.analyze_with_gemini")
@@ -788,20 +787,15 @@ old analysis
     @patch("vesper.vesper.handle_merge_command")
     @patch("vesper.vesper.handle_apply_comment")
     @patch("vesper.vesper.run_analysis_for_pr")
-    @patch("vesper.vesper.react_to_comment")
-    def test_handle_pr_comment_command_dispatches_analyze(self, mock_react, mock_run_analysis, _mock_apply, _mock_merge):
-        result = handle_pr_comment_command(123, "o/r", 1, "/analyze", "alice", "https://api.github.test/comment")
+    def test_handle_pr_comment_command_dispatches_analyze(self, mock_run_analysis, _mock_apply, _mock_merge):
+        result = handle_pr_comment_command(123, "o/r", 1, "/analyze", "alice")
         self.assertEqual(result, ({"status": "ok"}, 200))
         mock_run_analysis.assert_called_once_with(123, "o/r", 1, force=True, force_review=False)
-        mock_react.assert_called_once_with(123, "https://api.github.test/comment")
 
     @patch("vesper.vesper.handle_merge_command")
     @patch("vesper.vesper.handle_apply_comment")
     @patch("vesper.vesper.run_analysis_for_pr")
-    @patch("vesper.vesper.react_to_comment")
-    def test_handle_pr_comment_command_dispatches_analyze_force_review(
-        self, _mock_react, mock_run_analysis, _mock_apply, _mock_merge
-    ):
+    def test_handle_pr_comment_command_dispatches_analyze_force_review(self, mock_run_analysis, _mock_apply, _mock_merge):
         result = handle_pr_comment_command(123, "o/r", 1, "/analyze --force-review", "alice")
         self.assertEqual(result, ({"status": "ok"}, 200))
         mock_run_analysis.assert_called_once_with(123, "o/r", 1, force=True, force_review=True)
@@ -809,8 +803,7 @@ old analysis
     @patch("vesper.vesper.handle_merge_command")
     @patch("vesper.vesper.handle_apply_comment")
     @patch("vesper.vesper.run_analysis_for_pr")
-    @patch("vesper.vesper.react_to_comment")
-    def test_handle_pr_comment_command_dispatches_merge(self, _mock_react, mock_run_analysis, mock_apply, mock_merge):
+    def test_handle_pr_comment_command_dispatches_merge(self, mock_run_analysis, mock_apply, mock_merge):
         mock_merge.return_value = {"status": "merged"}
         result = handle_pr_comment_command(123, "o/r", 1, " /merge ", "alice")
         self.assertEqual(result, {"status": "merged"})

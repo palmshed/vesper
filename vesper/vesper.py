@@ -30,7 +30,6 @@ QUOTA_COOLDOWN_SECONDS = int(os.getenv("VESPER_QUOTA_COOLDOWN_SECONDS", "1800"))
 QUOTA_UNTIL_MARKER_RE = re.compile(r"vesper-quota-until:\s*(\d+)")
 REVIEW_HISTORY_START = "<!-- vesper-history-start -->"
 REVIEW_HISTORY_END = "<!-- vesper-history-end -->"
-SUPPORTED_COMMENT_COMMANDS = {"/analyze", "/apply", "/pause", "/resume", "/status", "/help", "/merge", "/squash", "/rebase"}
 
 try:
     from .rag import fetch_rag_context
@@ -1320,8 +1319,29 @@ def format_notice(title: str, details: str) -> str:
     # Notice comments should not include the SHA marker to avoid being treated as successful analysis
     return f"""Vesper: {title}
 
-{details}
+{notice_emoji(title)} {details}
 """
+
+
+def notice_emoji(title: str) -> str:
+    text = (title or "").lower()
+    if any(marker in text for marker in ("paused", "already", "empty diff", "no files", "no analysis", "no suggestions")):
+        return "😴"
+    if any(
+        marker in text
+        for marker in (
+            "quota",
+            "unavailable",
+            "disabled",
+            "insufficient",
+            "not mergeable",
+            "rejected",
+            "failed",
+            "not allowed",
+        )
+    ):
+        return "😅"
+    return "🙂"
 
 
 def post_notice_comment(github_token: str, repo_name: str, pr_number: int, title: str, details: str):
@@ -1329,28 +1349,6 @@ def post_notice_comment(github_token: str, repo_name: str, pr_number: int, title
     repo = g.get_repo(repo_name)
     pr = repo.get_pull(pr_number)
     pr.create_issue_comment(format_notice(title, details))
-
-
-def react_to_comment(installation_id: int, comment_url: str | None, content: str = "+1") -> None:
-    """React to the triggering comment without blocking command handling."""
-    if not comment_url:
-        return
-    try:
-        _, installation_token, _ = setup_environment_webhook(installation_id)
-        response = requests.post(
-            f"{comment_url}/reactions",
-            headers={
-                "Accept": "application/vnd.github+json",
-                "Authorization": f"Bearer {installation_token}",
-                "X-GitHub-Api-Version": "2022-11-28",
-            },
-            json={"content": content},
-            timeout=10,
-        )
-        if response.status_code not in {200, 201}:
-            logging.info(f"Skipped comment reaction: GitHub returned HTTP {response.status_code}")
-    except Exception as e:
-        logging.info(f"Skipped comment reaction: {str(e)}")
 
 
 def run_analysis_for_pr(
@@ -1474,7 +1472,6 @@ def handle_pr_comment_command(
     pr_number: int,
     comment_body: str,
     commenter_login: str,
-    comment_url: str | None = None,
 ):
     """Handle slash-commands posted as PR comments.
 
@@ -1485,9 +1482,6 @@ def handle_pr_comment_command(
     command_parts = raw_command.split()
     command = (command_parts[0] if command_parts else "").lower()
     command_args = {part.lower() for part in command_parts[1:]}
-
-    if command in SUPPORTED_COMMENT_COMMANDS:
-        react_to_comment(installation_id, comment_url)
 
     if command == "/apply":
         return handle_apply_comment(installation_id, repo_name, pr_number, commenter_login=commenter_login)
@@ -1697,11 +1691,11 @@ def handle_merge_command(
 
         result = pr.merge(merge_method=merge_method)
         if result.merged:
-            pr.create_issue_comment(f"Merged via {merge_method} by Vesper.")
+            pr.create_issue_comment(f"Vesper: Merged\n\n🙂 Merged via `{merge_method}`.")
             logging.info(f"Merged PR #{pr_number} with method={merge_method}")
             return jsonify({"status": "merged"})
 
-        pr.create_issue_comment(f"Merge failed: {result.message}")
+        pr.create_issue_comment(format_notice("Merge failed", result.message or "GitHub did not merge the PR."))
         return jsonify({"status": "merge_failed"}), 409
     except GithubException as e:
         status = getattr(e, "status", None)
@@ -1791,7 +1785,6 @@ def webhook_handler():
             pr_number,
             comment_body,
             commenter_login,
-            data.get("comment", {}).get("url"),
         )
         if isinstance(result, tuple) and len(result) == 2 and isinstance(result[0], dict):
             payload, status = result
@@ -1811,7 +1804,6 @@ def webhook_handler():
             pr_number,
             comment_body,
             commenter_login,
-            data.get("comment", {}).get("url"),
         )
         if isinstance(result, tuple) and len(result) == 2 and isinstance(result[0], dict):
             payload, status = result

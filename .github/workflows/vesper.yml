@@ -117,7 +117,21 @@ jobs:
           pip --version
 
     # Generate GitHub App token for PR commenting
+      - name: Check Vesper secrets
+        id: vesper-secrets
+        env:
+          VESPER_APP_ID: ${{ secrets.VESPER_APP_ID }}
+          VESPER_PRIVATE_KEY: ${{ secrets.VESPER_PRIVATE_KEY }}
+        run: |
+          if [ -n "$VESPER_APP_ID" ] && [ -n "$VESPER_PRIVATE_KEY" ]; then
+            echo "available=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "available=false" >> "$GITHUB_OUTPUT"
+            echo "Vesper app secrets are not configured; skipping bot run."
+          fi
+
       - name: Generate GitHub App Token
+        if: steps.vesper-secrets.outputs.available == 'true'
         id: app-token
         uses: actions/create-github-app-token@v3
         with:
@@ -126,6 +140,7 @@ jobs:
 
     # Run Vesper to analyze PR with Gemini AI
       - name: Run Gemini PR Bot
+        if: steps.vesper-secrets.outputs.available == 'true'
         env:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}

@@ -43,7 +43,7 @@ safety_settings:
 
 # Enable code authoring features
 # When enabled, Vesper can create commits, branches, and PRs with improvements
-enable_authoring: false
+enable_authoring: true
 
 # Auto-commit suggestions to PR branches
 # Applies code suggestions directly to the PR's head branch

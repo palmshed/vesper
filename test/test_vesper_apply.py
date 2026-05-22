@@ -45,7 +45,9 @@ class TestVesperApply(unittest.TestCase):
         ):
             result = vesper_apply.handle_apply_comment(123, "o/r", 1, commenter_login="alice")
 
-        pr.create_issue_comment.assert_called_once_with("No code suggestions found to apply.")
+        pr.create_issue_comment.assert_called_once_with(
+            "Vesper: No suggestions\n\n😴 No code suggestions were found to apply."
+        )
         fake_vesper_mod.apply_suggestions_to_pr.assert_not_called()
         self.assertEqual(result, {"status": "applied"})
 
@@ -77,7 +79,7 @@ class TestVesperApply(unittest.TestCase):
             result = vesper_apply.handle_apply_comment(123, "o/r", 1, commenter_login="alice")
 
         fake_vesper_mod.apply_suggestions_to_pr.assert_called_once_with(repo, pr, [("a.txt", "1", "change")])
-        pr.create_issue_comment.assert_called_once_with("Applied code suggestions from Vesper analysis.")
+        pr.create_issue_comment.assert_called_once_with("Vesper: Applied\n\n🙂 Applied code suggestions from Vesper analysis.")
         self.assertEqual(result, {"status": "applied"})
 
     def test_handle_apply_comment_rejects_when_authoring_disabled(self):

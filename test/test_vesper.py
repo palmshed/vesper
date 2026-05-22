@@ -28,6 +28,7 @@ from vesper.vesper import (  # noqa: E402
     is_api_unavailable_message,
     is_quota_exceeded_message,
     load_config,
+    parse_code_suggestions,
     parse_diff_for_suggestions,
     post_comment_webhook,
     post_inline_suggestions,
@@ -296,6 +297,20 @@ class TestVesper(unittest.TestCase):
         diff_text = "not a diff"
         result = parse_diff_for_suggestions(diff_text)
         self.assertIsNone(result)
+
+    def test_parse_code_suggestions_keeps_short_reason(self):
+        analysis = """### Code Suggestions
+Use the hyphen tag format so the compare link points at the release tag.
+
+```diff
+docs/CHANGELOG.md
+@@ -6,1 +6,1 @@
+-## [1.8.0](https://github.com/bniladridas/vesper/compare/vesper-v1.7.0...vesper/v1.8.0)
++## [1.8.0](https://github.com/bniladridas/vesper/compare/vesper-v1.7.0...vesper-v1.8.0)
+```"""
+        result = parse_code_suggestions(analysis)
+
+        self.assertEqual(result[0]["reason"], "Use the hyphen tag format so the compare link points at the release tag.")
 
     def test_format_comment_does_not_add_hr(self):
         """Vesper comment should not add extra decorations."""
@@ -645,6 +660,7 @@ class TestVesper(unittest.TestCase):
                 "end_line": 1,
                 "op": "replace",
                 "suggestion": "new",
+                "reason": "Use the current value.",
             }
         ]
         post_inline_suggestions(pr, pr_details, suggestions, g=Mock(), repo=repo)
@@ -654,6 +670,7 @@ class TestVesper(unittest.TestCase):
         self.assertEqual(kwargs["comments"][0]["path"], "a.txt")
         self.assertEqual(kwargs["comments"][0]["line"], 1)
         self.assertEqual(kwargs["comments"][0]["side"], "RIGHT")
+        self.assertEqual(kwargs["comments"][0]["body"], "Use the current value.\n\n```suggestion\nnew\n```")
 
     @patch("vesper.vesper.post_inline_suggestions")
     @patch("vesper.vesper.Github")

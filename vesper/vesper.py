@@ -236,6 +236,7 @@ Provide a concise code review analysis in this format:
 ### Code Suggestions
 - [Provide specific code changes as diff blocks]
 - [Use ```diff format for each suggestion]
+- [Before each diff block, add one short sentence that states what is wrong and what to change]
 
 ### Next Steps
 - [Actionable items for the author]"""
@@ -768,15 +769,46 @@ def parse_code_suggestions(analysis):
         if end_pos == -1:
             break
         diff_text = analysis[start_pos + 8 : end_pos]
-        diff_blocks.append(diff_text)
+        diff_blocks.append((diff_text, _suggestion_reason_before(analysis, start_pos)))
         start_pos = end_pos + 4
     suggestions: list[dict] = []
-    for diff_text in diff_blocks:
+    for diff_text, reason in diff_blocks:
         parsed = parse_diff_for_suggestions(diff_text)
         if not parsed:
             continue
+        if reason:
+            for suggestion in parsed:
+                suggestion["reason"] = reason
         suggestions.extend(parsed)
     return suggestions
+
+
+def _suggestion_reason_before(analysis: str, start_pos: int) -> str | None:
+    """Return the nearest short explanation before a diff block."""
+    prefix = analysis[:start_pos].rstrip()
+    if not prefix:
+        return None
+
+    for raw_line in reversed(prefix.splitlines()):
+        line = raw_line.strip()
+        if not line:
+            continue
+        line = re.sub(r"^[-*]\s+", "", line).strip()
+        if not line or line.startswith(("#", "```")):
+            continue
+        if line.lower() in {"code suggestions", "suggestion", "suggested change"}:
+            continue
+        return _clean_inline_reason(line)
+    return None
+
+
+def _clean_inline_reason(reason: str | None) -> str | None:
+    text = re.sub(r"\s+", " ", str(reason or "")).strip()
+    if not text:
+        return None
+    if len(text) > 180:
+        text = text[:177].rstrip() + "..."
+    return text
 
 
 def create_branch(repo, base_branch, new_branch_name):
@@ -1052,15 +1084,13 @@ def post_inline_suggestions(pr, pr_details, suggestions, g, repo, *, force_revie
             end_line = sugg.get("end_line")
             op = sugg.get("op")
             suggestion_text = sugg.get("suggestion")
+            reason = sugg.get("reason")
 
             if not file_path or not isinstance(start_line, int) or not isinstance(end_line, int):
                 logging.warning(f"Invalid suggestion payload for inline comment: {sugg!r}. Skipping.")
                 continue
 
-            if op == "delete":
-                body = "Suggested deletion."
-            else:
-                body = f"```suggestion\n{suggestion_text or ''}\n```"
+            body = _format_inline_suggestion_body(op, suggestion_text, reason)
 
             comment = {"path": file_path, "body": body}
             if ENABLE_RANGE_COMMENTS and end_line > start_line:
@@ -1105,7 +1135,7 @@ def post_inline_suggestions(pr, pr_details, suggestions, g, repo, *, force_revie
                 position = find_diff_position(pr_details.get("diff", ""), file_path, start_line)
                 if position is None:
                     continue
-                body = "Suggested deletion." if op == "delete" else f"```suggestion\n{suggestion_text or ''}\n```"
+                body = _format_inline_suggestion_body(op, suggestion_text, sugg.get("reason"))
                 position_comments.append({"path": file_path, "position": position, "body": body})
 
             if position_comments:
@@ -1121,6 +1151,13 @@ def post_inline_suggestions(pr, pr_details, suggestions, g, repo, *, force_revie
     except Exception as e:
         logging.error(f"Error posting review with suggestions: {str(e)}")
         # Don't fail the whole process for review posting errors
+
+
+def _format_inline_suggestion_body(op: str, suggestion_text: str | None, reason: str | None = None) -> str:
+    reason_text = _clean_inline_reason(reason) or "Suggested change."
+    if op == "delete":
+        return f"{reason_text}\n\nSuggested deletion."
+    return f"{reason_text}\n\n```suggestion\n{suggestion_text or ''}\n```"
 
 
 def verify_webhook_signature(payload, signature, secret):

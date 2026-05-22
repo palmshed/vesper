@@ -30,6 +30,7 @@ QUOTA_COOLDOWN_SECONDS = int(os.getenv("VESPER_QUOTA_COOLDOWN_SECONDS", "1800"))
 QUOTA_UNTIL_MARKER_RE = re.compile(r"vesper-quota-until:\s*(\d+)")
 REVIEW_HISTORY_START = "<!-- vesper-history-start -->"
 REVIEW_HISTORY_END = "<!-- vesper-history-end -->"
+SUPPORTED_COMMENT_COMMANDS = {"/analyze", "/apply", "/pause", "/resume", "/status", "/help", "/merge", "/squash", "/rebase"}
 
 try:
     from .rag import fetch_rag_context
@@ -1317,7 +1318,7 @@ def post_comment_webhook(
 
 def format_notice(title: str, details: str) -> str:
     # Notice comments should not include the SHA marker to avoid being treated as successful analysis
-    return f"""⚠️ **Vesper Notice: {title}**
+    return f"""Vesper: {title}
 
 {details}
 """
@@ -1328,6 +1329,28 @@ def post_notice_comment(github_token: str, repo_name: str, pr_number: int, title
     repo = g.get_repo(repo_name)
     pr = repo.get_pull(pr_number)
     pr.create_issue_comment(format_notice(title, details))
+
+
+def react_to_comment(installation_id: int, comment_url: str | None, content: str = "+1") -> None:
+    """React to the triggering comment without blocking command handling."""
+    if not comment_url:
+        return
+    try:
+        _, installation_token, _ = setup_environment_webhook(installation_id)
+        response = requests.post(
+            f"{comment_url}/reactions",
+            headers={
+                "Accept": "application/vnd.github+json",
+                "Authorization": f"Bearer {installation_token}",
+                "X-GitHub-Api-Version": "2022-11-28",
+            },
+            json={"content": content},
+            timeout=10,
+        )
+        if response.status_code not in {200, 201}:
+            logging.info(f"Skipped comment reaction: GitHub returned HTTP {response.status_code}")
+    except Exception as e:
+        logging.info(f"Skipped comment reaction: {str(e)}")
 
 
 def run_analysis_for_pr(
@@ -1451,6 +1474,7 @@ def handle_pr_comment_command(
     pr_number: int,
     comment_body: str,
     commenter_login: str,
+    comment_url: str | None = None,
 ):
     """Handle slash-commands posted as PR comments.
 
@@ -1461,6 +1485,9 @@ def handle_pr_comment_command(
     command_parts = raw_command.split()
     command = (command_parts[0] if command_parts else "").lower()
     command_args = {part.lower() for part in command_parts[1:]}
+
+    if command in SUPPORTED_COMMENT_COMMANDS:
+        react_to_comment(installation_id, comment_url)
 
     if command == "/apply":
         return handle_apply_comment(installation_id, repo_name, pr_number, commenter_login=commenter_login)
@@ -1498,7 +1525,7 @@ def handle_pr_comment_command(
                 repo_name,
                 pr_number,
                 "Paused",
-                f"Auto analysis is paused for this PR.\n\nUse `/resume` to turn it back on.\n\nLabel: `{PAUSE_LABEL}`",
+                f"Auto analysis is paused for this PR.\n\nUse `/resume` to turn it back on. The pause label is `{PAUSE_LABEL}`.",
             )
             return {"status": "ok"}, 200
 
@@ -1514,7 +1541,7 @@ def handle_pr_comment_command(
                 repo_name,
                 pr_number,
                 "Resumed",
-                f"Auto analysis is enabled for this PR.\n\nUse `/pause` to pause again.\n\nLabel: `{PAUSE_LABEL}`",
+                f"Auto analysis is enabled for this PR.\n\nUse `/pause` to pause again. The pause label is `{PAUSE_LABEL}`.",
             )
             return {"status": "ok"}, 200
 
@@ -1528,7 +1555,11 @@ def handle_pr_comment_command(
             quota_msg = f"\n\nQuota cooldown active until: **{until_iso}**"
 
         state = "paused" if is_paused else "enabled"
-        label_msg = f"Paused label present: `{PAUSE_LABEL}`" if is_paused else f"Paused label not present: `{PAUSE_LABEL}`"
+        label_msg = (
+            f"The pause label is present: `{PAUSE_LABEL}`."
+            if is_paused
+            else f"The pause label is not present: `{PAUSE_LABEL}`."
+        )
         build_msg = get_build_string()
         build_line = f"\n\n{build_msg}" if build_msg else ""
         post_notice_comment(
@@ -1539,16 +1570,15 @@ def handle_pr_comment_command(
             f"Auto analysis is **{state}** for this PR.{quota_msg}\n\n{label_msg}{build_line}",
         )
         return {"status": "ok"}, 200
+
     if command == "/help":
         _, installation_token, _ = setup_environment_webhook(installation_id)
         help_text = """
-**Vesper Capabilities**
+Vesper can review a pull request, apply suggestions when authoring is enabled, and manage auto analysis for a thread.
 
-- Automatic analysis on PR open/reopen
-- Manual analysis: `/analyze`
-- Apply suggestions: `/apply`
-- Pause/resume auto analysis: `/pause`, `/resume`, `/status`
-- Merge commands (write/admin only): `/merge`, `/squash`, `/rebase`
+Use `/analyze` for a fresh review, `/apply` for suggestions, and `/pause`, `/resume`, or `/status` for auto analysis.
+
+If you have write access, `/merge`, `/squash`, and `/rebase` can finish the pull request.
 """.strip()
         post_notice_comment(
             installation_token,
@@ -1761,6 +1791,7 @@ def webhook_handler():
             pr_number,
             comment_body,
             commenter_login,
+            data.get("comment", {}).get("url"),
         )
         if isinstance(result, tuple) and len(result) == 2 and isinstance(result[0], dict):
             payload, status = result
@@ -1780,6 +1811,7 @@ def webhook_handler():
             pr_number,
             comment_body,
             commenter_login,
+            data.get("comment", {}).get("url"),
         )
         if isinstance(result, tuple) and len(result) == 2 and isinstance(result[0], dict):
             payload, status = result

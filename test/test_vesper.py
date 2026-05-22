@@ -32,6 +32,7 @@ from vesper.vesper import (  # noqa: E402
     parse_diff_for_suggestions,
     post_comment_webhook,
     post_inline_suggestions,
+    react_to_comment,
     run_analysis_for_pr,
     verify_webhook_signature,
 )
@@ -352,12 +353,12 @@ docs/CHANGELOG.md
         self.assertIn("<details>", formatted)
         self.assertIn("analysis content", formatted)
 
-    def test_format_notice_includes_warning(self):
-        """Notice comment should include warning emoji and title."""
+    def test_format_notice_includes_quiet_title(self):
+        """Notice comment should include a quiet title."""
         from vesper.vesper import format_notice
 
         formatted = format_notice("Test Title", "Test details")
-        self.assertIn("⚠️ **Vesper Notice: Test Title**", formatted)
+        self.assertIn("Vesper: Test Title", formatted)
         self.assertIn("Test details", formatted)
 
     def test_format_notice_does_not_include_sha_marker(self):
@@ -366,8 +367,21 @@ docs/CHANGELOG.md
 
         formatted = format_notice("Test Title", "Test details")
         self.assertNotIn("vesper-sha:", formatted)
-        self.assertIn("⚠️ **Vesper Notice: Test Title**", formatted)
+        self.assertIn("Vesper: Test Title", formatted)
         self.assertIn("Test details", formatted)
+
+    @patch("vesper.vesper.requests.post")
+    @patch("vesper.vesper.setup_environment_webhook")
+    def test_react_to_comment_posts_like_reaction(self, mock_setup_env, mock_post):
+        mock_setup_env.return_value = (Mock(), "token", Mock())
+        mock_post.return_value.status_code = 201
+
+        react_to_comment(123, "https://api.github.test/repos/o/r/issues/comments/1")
+
+        mock_post.assert_called_once()
+        _args, kwargs = mock_post.call_args
+        self.assertEqual(kwargs["json"], {"content": "+1"})
+        self.assertEqual(kwargs["headers"]["Authorization"], "Bearer token")
 
     @patch("vesper.vesper.post_comment_webhook")
     @patch("vesper.vesper.analyze_with_gemini")
@@ -774,15 +788,20 @@ old analysis
     @patch("vesper.vesper.handle_merge_command")
     @patch("vesper.vesper.handle_apply_comment")
     @patch("vesper.vesper.run_analysis_for_pr")
-    def test_handle_pr_comment_command_dispatches_analyze(self, mock_run_analysis, _mock_apply, _mock_merge):
-        result = handle_pr_comment_command(123, "o/r", 1, "/analyze", "alice")
+    @patch("vesper.vesper.react_to_comment")
+    def test_handle_pr_comment_command_dispatches_analyze(self, mock_react, mock_run_analysis, _mock_apply, _mock_merge):
+        result = handle_pr_comment_command(123, "o/r", 1, "/analyze", "alice", "https://api.github.test/comment")
         self.assertEqual(result, ({"status": "ok"}, 200))
         mock_run_analysis.assert_called_once_with(123, "o/r", 1, force=True, force_review=False)
+        mock_react.assert_called_once_with(123, "https://api.github.test/comment")
 
     @patch("vesper.vesper.handle_merge_command")
     @patch("vesper.vesper.handle_apply_comment")
     @patch("vesper.vesper.run_analysis_for_pr")
-    def test_handle_pr_comment_command_dispatches_analyze_force_review(self, mock_run_analysis, _mock_apply, _mock_merge):
+    @patch("vesper.vesper.react_to_comment")
+    def test_handle_pr_comment_command_dispatches_analyze_force_review(
+        self, _mock_react, mock_run_analysis, _mock_apply, _mock_merge
+    ):
         result = handle_pr_comment_command(123, "o/r", 1, "/analyze --force-review", "alice")
         self.assertEqual(result, ({"status": "ok"}, 200))
         mock_run_analysis.assert_called_once_with(123, "o/r", 1, force=True, force_review=True)
@@ -790,7 +809,8 @@ old analysis
     @patch("vesper.vesper.handle_merge_command")
     @patch("vesper.vesper.handle_apply_comment")
     @patch("vesper.vesper.run_analysis_for_pr")
-    def test_handle_pr_comment_command_dispatches_merge(self, mock_run_analysis, mock_apply, mock_merge):
+    @patch("vesper.vesper.react_to_comment")
+    def test_handle_pr_comment_command_dispatches_merge(self, _mock_react, mock_run_analysis, mock_apply, mock_merge):
         mock_merge.return_value = {"status": "merged"}
         result = handle_pr_comment_command(123, "o/r", 1, " /merge ", "alice")
         self.assertEqual(result, {"status": "merged"})
@@ -941,7 +961,7 @@ old analysis
         _args, kwargs = mock_post_notice.call_args
         details = kwargs.get("details") if "details" in kwargs else _args[4]
         self.assertIn("Auto analysis is **enabled**", details)
-        self.assertIn("Paused label not present", details)
+        self.assertIn("The pause label is not present", details)
         self.assertIn("Build: `0123456`", details)
 
         # Paused
@@ -956,7 +976,7 @@ old analysis
         _args, kwargs = mock_post_notice.call_args
         details = kwargs.get("details") if "details" in kwargs else _args[4]
         self.assertIn("Auto analysis is **paused**", details)
-        self.assertIn("Paused label present", details)
+        self.assertIn("The pause label is present", details)
         self.assertIn("Build: `0123456`", details)
 
     def test_find_diff_position(self):

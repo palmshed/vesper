@@ -23,3 +23,8 @@ vesper = "vesper.vesper:main"
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["vesper*"]
+
+[tool.pytest.ini_options]
+filterwarnings = [
+    "ignore:'_UnionGenericAlias' is deprecated and slated for removal in Python 3\\.17:DeprecationWarning:google\\.genai\\.types"
+]

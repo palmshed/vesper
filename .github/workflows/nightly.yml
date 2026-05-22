@@ -63,7 +63,6 @@ jobs:
               --title "$title" \
               --notes-file "$notes_file" \
               --prerelease \
-              --latest \
               --target "$SHA"
           else
             gh release create "$tag" \
@@ -71,7 +70,7 @@ jobs:
               --title "$title" \
               --notes-file "$notes_file" \
               --prerelease \
-              --latest \
+              --latest=false \
               --target "$SHA" \
               --verify-tag
           fi

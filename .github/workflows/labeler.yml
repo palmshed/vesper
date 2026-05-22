@@ -2,7 +2,7 @@
 # Copyright (c) 2026 vesper
 
 ---
-name: Auto Label
+name: Labels
 
 on:
   issues:

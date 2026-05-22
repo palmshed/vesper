@@ -2,7 +2,7 @@
 # Copyright (c) 2026 vesper
 
 ---
-name: Security Scan
+name: Security
 
 on:
   schedule:

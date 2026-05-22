@@ -2,7 +2,7 @@
 # Copyright (c) 2026 vesper
 
 ---
-name: E2E Tests
+name: Integration
 
 permissions:
   contents: read
@@ -16,7 +16,7 @@ on:
 
 jobs:
   e2e:
-    name: E2E Tests
+    name: Integration
     runs-on: ubuntu-latest
 
     steps:

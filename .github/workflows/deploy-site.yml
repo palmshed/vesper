@@ -2,7 +2,7 @@
 # Copyright (c) 2026 vesper
 
 ---
-name: Deploy Website to GitHub Pages
+name: Pages
 
 on:
   push:

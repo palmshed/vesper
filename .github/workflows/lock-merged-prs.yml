@@ -2,7 +2,7 @@
 # Copyright (c) 2026 vesper
 
 ---
-name: Lock Merged PRs
+name: Merged PRs
 
 on:
   pull_request:

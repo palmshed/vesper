@@ -2,7 +2,7 @@
 # Copyright (c) 2026 vesper
 
 ---
-name: Release
+name: Manual release
 permissions:
   contents: write
 

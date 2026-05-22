@@ -2,7 +2,7 @@
 # Copyright (c) 2026 vesper
 
 ---
-name: Cleanup
+name: Maintenance
 permissions:
   contents: write
   issues: write
@@ -17,7 +17,7 @@ on:
 
 jobs:
   stale-issues:
-    name: Close Stale Issues
+    name: Stale issues
     runs-on: ubuntu-latest
 
     steps:
@@ -56,7 +56,7 @@ jobs:
           operations-per-run: 30
 
   cleanup-artifacts:
-    name: Cleanup Old Artifacts
+    name: Artifacts
     runs-on: ubuntu-latest
 
     steps:

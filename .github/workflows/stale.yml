@@ -2,7 +2,7 @@
 # Copyright (c) 2026 vesper
 
 ---
-name: Close stale issues and PRs
+name: Stale
 
 on:
   schedule:

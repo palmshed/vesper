@@ -1,43 +1,3 @@
-class FaviconManager {
-  constructor() {
-    this.faviconSVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <rect x="14" y="20" width="72" height="26" rx="8" fill="#f5f5f0"/>
-  <rect x="14" y="54" width="72" height="26" rx="8" fill="#f5f5f0"/>
-  <circle cx="30" cy="33" r="5" fill="#080909"/>
-  <circle cx="30" cy="67" r="5" fill="#080909"/>
-</svg>`;
-  }
-
-  init() {
-    this.setFavicon();
-  }
-
-  setFavicon() {
-    let favicon = document.querySelector('link[rel="icon"]');
-
-    if (!favicon) {
-      favicon = document.createElement('link');
-      favicon.rel = 'icon';
-      favicon.type = 'image/svg+xml';
-      document.head.appendChild(favicon);
-    }
-
-    const svgBlob = new Blob([this.faviconSVG], { type: 'image/svg+xml' });
-    const url = URL.createObjectURL(svgBlob);
-    favicon.href = url;
-  }
-}
-
-// Set favicon immediately before page renders
-(function() {
-  var fav = document.createElement('link');
-  fav.rel = 'icon';
-  fav.type = 'image/svg+xml';
-  var svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect x="14" y="20" width="72" height="26" rx="8" fill="#f5f5f0"/><rect x="14" y="54" width="72" height="26" rx="8" fill="#f5f5f0"/><circle cx="30" cy="33" r="5" fill="#080909"/><circle cx="30" cy="67" r="5" fill="#080909"/></svg>';
-  fav.href = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
-  document.head.appendChild(fav);
-})();
-
 class ResponsiveLayout {
   constructor() {
     this.init();
@@ -133,7 +93,6 @@ class ResponsiveLayout {
 
 class LayoutManager {
   constructor() {
-    this.faviconManager = new FaviconManager();
     this.responsiveLayout = null;
     this.init();
   }

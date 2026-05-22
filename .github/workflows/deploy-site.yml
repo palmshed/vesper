@@ -27,7 +27,7 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-pages-artifact@v5
         with:
           # Point this to your website directory
           path: website

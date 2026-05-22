@@ -159,7 +159,7 @@ gem build *.gemspec            # Verify build
 
 # PR Review
 
-Vesper is the optional PR-review companion included in this repo. For setup details, see [vesper/Vesper.md](vesper/Vesper.md).
+Vesper is the optional PR-review companion included in this repo. For setup details, see [`vesper/Vesper.md`](vesper/Vesper.md).
 
 
 <br>
@@ -198,12 +198,12 @@ puts client.chat(messages, system_instruction: 'Be helpful and concise.')
 
 | Need | Link |
 | --- | --- |
-| Start | [Quickstart](docs/start/quickstart.md) |
-| API | [Reference](docs/reference/api.md) |
-| Recipes | [Cookbook](docs/reference/cookbook.md) |
-| Practice | [Best practices](docs/guides/practices.md) |
-| Automation | [Workflows](docs/guides/workflows.md) |
-| Project | [Contributing](docs/CONTRIBUTING.md) |
+| Start | [`Quickstart`](docs/start/quickstart.md) |
+| API | [`Reference`](docs/reference/api.md) |
+| Recipes | [`Cookbook`](docs/reference/cookbook.md) |
+| Practice | [`Best practices`](docs/guides/practices.md) |
+| Automation | [`Workflows`](docs/guides/workflows.md) |
+| Project | [`Contributing`](docs/CONTRIBUTING.md) |
 
 
 <br>
@@ -217,15 +217,15 @@ Fork the repo and open a pull request.
 
 # License
 
-MIT → see [LICENSE](LICENSE).
+MIT → see [`LICENSE`](LICENSE).
 
 
 <br>
 
 <p align="center">
   <a href="https://github.com/apps/vesper-review">
-    <img src="website/assets/vesper-review-app.png" alt="Vesper Review app" width="180">
+    <img src="website/favicon.svg" alt="Vesper Review app" width="96">
   </a>
   <br>
-  <a href="https://github.com/apps/vesper-review">Vesper Review</a>
+  <a href="https://github.com/apps/vesper-review"><code>Vesper Review</code></a>
 </p>

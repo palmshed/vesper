@@ -18,6 +18,7 @@ jobs:
     permissions:
       contents: read
       pull-requests: read
+      statuses: write
 
     steps:
       - id: app-token
@@ -26,24 +27,20 @@ jobs:
         with:
           app-id: ${{ secrets.VESPER_APP_ID }}
           private-key: ${{ secrets.VESPER_PRIVATE_KEY }}
-          permission-checks: write
           permission-pull-requests: read
           permission-contents: read
 
-      - name: Publish check
+      - name: Publish status
         env:
-          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          GH_TOKEN: ${{ github.token }}
           HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
           REPO: ${{ github.repository }}
         run: |
           set -euo pipefail
 
-          gh api "repos/$REPO/check-runs" \
+          gh api "repos/$REPO/statuses/$HEAD_SHA" \
             -X POST \
-            -f name='Vesper Review' \
-            -f head_sha="$HEAD_SHA" \
-            -f status='completed' \
-            -f conclusion='success' \
-            -f 'output[title]=Vesper Review' \
-            -f 'output[summary]=Vesper Review is available for this ref.' \
+            -f state='success' \
+            -f context='Vesper Review' \
+            -f description='Vesper Review is available for this ref.' \
             --silent

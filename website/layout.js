@@ -1,8 +1,10 @@
 class FaviconManager {
   constructor() {
     this.faviconSVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <circle cx="50" cy="50" r="45" fill="#333333"/>
-  <text x="50" y="65" font-size="40" text-anchor="middle" fill="white" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">fg</text>
+  <rect x="14" y="20" width="72" height="26" rx="8" fill="#f5f5f0"/>
+  <rect x="14" y="54" width="72" height="26" rx="8" fill="#f5f5f0"/>
+  <circle cx="30" cy="33" r="5" fill="#080909"/>
+  <circle cx="30" cy="67" r="5" fill="#080909"/>
 </svg>`;
   }
 
@@ -31,7 +33,7 @@ class FaviconManager {
   var fav = document.createElement('link');
   fav.rel = 'icon';
   fav.type = 'image/svg+xml';
-  var svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="#333333"/><text x="50" y="65" font-size="40" text-anchor="middle" fill="white" font-family="system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif">fg</text></svg>';
+  var svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect x="14" y="20" width="72" height="26" rx="8" fill="#f5f5f0"/><rect x="14" y="54" width="72" height="26" rx="8" fill="#f5f5f0"/><circle cx="30" cy="33" r="5" fill="#080909"/><circle cx="30" cy="67" r="5" fill="#080909"/></svg>';
   fav.href = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
   document.head.appendChild(fav);
 })();

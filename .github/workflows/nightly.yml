@@ -1,0 +1,78 @@
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2026 bniladridas
+
+---
+name: Nightly
+
+on:
+  schedule:
+    - cron: '17 3 * * *'
+  workflow_dispatch:
+
+jobs:
+  prerelease:
+    name: Prerelease
+    runs-on: ubuntu-latest
+    if: github.repository_owner == 'bniladridas'
+    permissions:
+      contents: read
+
+    steps:
+      - id: app-token
+        name: Create Vesper Review app token
+        uses: actions/create-github-app-token@v3
+        with:
+          app-id: ${{ secrets.VESPER_APP_ID }}
+          private-key: ${{ secrets.VESPER_PRIVATE_KEY }}
+          permission-contents: write
+
+      - name: Publish nightly prerelease
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          REPO: ${{ github.repository }}
+          SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+
+          tag="nightly-$(date -u +%Y%m%d)"
+          title="Nightly $(date -u +%Y-%m-%d)"
+          notes_file="$(mktemp)"
+
+          {
+            printf "Nightly prerelease for \`%s\`.\n\n" "$SHA"
+            printf "Generated from \`main\` for testing before the next release.\n"
+          } > "$notes_file"
+
+          if gh api "repos/$REPO/git/ref/tags/$tag" --silent 2>/dev/null; then
+            gh api "repos/$REPO/git/refs/tags/$tag" \
+              -X PATCH \
+              -f sha="$SHA" \
+              -F force=true \
+              --silent
+          else
+            gh api "repos/$REPO/git/refs" \
+              -X POST \
+              -f ref="refs/tags/$tag" \
+              -f sha="$SHA" \
+              --silent
+          fi
+
+          if gh release view "$tag" --repo "$REPO" >/dev/null 2>&1; then
+            gh release edit "$tag" \
+              --repo "$REPO" \
+              --title "$title" \
+              --notes-file "$notes_file" \
+              --prerelease \
+              --target "$SHA"
+          else
+            gh release create "$tag" \
+              --repo "$REPO" \
+              --title "$title" \
+              --notes-file "$notes_file" \
+              --prerelease \
+              --latest=false \
+              --target "$SHA" \
+              --verify-tag
+          fi
+
+          echo "tag=$tag" >> "$GITHUB_STEP_SUMMARY"

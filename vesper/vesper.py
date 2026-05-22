@@ -1386,6 +1386,18 @@ def run_analysis_for_pr(
         logging.warning(f"Quota exceeded for PR #{pr_number}; cooldown until {until_iso}")
         return
 
+    if is_api_unavailable_message(analysis):
+        logging.warning(f"Skipping comment update for PR #{pr_number}: Gemini API unavailable")
+        if force:
+            post_notice_comment(
+                installation_token,
+                repo_name,
+                pr_number,
+                "Gemini unavailable",
+                "Gemini is temporarily unavailable. The previous Vesper analysis was left unchanged.",
+            )
+        return
+
     post_comment_webhook(
         installation_token,
         repo_name,
@@ -1521,6 +1533,15 @@ def handle_pr_comment_command(
 def is_quota_exceeded_message(analysis: str) -> bool:
     text = (analysis or "").lower()
     return "api quota exceeded" in text or "rate limit" in text or "quota" in text and "exceeded" in text
+
+
+def is_api_unavailable_message(analysis: str) -> bool:
+    text = (analysis or "").lower()
+    return (
+        "api unavailable" in text
+        or "service unavailable" in text
+        or ("503" in text and ("unavailable" in text or "high demand" in text))
+    )
 
 
 def get_quota_cooldown_until(pr) -> int | None:

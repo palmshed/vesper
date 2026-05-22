@@ -25,6 +25,7 @@ from vesper.vesper import (  # noqa: E402
     find_diff_position,
     get_pr_details_webhook,
     handle_pr_comment_command,
+    is_api_unavailable_message,
     is_quota_exceeded_message,
     load_config,
     parse_diff_for_suggestions,
@@ -467,6 +468,86 @@ class TestVesper(unittest.TestCase):
         self.assertTrue(is_quota_exceeded_message("Error generating analysis: API quota exceeded."))
         self.assertTrue(is_quota_exceeded_message("rate limit hit, try later"))
         self.assertFalse(is_quota_exceeded_message("all good"))
+
+    def test_is_api_unavailable_message(self):
+        self.assertTrue(is_api_unavailable_message("Error generating analysis: API unavailable (HTTP 503)."))
+        self.assertTrue(is_api_unavailable_message("503 UNAVAILABLE: high demand, try later"))
+        self.assertFalse(is_api_unavailable_message("all good"))
+
+    @patch("vesper.vesper.post_notice_comment")
+    @patch("vesper.vesper.post_comment_webhook")
+    @patch("vesper.vesper.analyze_with_gemini")
+    @patch("vesper.vesper.get_pr_details_webhook")
+    @patch("vesper.vesper.setup_environment_webhook")
+    def test_run_analysis_for_pr_skips_comment_update_when_api_unavailable(
+        self,
+        mock_setup_env,
+        mock_get_pr_details,
+        mock_analyze,
+        mock_post_comment,
+        mock_post_notice,
+    ):
+        g = Mock()
+        repo = Mock()
+        pr = Mock()
+        issue = Mock()
+
+        label = Mock()
+        label.name = "something-else"
+        issue.get_labels.return_value = [label]
+        pr.get_issue_comments.return_value = []
+
+        repo.get_issue.return_value = issue
+        repo.get_pull.return_value = pr
+        g.get_repo.return_value = repo
+
+        mock_setup_env.return_value = (g, "token", Mock())
+        mock_get_pr_details.return_value = {
+            "number": 1,
+            "files_changed": ["x.py"],
+            "diff": "diff",
+            "head_sha": "deadbeef",
+        }
+        mock_analyze.return_value = "Error generating analysis: API unavailable (HTTP 503). Please try again later."
+
+        run_analysis_for_pr(123, "o/r", 1, force=False)
+
+        mock_post_comment.assert_not_called()
+        mock_post_notice.assert_not_called()
+
+    @patch("vesper.vesper.post_notice_comment")
+    @patch("vesper.vesper.post_comment_webhook")
+    @patch("vesper.vesper.analyze_with_gemini")
+    @patch("vesper.vesper.get_pr_details_webhook")
+    @patch("vesper.vesper.setup_environment_webhook")
+    def test_run_analysis_for_pr_posts_notice_when_manual_api_unavailable(
+        self,
+        mock_setup_env,
+        mock_get_pr_details,
+        mock_analyze,
+        mock_post_comment,
+        mock_post_notice,
+    ):
+        g = Mock()
+        repo = Mock()
+        pr = Mock()
+        pr.get_issue_comments.return_value = []
+        repo.get_pull.return_value = pr
+        g.get_repo.return_value = repo
+
+        mock_setup_env.return_value = (g, "token", Mock())
+        mock_get_pr_details.return_value = {
+            "number": 1,
+            "files_changed": ["x.py"],
+            "diff": "diff",
+            "head_sha": "deadbeef",
+        }
+        mock_analyze.return_value = "503 UNAVAILABLE: high demand, try later"
+
+        run_analysis_for_pr(123, "o/r", 1, force=True)
+
+        mock_post_comment.assert_not_called()
+        mock_post_notice.assert_called_once()
 
     @patch("vesper.vesper.post_notice_comment")
     @patch("vesper.vesper.analyze_with_gemini")

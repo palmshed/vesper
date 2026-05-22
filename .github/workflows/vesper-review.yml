@@ -1,0 +1,49 @@
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2026 bniladridas
+
+---
+name: Vesper Review
+
+on:
+  push:
+    branches: [main]
+  pull_request_target:
+    types: [opened, reopened, synchronize, ready_for_review]
+
+jobs:
+  check:
+    name: Vesper Review
+    runs-on: ubuntu-latest
+    if: github.repository_owner == 'bniladridas'
+    permissions:
+      contents: read
+      pull-requests: read
+
+    steps:
+      - id: app-token
+        name: Create Vesper Review app token
+        uses: actions/create-github-app-token@v3
+        with:
+          app-id: ${{ secrets.VESPER_APP_ID }}
+          private-key: ${{ secrets.VESPER_PRIVATE_KEY }}
+          permission-checks: write
+          permission-pull-requests: read
+          permission-contents: read
+
+      - name: Publish check
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+
+          gh api "repos/$REPO/check-runs" \
+            -X POST \
+            -f name='Vesper Review' \
+            -f head_sha="$HEAD_SHA" \
+            -f status='completed' \
+            -f conclusion='success' \
+            -f 'output[title]=Vesper Review' \
+            -f 'output[summary]=Vesper Review is available for this ref.' \
+            --silent

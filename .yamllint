@@ -4,6 +4,4 @@ extends: default
 rules:
   truthy: disable
   line-length:
-    max: 200
-  comments-indentation: disable
-  comments: disable
+    max: 160

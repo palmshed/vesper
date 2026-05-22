@@ -106,7 +106,7 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 1
 
-    # Install Python dependencies required for Vesper
+      # Install Python dependencies required for Vesper
       - name: Install dependencies
         run: |
           # Install pinned Vesper dependencies (direct + transitive) for reproducible runs
@@ -138,7 +138,7 @@ jobs:
           app-id: ${{ secrets.VESPER_APP_ID }}
           private-key: ${{ secrets.VESPER_PRIVATE_KEY }}
 
-    # Run Vesper to analyze PR with Gemini AI
+      # Run Vesper to analyze PR with Gemini AI
       - name: Run Gemini PR Bot
         if: steps.vesper-secrets.outputs.available == 'true'
         env:

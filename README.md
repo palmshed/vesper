@@ -218,3 +218,14 @@ Fork the repo and open a pull request.
 # License
 
 MIT → see [LICENSE](LICENSE).
+
+
+<br>
+
+<p align="center">
+  <a href="https://github.com/apps/vesper-review">
+    <img src="website/assets/vesper-review-app.png" alt="Vesper Review app" width="180">
+  </a>
+  <br>
+  <a href="https://github.com/apps/vesper-review">Vesper Review</a>
+</p>

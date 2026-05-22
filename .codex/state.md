@@ -1,4 +1,12 @@
-# State
+# Codex State
+
+Memory version: `2026.05.22.1`
+
+Updated: `2026-05-22`
+
+Brain link: [repo memory](state.md)
+
+Read this before changing behavior. Update it when it becomes stale.
 
 ## Project shape
 
@@ -18,9 +26,13 @@ Use `🙂` for normal replies, `😅` for blocked or unavailable states, and `�
 
 Do not use GitHub reactions for command feedback.
 
+On the website, mention this emoji behavior in one place only: Support -> Command replies.
+
 The main Vesper analysis comment is updated in place and keeps a reviewed commits table.
 
 Empty inline reviews should be skipped when there are no inline suggestions.
+
+`/apply` authoring is enabled, but automatic suggestion commits remain off.
 
 ## Operations
 

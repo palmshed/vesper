@@ -54,7 +54,7 @@
           <li><span></span>Required GitHub App permissions + webhook events</li>
           <li><span></span>Slash command behavior: <code>/analyze</code>, <code>/apply</code>, <code>/help</code>, <code>/merge</code>, <code>/squash</code>, <code>/rebase</code></li>
           <li><span></span>Operational controls: <code>/pause</code>, <code>/resume</code>, <code>/status</code></li>
-          <li><span></span>Quiet command replies using <code>🙂</code>, <code>😅</code>, and <code>😴</code></li>
+          <li><span></span>Quiet command replies with a small status cue when useful</li>
           <li><span></span>Why reviews/inline suggestions sometimes don't appear</li>
           <li><span></span>Optional multi-line inline review comments ("comment on lines ...")</li>
           <li><span></span>Common log patterns and how to interpret them</li>
@@ -137,7 +137,7 @@ Pull request review comment</code></pre>
             <tr>
               <td data-label="Symptom">Command replies felt too loud</td>
               <td data-label="Root cause">Notices used warning-style labels and list-like copy</td>
-              <td data-label="Resolution">Use short prose with <code>🙂</code> for normal replies, <code>😅</code> for blocked states, and <code>😴</code> for paused or no-op states</td>
+              <td data-label="Resolution">Use short prose with a small status cue only when it helps</td>
             </tr>
           </tbody>
         </table>
@@ -165,19 +165,18 @@ Pull request review comment</code></pre>
         <section>
           <h2>Command replies</h2>
           <p>
-            Vesper keeps command replies short. Normal replies use <code>🙂</code>, blocked or unavailable states use
-            <code>😅</code>, and paused or no-op states use <code>😴</code>.
+            Vesper keeps command replies short. It uses prose first and a small status cue only when the state needs it.
           </p>
           <pre><code>Vesper: Paused
 
-😴 Auto analysis is paused for this PR.</code></pre>
+Auto analysis is paused for this PR.</code></pre>
         </section>
 
         <section>
           <h2>Quota cooldown</h2>
           <p>
-            When Gemini returns a quota or rate-limit error, Vesper posts a short <code>😅</code> notice and temporarily
-            skips auto-analysis on new commits for a short cooldown window.
+            When Gemini returns a quota or rate-limit error, Vesper posts a short notice and temporarily skips
+            auto-analysis on new commits for a short cooldown window.
           </p>
           <p class="card-subtext">Config (Vercel → Project → Settings → Environment Variables):</p>
           <pre><code>VESPER_QUOTA_COOLDOWN_SECONDS=1800</code></pre>

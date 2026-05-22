@@ -48,7 +48,6 @@ repos:
         language: python
         types: [yaml]
         args: [--strict]
-        additional_dependencies: [yamllint]
 
   # Spelling
   - repo: https://github.com/codespell-project/codespell

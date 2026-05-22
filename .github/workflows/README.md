@@ -10,7 +10,7 @@ This directory holds the GitHub Actions workflows for the repository.
 | `dependencies.yml` | Checks dependency updates |
 | `vesper.yml` | Runs Vesper on pull requests |
 | `deploy-site.yml` | Publishes the static website |
-| `release.yml` | Handles release automation |
+| `release.yml` | Opens release pull requests and tags releases through Vesper Review |
 | `publish-gem.yml` | Builds and publishes gem artifacts |
 | `vesper-review.yml` | Publishes the Vesper Review app check |
 | `manual.yml` | Provides manual release and maintenance tasks |

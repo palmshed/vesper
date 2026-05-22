@@ -16,28 +16,45 @@ jobs:
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
     permissions:
-      contents: write
-      pull-requests: write
+      contents: read
     steps:
+      - id: app-token
+        name: Create Vesper Review app token
+        uses: actions/create-github-app-token@v3
+        with:
+          app-id: ${{ secrets.VESPER_APP_ID }}
+          private-key: ${{ secrets.VESPER_PRIVATE_KEY }}
+          permission-contents: write
+          permission-pull-requests: write
+          permission-issues: write
+
       - uses: googleapis/release-please-action@v5
         id: release
         with:
-          token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
+          token: ${{ steps.app-token.outputs.token }}
           config-file: release-please-config.json
           manifest-file: .release-please-manifest.json
-          skip-labeling: true
 
   release-tag:
     if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     permissions:
-      contents: write
-      pull-requests: write
+      contents: read
     steps:
+      - id: app-token
+        name: Create Vesper Review app token
+        uses: actions/create-github-app-token@v3
+        with:
+          app-id: ${{ secrets.VESPER_APP_ID }}
+          private-key: ${{ secrets.VESPER_PRIVATE_KEY }}
+          permission-contents: write
+          permission-pull-requests: write
+          permission-issues: write
+
       - uses: googleapis/release-please-action@v5
         id: release
         with:
-          token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
+          token: ${{ steps.app-token.outputs.token }}
           config-file: release-please-config.json
           manifest-file: .release-please-manifest.json
           command: release

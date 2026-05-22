@@ -15,6 +15,5 @@
     { "type": "perf", "section": "Performance Improvements" },
     { "type": "docs", "section": "Documentation" },
     { "type": "refactor", "section": "Code Refactoring" }
-  ],
-  "skip-labeling": true
+  ]
 }

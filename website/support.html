@@ -54,7 +54,6 @@
           <li><span></span>Required GitHub App permissions + webhook events</li>
           <li><span></span>Slash command behavior: <code>/analyze</code>, <code>/apply</code>, <code>/help</code>, <code>/merge</code>, <code>/squash</code>, <code>/rebase</code></li>
           <li><span></span>Operational controls: <code>/pause</code>, <code>/resume</code>, <code>/status</code></li>
-          <li><span></span>Quiet command replies with a small status cue when useful</li>
           <li><span></span>Why reviews/inline suggestions sometimes don't appear</li>
           <li><span></span>Optional multi-line inline review comments ("comment on lines ...")</li>
           <li><span></span>Common log patterns and how to interpret them</li>
@@ -134,11 +133,6 @@ Pull request review comment</code></pre>
               <td data-label="Root cause">No per-PR control for auto triggers</td>
               <td data-label="Resolution">Introduce <code>/pause</code> and <code>/resume</code> using the <code>vesper:paused</code> label</td>
             </tr>
-            <tr>
-              <td data-label="Symptom">Command replies felt too loud</td>
-              <td data-label="Root cause">Notices used warning-style labels and list-like copy</td>
-              <td data-label="Resolution">Use short prose with a small status cue only when it helps</td>
-            </tr>
           </tbody>
         </table>
         <p class="subtext">
@@ -165,11 +159,12 @@ Pull request review comment</code></pre>
         <section>
           <h2>Command replies</h2>
           <p>
-            Vesper keeps command replies short. It uses prose first and a small status cue only when the state needs it.
+            Vesper keeps command replies short. A normal reply may use <code>🙂</code>, a blocked or unavailable state
+            may use <code>😅</code>, and a paused or no-op state may use <code>😴</code>.
           </p>
           <pre><code>Vesper: Paused
 
-Auto analysis is paused for this PR.</code></pre>
+😴 Auto analysis is paused for this PR.</code></pre>
         </section>
 
         <section>

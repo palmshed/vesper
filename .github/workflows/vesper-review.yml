@@ -27,12 +27,13 @@ jobs:
         with:
           app-id: ${{ secrets.VESPER_APP_ID }}
           private-key: ${{ secrets.VESPER_PRIVATE_KEY }}
+          permission-statuses: write
           permission-pull-requests: read
           permission-contents: read
 
       - name: Publish status
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
           HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
           REPO: ${{ github.repository }}
         run: |

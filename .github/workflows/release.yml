@@ -35,6 +35,46 @@ jobs:
           config-file: release-please-config.json
           manifest-file: .release-please-manifest.json
 
+      - name: Quiet release pull request
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+
+          branch="release-please--branches--main--components--vesper"
+          pr_number="$(gh pr list \
+            --repo "$REPO" \
+            --state open \
+            --head "$branch" \
+            --json number \
+            --jq ".[0].number // empty")"
+
+          if [ -z "$pr_number" ]; then
+            exit 0
+          fi
+
+          title="$(gh pr view "$pr_number" --repo "$REPO" --json title --jq '.title')"
+          version="$(printf '%s' "$title" | sed -nE 's/.*release[^0-9]*([0-9]+\.[0-9]+\.[0-9]+).*/\1/p')"
+          body_file="$(mktemp)"
+
+          {
+            printf "Release notes for the next Vesper release.\n\n"
+            if [ -n "$version" ]; then
+              printf "Version: \`%s\`\n\n" "$version"
+            fi
+            printf "Review:\n"
+            gh pr view "$pr_number" \
+              --repo "$REPO" \
+              --json files \
+              --jq ".files[].path" | while IFS= read -r path; do
+                printf -- "- \`%s\`\n" "$path"
+              done
+            printf "\nManaged by Vesper Review.\n"
+          } > "$body_file"
+
+          gh pr edit "$pr_number" --repo "$REPO" --body-file "$body_file"
+
   release-tag:
     if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
     runs-on: ubuntu-latest

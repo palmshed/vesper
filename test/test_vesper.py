@@ -503,6 +503,16 @@ class TestVesper(unittest.TestCase):
         self.assertEqual(kwargs["headers"]["Authorization"], "token inst-token")
 
     @patch("vesper.vesper.requests.get")
+    def test_fetch_pr_diff_treats_stateless_installation_tokens_as_opaque(self, mock_get):
+        token = f"ghs_{'a' * 80}.{'b' * 210}.{'c' * 210}"
+        mock_get.return_value = Mock(status_code=200, text="diff")
+
+        self.assertEqual(fetch_pr_diff("https://example.invalid/diff", token=token), "diff")
+
+        _args, kwargs = mock_get.call_args
+        self.assertEqual(kwargs["headers"]["Authorization"], f"token {token}")
+
+    @patch("vesper.vesper.requests.get")
     def test_fetch_pr_diff_returns_empty_on_non_200(self, mock_get):
         response = Mock()
         response.status_code = 403

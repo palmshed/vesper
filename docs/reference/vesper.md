@@ -81,7 +81,7 @@ Webhook Mode is recommended for better scalability and ease of management. Benef
 ## Security
 
 - **Webhook signature verification**: All webhook requests are validated using HMAC-SHA256
-- **GitHub App authentication**: Uses secure app tokens with minimal required permissions
+- **GitHub App authentication**: Uses secure app tokens with minimal required permissions. Installation tokens are treated as opaque strings and may use GitHub's longer `ghs_` token format.
 - **Environment variables**: Sensitive keys are stored securely in Vercel/env vars
 
 ## Code Authoring Features

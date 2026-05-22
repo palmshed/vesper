@@ -2,7 +2,7 @@
 
 Contributions are welcome when they keep the project small, clear, and tested.
 
-Please read the [Code of Conduct](CODE_OF_CONDUCT.md) before participating.
+Please read the [`Code of Conduct`](CODE_OF_CONDUCT.md) before participating.
 
 ## Setup
 
@@ -54,10 +54,10 @@ For feature requests, describe the use case and the smallest API that would solv
 
 | Topic | Link |
 | --- | --- |
-| Setup | [Setup](SETUP.md) |
-| Practices | [Development practices](guides/practices.md) |
-| Tests | [Testing](reference/testing.md) |
-| API | [API reference](reference/api.md) |
+| Setup | [`Setup`](SETUP.md) |
+| Practices | [`Development practices`](guides/practices.md) |
+| Tests | [`Testing`](reference/testing.md) |
+| API | [`API reference`](reference/api.md) |
 
 ## License
 

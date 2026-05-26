@@ -43,10 +43,10 @@ function getDiff() {
 
 async function analyzeWithGemini(files, diff, apiKey) {
   const genAI = new GoogleGenerativeAI(apiKey);
-  const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+  const model = genAI.getGenerativeModel({ model: process.env.VESPER_GEMINI_MODEL || 'gemini-3.5-flash' });
 
   const prompt = `
-Analyze the following code changes for improvements. Focus on code quality, best practices, performance, and correctness.
+Analyze the following code changes. Focus on code quality, security, performance, and correctness.
 
 Changed files:
 ${files.join('\n')}

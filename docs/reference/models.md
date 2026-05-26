@@ -1,13 +1,23 @@
 # Models
 
-Vesper maps a small set of Ruby symbols to Gemini model IDs.
+Vesper maps Ruby symbols to Gemini `generateContent` text model IDs.
 
 | Symbol | Model | Use |
 | --- | --- | --- |
-| `:pro` | `gemini-2.5-pro` | Default model for complex work |
-| `:flash` | `gemini-2.5-flash` | Faster general-purpose responses |
-| `:flash_2_0` | `gemini-2.0-flash` | Legacy compatibility |
-| `:flash_lite` | `gemini-2.0-flash-lite` | Lightweight legacy compatibility |
+| `:flash_latest` | `gemini-flash-latest` | Moving Flash alias |
+| `:pro_latest` | `gemini-pro-latest` | Moving Pro alias |
+| `:flash_3_5` | `gemini-3.5-flash` | Gemini 3.5 Flash |
+| `:pro_3_preview` | `gemini-3-pro-preview` | Gemini 3 preview |
+| `:flash_3_preview` | `gemini-3-flash-preview` | Gemini 3 Flash preview |
+| `:pro_3_1_preview` | `gemini-3.1-pro-preview` | Gemini 3.1 Pro preview |
+| `:flash_3_1_lite` | `gemini-3.1-flash-lite` | Gemini 3.1 Flash Lite |
+| `:pro_2_5` | `gemini-2.5-pro` | Gemini 2.5 Pro |
+| `:flash_2_5` | `gemini-2.5-flash` | Gemini 2.5 Flash |
+| `:flash_2_0` | `gemini-2.0-flash` | Gemini 2.0 Flash |
+| `:pro` | `gemini-pro-latest` | Short alias |
+| `:flash` | `gemini-3.5-flash` | Short alias |
+| `:flash_lite` | `gemini-3.1-flash-lite` | Short alias |
+| `:pro_2_0` | `gemini-2.0-flash` | Legacy alias |
 
 ## Usage
 

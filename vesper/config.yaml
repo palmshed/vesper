@@ -7,14 +7,14 @@
 # Customize the analysis focus and model
 
 # Analysis focus: 'all', 'security', 'performance', 'quality'
-# Options: 'all' for comprehensive review, 'security' for security issues only, 'performance' for optimization suggestions, 'quality' for code quality feedback
+# Options: 'all' for full review, 'security' for security issues only, 'performance' for performance suggestions, 'quality' for code quality feedback
 focus: all
 
 # Gemini model to use
-# Available options: 'gemini-1.5-flash', 'gemini-1.5-pro', 'gemini-2.0-flash', 'gemini-2.5-flash', 'gemini-2.5-pro'
-# Recommendations: 'gemini-2.5-flash' for fast, cost-effective analysis; 'gemini-2.5-pro' for higher quality but slower responses
+# Default: 'gemini-3.5-flash'
+# Use VESPER_GEMINI_MODEL to override the default in hosted environments.
 # See https://ai.google.dev/models/gemini for the full list and latest models
-model: gemini-2.5-flash
+model: gemini-3.5-flash
 
 # Maximum diff length to analyze (characters)
 # Limits the size of diff content sent to AI. Larger values provide more context but may hit token limits or increase costs
@@ -57,52 +57,21 @@ create_improvement_prs: false
 # {timestamp} and {pr_number} will be replaced with actual values
 improvement_branch_pattern: "vesper-improvements-{timestamp}"
 
-# Enable RAG (Retrieval Augmented Generation)
-# Fetches current information to supplement model's knowledge cutoff
-enable_rag: true
-
-# RAG sources to search (space-separated)
-# Package Managers: pypi, npm, crates, go, dockerhub, apt, brew, conda, nuget, maven, pub, helm, cocoapods, packagist, rubygems, spm, carthage, pipenv
-# Cloud: aws_docs, azure_docs, gcp_docs, terraform_registry, kubernetes, cloudflare, vercel, heroku, digitalocean, linode, fastly
-# Serverless: aws_lambda, cloudfunctions, firebase_functions
-# Security: security, snyk, github, dependabot, sonarcloud, auth0, clerk, supabase
-# Docs/Community: docs, stackoverflow, reddit, hackernews, youtube, arxiv, devto, medium, producthunt, gitbook, confluence, slack, discord, telegram
-# Testing: jest, pytest, rspec, cypress, playwright, vitest
-# Databases: postgresql, mongodb, redis, prisma, mysql, sqlite, elasticsearch, algolia, meilisearch, memcached, rabbitmq, kafka, pulsar
-# API: swagger, graphql, rest, grpc
-# CI/CD: github_actions, gitlab_ci, jenkins, circleci, actions
-# Monitoring: datadog, newrelic, sentry, prometheus, grafana
-# AI/ML: openai, anthropic, cohere, huggingface, kaggle, langchain
-# Payments: stripe, paypal, braintree
-# Email: sendgrid, mailgun, ses
-# Infrastructure: ansible, puppet, packer, vagrant
-
-# RAG sources - 90+ sources available
-rag_sources: [
-  pypi, npm, crates, go, dockerhub, security, github, docs, stackoverflow,
-  news, weather, reddit, hackernews, youtube, arxiv, devto, medium,
-  producthunt, apt, brew, conda, nuget, maven, pub, helm, terraform_registry,
-  cocoapods, packagist, rubygems, kubernetes, cloudflare, vercel, heroku,
-  slack, discord, telegram, jest, pytest, rspec, cypress, playwright, vitest,
-  sonarcloud, postgresql, mongodb, redis, prisma, mysql, elasticsearch,
-  algolia, meilisearch, rabbitmq, kafka, pulsar, grpc, circleci, actions,
-  prometheus, grafana, stripe, paypal, braintree, sendgrid, mailgun, ses,
-  ansible, puppet, packer, vagrant, firebase_functions, langchain,
-  aws_docs, azure_docs, gcp_docs, huggingface, kaggle,
-  auth0, clerk, supabase, openai, anthropic, cohere
-]
+# Optional retrieval context. Disabled by default to keep reviews fast and predictable.
+enable_rag: false
+rag_sources: [pypi, npm, rubygems, security, github, docs]
 
 # GitHub token for RAG (optional, for higher rate limits)
 # If not set, will use GITHUB_TOKEN from environment
 rag_github_token: ""
 
-# Max items to fetch per RAG source
-rag_max_items: 5
+# Max items to fetch per RAG source when RAG is enabled
+rag_max_items: 3
 
 # AI analysis prompt template
 # Customize the prompt to change how Vesper analyzes code
 prompt: |
-  Analyze the following code changes for improvements. Focus on code quality, best practices, performance, and correctness.
+  Analyze the following code changes. Focus on code quality, security, performance, and correctness.
 
   Changed files:
   {files}

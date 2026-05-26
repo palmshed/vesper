@@ -1,15 +1,15 @@
-# Core Capabilities
+# Capabilities
 
-Vesper provides comprehensive access to Google Gemini's advanced AI capabilities through a Ruby interface.
+Vesper provides a Ruby interface for Gemini text generation, chat, and image input.
 
 ## Text Generation
 
-Generate high-quality text for various use cases with fine-grained control over output characteristics.
+Generate text with request options for temperature, token limits, and sampling.
 
 ### Basic Text Generation
 ```ruby
 client = GeminiAI::Client.new
-response = client.generate_text("Explain quantum computing in simple terms")
+response = client.generate_text("Explain quantum computing")
 ```
 
 ### Creative Writing
@@ -101,7 +101,7 @@ analysis = client.generate_text(
 ```ruby
 code_file = File.read('complex_application.rb')
 review = client.generate_text(
-  "Review this Ruby code for best practices and potential issues: #{code_file}",
+  "Review this Ruby code for issues: #{code_file}",
   temperature: 0.2,  # Focused analysis
   max_tokens: 400
 )
@@ -175,7 +175,7 @@ end
 
 ### Error Recovery
 ```ruby
-def robust_generation(prompt, retries: 3)
+def generate_with_retry(prompt, retries: 3)
   attempt = 0
   begin
     client.generate_text(prompt)

@@ -4,7 +4,7 @@ Get started with Vesper in minutes.
 
 ## Prerequisites
 
-- Ruby 3.1 or higher
+- Ruby 3.3 or higher
 - Google AI API key from [Google AI Studio](https://aistudio.google.com/app/apikey)
 
 ## Installation

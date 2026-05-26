@@ -36,7 +36,7 @@ class ClientEdgeCasesTest < Minitest::Test
     expected_system_instruction = 'You are a helpful assistant'
 
     # Stub the request with the exact expected format
-    stub_request(:post, "https://generativelanguage.googleapis.com/v1/models/gemini-2.5-pro:generateContent?key=#{@client.instance_variable_get('@api_key')}")
+    stub_request(:post, "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro-latest:generateContent?key=#{@client.instance_variable_get('@api_key')}")
       .with(
         body: {
           contents: [

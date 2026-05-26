@@ -29,7 +29,7 @@ jobs:
     name: Scan
     runs-on: ubuntu-latest
     container:
-      image: ruby:3.2-slim
+      image: ruby:3.3-slim
     steps:
       - name: Install Git
         run: |

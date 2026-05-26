@@ -10,7 +10,7 @@ Run with: python -m pytest test/test_vesper.py
 import os
 import sys
 import unittest
-from unittest.mock import Mock, patch
+from unittest.mock import Mock, mock_open, patch
 
 # Add the repo root to path so we can import `vesper.*` as a package.
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
@@ -66,18 +66,31 @@ class TestVesper(unittest.TestCase):
         with patch("os.path.exists", return_value=False):
             config = load_config()
             self.assertEqual(config["focus"], "all")
-            self.assertEqual(config["model"], "gemini-2.5-flash")
+            self.assertEqual(config["model"], "gemini-3.5-flash")
             self.assertEqual(config["max_diff_length"], 4000)
             self.assertEqual(config["temperature"], 0.2)
             self.assertEqual(config["max_output_tokens"], 8192)
+            self.assertFalse(config["enable_rag"])
+            self.assertEqual(config["rag_max_items"], 3)
             self.assertIn("prompt", config)  # Should include default prompt
+
+    def test_load_config_env_model_override(self):
+        """Hosted environments can override the checked-in model."""
+        config_yaml = "model: gemini-2.0-flash\nfocus: all\n"
+        with (
+            patch("os.path.exists", return_value=True),
+            patch("builtins.open", mock_open(read_data=config_yaml)),
+            patch.dict(os.environ, {"VESPER_GEMINI_MODEL": "gemini-3.5-flash"}),
+        ):
+            config = load_config()
+            self.assertEqual(config["model"], "gemini-3.5-flash")
 
     @patch("vesper.vesper.load_config")
     def test_analyze_with_gemini_success(self, mock_load_config):
         """Test successful Gemini analysis."""
         # Mock config with all required keys
         mock_load_config.return_value = {
-            "model": "gemini-2.5-flash",
+            "model": "gemini-3.5-flash",
             "focus": "all",
             "max_diff_length": 4000,
             "temperature": 0.2,
@@ -110,7 +123,7 @@ class TestVesper(unittest.TestCase):
         from google.genai import errors as genai_errors
 
         mock_load_config.return_value = {
-            "model": "gemini-2.5-flash",
+            "model": "gemini-3.5-flash",
             "focus": "all",
             "max_diff_length": 4000,
             "temperature": 0.2,
@@ -147,7 +160,7 @@ class TestVesper(unittest.TestCase):
         from google.genai import errors as genai_errors
 
         mock_load_config.return_value = {
-            "model": "gemini-2.5-flash",
+            "model": "gemini-3.5-flash",
             "focus": "all",
             "max_diff_length": 4000,
             "temperature": 0.2,
@@ -174,7 +187,7 @@ class TestVesper(unittest.TestCase):
     def test_analyze_with_gemini_prompt_backcompat_files_diff(self, mock_load_config):
         """Supports legacy {files}/{diff} placeholders in prompt templates."""
         mock_load_config.return_value = {
-            "model": "gemini-2.5-flash",
+            "model": "gemini-3.5-flash",
             "focus": "all",
             "max_diff_length": 4000,
             "temperature": 0.2,
@@ -206,7 +219,7 @@ class TestVesper(unittest.TestCase):
     def test_analyze_with_gemini_keeps_large_response_with_8k_output_budget(self, mock_load_config):
         """An 8k-token output budget should not be cut off by the sanitizer's char cap."""
         mock_load_config.return_value = {
-            "model": "gemini-2.5-flash",
+            "model": "gemini-3.5-flash",
             "focus": "all",
             "max_diff_length": 4000,
             "temperature": 0.2,

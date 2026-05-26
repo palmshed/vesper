@@ -64,9 +64,9 @@ function expandGlobs(patterns) {
 
 async function analyzeWithGemini(files, apiKey) {
   const genAI = new GoogleGenerativeAI(apiKey);
-  const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+  const model = genAI.getGenerativeModel({ model: process.env.VESPER_GEMINI_MODEL || 'gemini-3.5-flash' });
 
-  let content = 'Analyze the following code files for improvements. Focus on code quality, best practices, performance, and correctness.\n\n';
+  let content = 'Analyze the following code files. Focus on code quality, security, performance, and correctness.\n\n';
 
   for (const file of files) {
     const fileContent = readFileContent(file);

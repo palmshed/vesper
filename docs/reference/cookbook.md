@@ -59,7 +59,7 @@ end
 # Usage
 generator = BlogPostGenerator.new
 post = generator.generate_post(
-  "Ruby on Rails best practices",
+  "Ruby on Rails patterns",
   style: 'technical',
   length: 'medium'
 )
@@ -75,7 +75,7 @@ class CodeDocGenerator
 
   def document_method(code, language: 'ruby')
     prompt = <<~PROMPT
-      Generate comprehensive documentation for this #{language} code:
+      Generate documentation for this #{language} code:
 
       ```#{language}
       #{code}
@@ -96,7 +96,7 @@ class CodeDocGenerator
 
   def explain_code(code, language: 'ruby')
     prompt = <<~PROMPT
-      Explain what this #{language} code does in simple terms:
+      Explain what this #{language} code does:
 
       ```#{language}
       #{code}
@@ -183,15 +183,15 @@ puts bot.ask("What models does it support?")
 ```ruby
 class SupportBot
   SUPPORT_CONTEXT = <<~CONTEXT
-    You are a helpful customer support assistant for Vesper Ruby gem.
+    You answer support questions for the Vesper Ruby gem.
 
     Common issues:
     - API key problems: Check environment variables and key format
     - Rate limiting: Implement exponential backoff
     - Network errors: Check internet connection
-    - Installation issues: Ensure Ruby 3.1+ and proper gem installation
+    - Installation issues: Ensure Ruby 3.3+ and proper gem installation
 
-    Always be helpful, polite, and provide specific solutions.
+    Give direct, specific answers.
   CONTEXT
 
   def initialize

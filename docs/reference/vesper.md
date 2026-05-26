@@ -9,7 +9,7 @@ This bot automatically analyzes pull requests using Google's Gemini AI and posts
 - Identifies potential issues and bugs
 - Suggests improvements
 - Posts detailed analysis as PR comments
-- **NEW**: Can author code changes directly (auto-commit suggestions, create improvement PRs)
+- Can author code changes directly when enabled
 
 ## Setup
 
@@ -29,12 +29,12 @@ This bot automatically analyzes pull requests using Google's Gemini AI and posts
      - `WEBHOOK_SECRET`: A secret string for webhook signature verification (used in webhook mode)
 
 3. **GitHub App Installation (for Webhook Mode)**
-    Install Vesper Review on your repository. This is required for the recommended Webhook Mode.
+    Install Vesper Review on your repository. This is required for Webhook Mode.
 
 ## How It Works
 
-### Webhook Mode (Recommended)
-This is the preferred mode for new installations. It uses a centralized deployment for scalability and ease of management.
+### Webhook Mode
+Use this mode for new installations. It uses one hosted deployment for connected repositories.
 
 1. Install the GitHub App on your repository
 2. The hosted bot automatically receives webhooks for PR events
@@ -56,18 +56,17 @@ Run manually: `python vesper/vesper.py --repo owner/repo --pr 123`
 
 ## Migration from Workflow Mode to Webhook Mode
 
-Webhook Mode is recommended for better scalability and ease of management. Benefits include:
+Webhook Mode uses one deployment for connected repositories:
 
-- **Centralized deployment**: One Vercel instance handles all repositories
+- **One deployment**: One Vercel instance handles all repositories
 - **No per-repository secrets**: API keys and credentials managed in one place
-- **Automatic updates**: Deployments update all connected repositories
-- **Better performance**: Serverless architecture scales automatically
+- **Shared updates**: Deployments update connected repositories
 
 ### Migration Steps
 
 1. **Deploy to Vercel**:
     - Fork this repository
-    - Connect to Vercel and deploy the `webhook-vercel` branch
+    - Connect Vercel to the repository and deploy `main`
     - Set environment variables: `GEMINI_API_KEY`, `VESPER_APP_ID`, `VESPER_PRIVATE_KEY`, `WEBHOOK_SECRET`
 
 2. **Install GitHub App**:
@@ -86,17 +85,15 @@ Webhook Mode is recommended for better scalability and ease of management. Benef
 
 ## Code Authoring Features
 
-Vesper can now author code changes directly as a contributor to repositories:
+Vesper can author code changes as a contributor to repositories:
 
 ### Auto-Commit Suggestions
-- Automatically applies code suggestions to PR branches
+- Applies code suggestions to PR branches
 - Creates commits with fixes and improvements
-- Reduces manual work for developers
   - In webhook mode, this is triggered by commenting `/apply` (requires `enable_authoring: true` and write/admin permissions).
 
 ### Improvement PRs
 - Creates new PRs with additional improvements
-- Generates comprehensive enhancement suggestions
 - Works alongside existing PR review process
 
 ### Configuration
@@ -112,7 +109,7 @@ Authoring features require write access to repositories. Ensure proper permissio
 
 Modify `vesper/config.yaml` to adjust:
 - Analysis focus: 'all', 'security', 'performance', 'quality'
-- Gemini model: 'gemini-2.0-flash', 'gemini-2.5-pro'
+- Gemini model: 'gemini-3.5-flash' by default; override with `VESPER_GEMINI_MODEL`
 - Temperature and token limits
 - Authoring features (enable/disable auto-committing and improvement PRs)
 

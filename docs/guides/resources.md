@@ -12,7 +12,7 @@ Additional resources, links, and references for Vesper.
 
 ### Vesper Documentation
 - [GitHub Repository](https://github.com/bniladridas/vesper) - Source code and issues
-- [RubyGems Page](https://rubygems.org/gems/friday_gemini_ai) - Gem installation and versions
+- [RubyGems](https://rubygems.org/gems/friday_gemini_ai) - Gem installation and versions
 - [`API Reference`](../reference/api.md) - Complete method documentation
 - [`Usage Guide`](../reference/usage.md) - Comprehensive examples
 
@@ -62,7 +62,7 @@ response = client.chat(messages, max_tokens: 100)
 require 'net/http'
 require 'json'
 
-uri = URI('https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash:generateContent')
+uri = URI('https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent')
 uri.query = "key=#{api_key}"
 
 http = Net::HTTP.new(uri.host, uri.port)
@@ -202,7 +202,7 @@ end
 # Use detailed prompts
 prompt = <<~PROMPT
   You are a Ruby expert specializing in Rails applications.
-  Always provide code examples and explain best practices.
+  Provide code examples and explain tradeoffs.
   Format your response with clear sections.
 
   Question: #{user_question}
@@ -270,7 +270,7 @@ ruby tests/test_runner.rb
 ### Code Style
 - Follow Ruby Style Guide
 - Use RuboCop for linting
-- Write comprehensive tests
+- Write tests for changed behavior
 - Document public methods
 
 ### Submitting Issues

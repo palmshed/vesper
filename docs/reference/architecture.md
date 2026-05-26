@@ -12,7 +12,7 @@ vesper/
 │   └── ARCHITECTURE.md    # This file
 ├── examples/              # Usage examples
 │   ├── basic_usage.rb     # Basic examples
-│   └── advanced_usage.rb  # Advanced examples
+│   └── advanced.rb  # Configuration examples
 ├── src/                   # Source code
 │   ├── core/              # Core functionality
 │   │   ├── client.rb      # Main API client
@@ -77,7 +77,7 @@ vesper/
 ### 4. Developer Experience
 - Clear error messages
 - Comprehensive examples
-- CLI interface for quick testing
+- CLI interface for local testing
 
 ## Data Flow
 
@@ -136,7 +136,7 @@ StandardError
 - Never logged in plain text
 - Masked in all output (logs, errors)
 - Validated format before use
-- Environment variable storage recommended
+- Store secrets in environment variables
 
 ### Input Validation
 - Prompt length limits
@@ -171,5 +171,5 @@ StandardError
 ### New Features
 1. Add to appropriate module (`core/` or `utils/`)
 2. Follow existing patterns
-3. Add comprehensive tests
+3. Add tests for changed behavior
 4. Update documentation

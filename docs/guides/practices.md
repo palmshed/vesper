@@ -193,7 +193,7 @@ end
 
 ### Comprehensive Error Handling
 ```ruby
-def robust_generate_text(prompt, max_retries: 3)
+def generate_with_retry(prompt, max_retries: 3)
   retries = 0
 
   begin
@@ -322,7 +322,7 @@ response = client.generate_text(prompt, temperature: 0.3)
 tech_prompt = "You are a technical writer. Explain how Ruby blocks work to a beginner programmer."
 
 # Code review
-review_prompt = "You are a senior Ruby developer. Review this code for best practices and suggest improvements: #{code}"
+review_prompt = "You are a senior Ruby developer. Review this code for issues and changes: #{code}"
 
 # Creative writing
 creative_prompt = "You are a creative writing assistant. Help improve this story opening: #{story_text}"

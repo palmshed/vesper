@@ -30,7 +30,7 @@ Common issues and solutions when using Vesper.
    client = GeminiAI::Client.new
    ```
 
-4. **Pass API key directly** (not recommended for production):
+4. **Pass API key directly** (avoid in production):
    ```ruby
    client = GeminiAI::Client.new('your_api_key_here')
    ```
@@ -72,7 +72,7 @@ Common issues and solutions when using Vesper.
    ```bash
    curl -H "Content-Type: application/json" \
         -d '{"contents":[{"parts":[{"text":"Hello"}]}]}' \
-        "https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash:generateContent?key=YOUR_API_KEY"
+        "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=YOUR_API_KEY"
    ```
 
 2. **Generate new API key**:
@@ -137,45 +137,38 @@ Common issues and solutions when using Vesper.
 
 **Problem**: Too many requests in a short time period.
 
-**Current Limits**:
-- 60 requests per minute
-- 32,000 tokens per minute
-- 1,500 requests per day
+Limits depend on your key, billing state, region, and selected model.
 
 **Solutions**:
-1. **Implement exponential backoff**:
-   ```ruby
-   def generate_with_retry(prompt, max_retries: 3)
-     retries = 0
-     begin
-       client.generate_text(prompt)
-     rescue GeminiAI::RateLimitError => e
-       retries += 1
-       if retries <= max_retries
-         wait_time = 2 ** retries
-         sleep(wait_time)
-         retry
-       else
-         raise e
-       end
-     end
-   end
-   ```
+1. **Let the client retry**:
+   The client retries HTTP 429 responses three times with exponential backoff.
 
 2. **Add delays between requests**:
    ```ruby
    prompts.each do |prompt|
      response = client.generate_text(prompt)
-     sleep(1)  # Wait 1 second between requests
+     sleep(1)
    end
    ```
 
-3. **Use batch processing**:
+3. **Handle final failure**:
    ```ruby
-   # Process in smaller batches
+   begin
+     response = client.generate_text(prompt)
+   rescue GeminiAI::Error => e
+     if e.message.include?('Rate limit exceeded')
+       warn 'Rate limit exceeded. Wait and retry later.'
+     else
+       raise e
+     end
+   end
+   ```
+
+4. **Use smaller batches**:
+   ```ruby
    prompts.each_slice(10) do |batch|
      batch.each { |prompt| client.generate_text(prompt) }
-     sleep(60)  # Wait 1 minute between batches
+     sleep(60)
    end
    ```
 
@@ -199,28 +192,27 @@ Common issues and solutions when using Vesper.
 
 2. **Provide default prompts**:
    ```ruby
-   prompt = user_input.presence || "Please provide a helpful response."
+   prompt = user_input.to_s.strip
+   prompt = "Respond to the request." if prompt.empty?
    response = client.generate_text(prompt)
    ```
 
-### "Request too large"
+### "Prompt too long"
 
-**Problem**: Prompt exceeds maximum token limit.
+**Problem**: Prompt exceeds the client guard of 8192 characters.
 
 **Solutions**:
 1. **Check prompt length**:
    ```ruby
-   # Rough token estimation: 1 token ≈ 4 characters
-   estimated_tokens = prompt.length / 4
-   puts "Estimated tokens: #{estimated_tokens}"
+   puts "Prompt characters: #{prompt.length}"
    ```
 
 2. **Truncate long prompts**:
    ```ruby
-   MAX_PROMPT_LENGTH = 8000  # Conservative limit
+   MAX_PROMPT_LENGTH = 8192
 
    if prompt.length > MAX_PROMPT_LENGTH
-     prompt = prompt[0..MAX_PROMPT_LENGTH] + "..."
+     prompt = prompt[0...MAX_PROMPT_LENGTH]
    end
    ```
 
@@ -351,7 +343,7 @@ chmod +x bin/gemini
 
 **Problem**: Ruby version too old.
 
-**Requirements**: Ruby 3.1 or higher
+**Requirements**: Ruby 3.3 or higher
 
 **Solutions**:
 1. **Check Ruby version**:
@@ -361,14 +353,14 @@ chmod +x bin/gemini
 
 2. **Update Ruby** (using rbenv):
    ```bash
-   rbenv install 3.1.0
-   rbenv global 3.1.0
+   rbenv install 3.3.11
+   rbenv global 3.3.11
    ```
 
 3. **Update Ruby** (using RVM):
    ```bash
-   rvm install 3.1.0
-   rvm use 3.1.0 --default
+   rvm install 3.3.11
+   rvm use 3.3.11 --default
    ```
 
 ## Debugging
@@ -376,13 +368,10 @@ chmod +x bin/gemini
 ### Enable Debug Logging
 
 ```ruby
-# Enable debug logging to see detailed request/response info
 require 'logger'
 
-# Set debug level
-GeminiAI::Utils::Logger.instance.level = Logger::DEBUG
+GeminiAI::Client.logger.level = Logger::DEBUG
 
-# Now all requests will show detailed information
 client = GeminiAI::Client.new
 response = client.generate_text("Test prompt")
 ```
@@ -403,15 +392,14 @@ end
 ### Inspect Request Details
 
 ```ruby
-# Enable debug mode to see full request/response
-ENV['DEBUG'] = 'true'
+require 'logger'
 
+GeminiAI::Client.logger.level = Logger::DEBUG
 client = GeminiAI::Client.new
 response = client.generate_text("Test")
 
-# This will show:
+# Debug logs include:
 # - Request URL
-# - Request headers
 # - Request body
 # - Response status
 # - Response body
@@ -443,7 +431,7 @@ Create a minimal script to reproduce the issue:
 ```ruby
 #!/usr/bin/env ruby
 
-require_relative 'src/gemini'
+require 'vesper'
 
 begin
   GeminiAI.load_env

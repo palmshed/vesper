@@ -9,8 +9,8 @@ This bot automatically analyzes pull requests using Google's Gemini AI and posts
 - Identifies potential issues and bugs
 - Suggests improvements
 - Posts detailed analysis as PR comments
-- **RAG (Retrieval Augmented Generation)**: Fetches current context from 90+ sources to supplement AI knowledge beyond its training cutoff
-- **Auto-authoring**: Can author code changes directly (auto-commit suggestions, create improvement PRs)
+- Optional retrieval context is available but disabled by default.
+- Authoring can apply suggestions when enabled.
 
 ## Setup
 
@@ -30,12 +30,12 @@ This bot automatically analyzes pull requests using Google's Gemini AI and posts
     - `WEBHOOK_SECRET`: A secret string for webhook signature verification (used in webhook mode)
 
 3. **GitHub App Installation (for Webhook Mode)**
-   Install Vesper Review on your repository. This is required for the recommended Webhook Mode.
+   Install Vesper Review on your repository. This is required for Webhook Mode.
 
 ## How It Works
 
-### Webhook Mode (Recommended)
-This is the preferred mode for new installations. It uses a centralized deployment for scalability and ease of management.
+### Webhook Mode
+Use this mode for new installations. It uses one hosted deployment for connected repositories.
 
 Before deploying, make sure you:
 
@@ -52,11 +52,6 @@ Before deploying, make sure you:
    Or manually copy `vesper/` and `.github/workflows/vesper.yml` to your repository
 2. Set required secrets: `GEMINI_API_KEY`, `VESPER_APP_ID`, `VESPER_PRIVATE_KEY`
 3. When a PR is opened/reopened, the workflow runs and posts analysis
-
-### Webhook Mode (Recommended)
-1. Install the GitHub App on your repository
-2. The hosted bot automatically receives webhooks for PR events
-3. Analysis is posted directly without repository-specific setup
 
 ### Manual Analysis Trigger
 Comment `/analyze` on a PR to request a fresh analysis on demand.
@@ -79,38 +74,20 @@ Run manually: `python vesper/vesper.py --repo owner/repo --pr 123`
 
 *Note: The local webhook server uses Flask's development server, suitable for testing. For production self-hosting outside Vercel, use a WSGI server like Gunicorn.*
 
-## RAG (Retrieval Augmented Generation)
+## Retrieval Context
 
-Vesper includes a comprehensive RAG system that fetches current context from 90+ sources to supplement the model with up-to-date package, security, documentation, and ecosystem information.
+Vesper can fetch a small amount of package, security, GitHub, or documentation context before review. It is disabled by default to keep reviews fast and predictable.
 
-### Enable RAG
+### Enable
 
 Edit `vesper/config.yaml`:
 
 ```yaml
 enable_rag: true
-rag_sources: pypi npm security github docs stackoverflow news weather reddit hackernews crates go dockerhub web_search youtube arxiv devto aws_docs azure_docs gcp_docs huggingface kaggle medium producthunt apt brew conda nuget maven pub helm terraform_registry cocoapods packagist rubygems kubernetes cloudflare vercel heroku slack discord telegram jest pytest rspec sonarcloud postgresql mongodb redis prisma swagger graphql github_actions gitlab_ci jenkins datadog newrelic sentry openai anthropic cohere digitalocean linode fastly auth0 clerk supabase cypress playwright vitest mysql elasticsearch algolia meilisearch rabbitmq kafka pulsar grpc circleci actions prometheus grafana stripe paypal braintree sendgrid mailgun ses ansible puppet packer vagrant firebase_functions langchain
+rag_sources: [pypi, npm, rubygems, security, github, docs]
 ```
 
-### RAG Sources (90+)
-
-| Category | Sources |
-|----------|---------|
-| Package Managers | pypi, npm, crates, go, dockerhub, apt, brew, conda, nuget, maven, pub, helm, cocoapods, packagist, rubygems |
-| Cloud | aws_docs, azure_docs, gcp_docs, terraform_registry, kubernetes, cloudflare, vercel, heroku, digitalocean, linode, fastly |
-| Security/Auth | security, snyk, github, dependabot, sonarcloud, auth0, clerk, supabase |
-| Docs/Community | docs, stackoverflow, reddit, hackernews, youtube, arxiv, devto, medium, producthunt, gitbook, confluence, slack, discord, telegram |
-| Testing | jest, pytest, rspec, cypress, playwright, vitest |
-| Databases | postgresql, mongodb, redis, prisma, mysql, elasticsearch, algolia, meilisearch, rabbitmq, kafka, pulsar |
-| API | swagger, graphql, rest, grpc |
-| CI/CD | github_actions, gitlab_ci, jenkins, circleci, actions |
-| Monitoring | datadog, newrelic, sentry, prometheus, grafana |
-| AI/ML | openai, anthropic, cohere, huggingface, kaggle, langchain |
-| Payments | stripe, paypal, braintree |
-| Email | sendgrid, mailgun, ses |
-| Infrastructure | ansible, puppet, packer, vagrant |
-
-### Environment Variables
+### Optional Keys
 
 ```bash
 # Optional API keys for premium sources
@@ -125,27 +102,26 @@ CONFLUENCE_API_KEY=       # Confluence API
 WEATHER_LOCATION=        # Default: "San Francisco"
 ```
 
-### How RAG Works
+### How It Works
 
 1. **Extract dependencies** from changed files (Python, Node.js, Rust, Go, Docker, etc.)
 2. **Fetch current context** from configured sources (latest versions, docs, security advisories, tutorials)
 3. **Prepend context** to AI prompt with a current timestamp
-4. **Model receives** up-to-date information about dependencies, best practices, and related resources
+4. **Model receives** current information about dependencies, docs, and related resources
 
 ## Migration from Workflow Mode to Webhook Mode
 
-Webhook Mode is recommended for better scalability and ease of management. Benefits include:
+Webhook Mode uses one deployment for connected repositories:
 
-- **Centralized deployment**: One Vercel instance handles all repositories
+- **One deployment**: One Vercel instance handles all repositories
 - **No per-repository secrets**: API keys and credentials managed in one place
-- **Automatic updates**: Deployments update all connected repositories
-- **Better performance**: Serverless architecture scales automatically
+- **Shared updates**: Deployments update connected repositories
 
 ### Migration Steps
 
 1. **Deploy to Vercel**:
    - Fork this repository
-   - Connect to Vercel and deploy the `webhook-vercel` branch
+   - Connect Vercel to the repository and deploy `main`
    - Set environment variables: `GEMINI_API_KEY`, `VESPER_APP_ID`, `VESPER_PRIVATE_KEY`, `WEBHOOK_SECRET`
 
 2. **Install GitHub App**:
@@ -175,7 +151,6 @@ Vesper can now author code changes directly as a contributor to repositories:
 
 ### Improvement PRs
 - Creates new PRs with additional improvements
-- Generates comprehensive enhancement suggestions
 - Works alongside existing PR review process
 
 ### Configuration
@@ -191,7 +166,7 @@ Authoring features require write access to repositories. Ensure proper permissio
 
 Modify `vesper/config.yaml` to adjust:
 - Analysis focus: 'all', 'security', 'performance', 'quality'
-- Gemini model: 'gemini-2.5-flash', 'gemini-2.5-pro'
+- Gemini model: 'gemini-3.5-flash' by default; override with `VESPER_GEMINI_MODEL`
 - Temperature and token limits
 - Authoring features (enable/disable auto-committing and improvement PRs)
 

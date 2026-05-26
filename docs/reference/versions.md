@@ -14,11 +14,13 @@ gem 'friday_gemini_ai', require: 'vesper'
 
 | Area | Current support |
 | --- | --- |
-| Ruby | 3.1 or later |
-| Local development | Ruby 3.2.2 in `.ruby-version` |
-| Gemini API | `v1` Generative Language API |
-| Default model | `gemini-2.5-pro` |
-| Fast model | `gemini-2.5-flash` |
+| Ruby | 3.3 or later |
+| Local development | Ruby 3.3.11 in `.ruby-version` |
+| Gemini API | `v1beta` Generative Language API |
+| Default model | `gemini-pro-latest` |
+| Fast model | `gemini-3.5-flash` |
+
+Ruby support follows maintained Ruby branches. The gem currently requires Ruby 3.3 or later; older EOL Rubies are not supported.
 
 ## Public API
 
@@ -43,12 +45,22 @@ client.generate_image_text(image, 'Describe this image')
 
 | Symbol | Model |
 | --- | --- |
-| `:pro` | `gemini-2.5-pro` |
-| `:flash` | `gemini-2.5-flash` |
+| `:flash_latest` | `gemini-flash-latest` |
+| `:pro_latest` | `gemini-pro-latest` |
+| `:flash_3_5` | `gemini-3.5-flash` |
+| `:pro_3_preview` | `gemini-3-pro-preview` |
+| `:flash_3_preview` | `gemini-3-flash-preview` |
+| `:pro_3_1_preview` | `gemini-3.1-pro-preview` |
+| `:flash_3_1_lite` | `gemini-3.1-flash-lite` |
+| `:pro_2_5` | `gemini-2.5-pro` |
+| `:flash_2_5` | `gemini-2.5-flash` |
 | `:flash_2_0` | `gemini-2.0-flash` |
-| `:flash_lite` | `gemini-2.0-flash-lite` |
+| `:pro` | `gemini-pro-latest` |
+| `:flash` | `gemini-3.5-flash` |
+| `:flash_lite` | `gemini-3.1-flash-lite` |
+| `:pro_2_0` | `gemini-2.0-flash` |
 
-Older `1.5` model aliases are deprecated and resolve to `:pro`.
+Removed aliases resolve to `:pro` with a warning.
 
 ## Updating Versions
 

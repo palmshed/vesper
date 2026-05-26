@@ -5,10 +5,12 @@ This guide covers the setup and development of the Vesper Ruby gem.
 ## Local Development Setup
 
 ### Prerequisites
-1. Ruby 3.1+ (check `.ruby-version` for the local development version)
+1. Ruby 3.3+ (check `.ruby-version` for the local development version)
 2. Bundler (`gem install bundler`)
 3. Git
-4. [GitHub CLI](https://cli.github.com/) (recommended for PR management)
+4. [GitHub CLI](https://cli.github.com/) for PR management
+
+The project tracks maintained Ruby branches for local development and CI. Do not lower the gemspec Ruby floor for EOL Ruby versions.
 
 ### Setup
 
@@ -79,8 +81,8 @@ The project uses GitHub Actions for CI/CD. Key workflows:
 
 2. **Vesper Workflow** (`.github/workflows/vesper.yml`):
     - Automated PR analysis and code review
-    - Provides intelligent feedback on code quality, security, and performance
-    - Uses Gemini AI for comprehensive analysis
+    - Comments on code quality, security, and performance
+    - Uses Gemini for PR analysis
 
 3. **Release Workflow** (`.github/workflows/release.yml`):
     - Publishes the gem to RubyGems on version tag push

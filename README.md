@@ -3,11 +3,11 @@
 
 
 [![Gem](https://img.shields.io/gem/v/friday_gemini_ai?style=flat-square&label=gem)](https://rubygems.org/gems/friday_gemini_ai)
-![Ruby](https://img.shields.io/badge/ruby-%3E%3D%203.1-cc342d?style=flat-square)
+![Ruby](https://img.shields.io/badge/ruby-%3E%3D%203.3-cc342d?style=flat-square)
 [![License](https://img.shields.io/badge/license-MIT-2f4858?style=flat-square)](LICENSE)
-![Tests](https://img.shields.io/badge/tests-134%20passing-2e7d32?style=flat-square)
+![Tests](https://img.shields.io/badge/tests-passing-2e7d32?style=flat-square)
 
-Ruby client for Google's Gemini models, with a small CLI and an optional PR-review companion.
+Ruby client for Gemini `generateContent`. Includes a CLI and a PR review app.
 
 
 <br>
@@ -57,21 +57,31 @@ fast_client = GeminiAI::Client.new(model: :flash)
 puts fast_client.generate_text('Explain Ruby in one sentence')
 ```
 
-### Model Reference
+### generateContent Text Models
 
-| Key           | ID                      | Use case                        |
-| ------------- | ----------------------- | ------------------------------- |
-| `:pro`        | `gemini-2.5-pro`        | Most capable, complex reasoning |
-| `:flash`      | `gemini-2.5-flash`      | Fast, general-purpose           |
-| `:flash_2_0`  | `gemini-2.0-flash`      | Legacy support                  |
-| `:flash_lite` | `gemini-2.0-flash-lite` | Lightweight legacy              |
+| Key | ID |
+| --- | --- |
+| `:flash_latest` | `gemini-flash-latest` |
+| `:pro_latest` | `gemini-pro-latest` |
+| `:flash_3_5` | `gemini-3.5-flash` |
+| `:pro_3_preview` | `gemini-3-pro-preview` |
+| `:flash_3_preview` | `gemini-3-flash-preview` |
+| `:pro_3_1_preview` | `gemini-3.1-pro-preview` |
+| `:flash_3_1_lite` | `gemini-3.1-flash-lite` |
+| `:pro_2_5` | `gemini-2.5-pro` |
+| `:flash_2_5` | `gemini-2.5-flash` |
+| `:flash_2_0` | `gemini-2.0-flash` |
+
+Short aliases: `:pro` uses `gemini-pro-latest`, `:flash` uses `gemini-3.5-flash`, and `:flash_lite` uses `gemini-3.1-flash-lite`. Legacy `:pro_2_0` maps to `gemini-2.0-flash`.
+
+The gem does not wrap embeddings, Imagen, or Veo APIs.
 
 
 <br>
 
 # Capabilities
 
-Vesper supports text generation, chat, image-to-text analysis, model aliases, safety settings, API key masking, retry handling, and a local CLI for quick prompts.
+Vesper supports text generation, chat, image input for `generateContent`, model aliases, safety settings, API key masking, retries, and a local CLI.
 
 
 <br>
@@ -123,7 +133,7 @@ client = GeminiAI::Client.new
 
 # Requirements
 
-Ruby 3.1 or later. Linux and macOS are recommended.
+Ruby 3.3 or later. Linux and macOS are tested.
 
 
 <br>
@@ -132,7 +142,6 @@ Ruby 3.1 or later. Linux and macOS are recommended.
 
 ```bash
 GEMINI_API_KEY=your_api_key_here
-VESPER_GEMINI_API_KEY=your_api_key_here
 ```
 
 ### Repo CLI
@@ -150,16 +159,18 @@ VESPER_GEMINI_API_KEY=your_api_key_here
 
 ```bash
 bundle exec rake test          # Run tests
-bundle exec rake rubocop       # Optional lint check
-gem build *.gemspec            # Verify build
+bundle exec rake docs          # Build API docs
+gem build friday_gemini_ai.gemspec
 ```
 
 
 <br>
 
-# PR Review
+# Review App
 
-Vesper is the optional PR-review companion included in this repo. For setup details, see [`vesper/Vesper.md`](vesper/Vesper.md).
+Vesper Review is the PR review app in this repo. It defaults to `gemini-3.5-flash`; retrieval context is off unless enabled in `vesper/config.yaml`.
+
+For setup details, see [`vesper/Vesper.md`](vesper/Vesper.md).
 
 
 <br>
@@ -188,7 +199,7 @@ messages = [
   { role: 'model', content: 'Hi there!' },
   { role: 'user', content: 'Tell me about Ruby.' }
 ]
-puts client.chat(messages, system_instruction: 'Be helpful and concise.')
+puts client.chat(messages, system_instruction: 'Be concise.')
 ```
 
 

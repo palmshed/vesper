@@ -122,7 +122,7 @@ module Minitest
     end
 
     # Helper method to stub API requests
-    def stub_gemini_request(model: 'gemini-2.5-pro', response: test_response, status: 200, with_body: nil)
+    def stub_gemini_request(model: 'gemini-pro-latest', response: test_response, status: 200, with_body: nil)
       url = build_gemini_url(model)
       expected_body = normalize_expected_body(with_body)
 
@@ -137,7 +137,7 @@ module Minitest
     private
 
     def build_gemini_url(model)
-      "https://generativelanguage.googleapis.com/v1/models/#{model}:generateContent?key=#{test_api_key}"
+      "https://generativelanguage.googleapis.com/v1beta/models/#{model}:generateContent?key=#{test_api_key}"
     end
 
     def normalize_expected_body(with_body)

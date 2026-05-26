@@ -12,14 +12,9 @@ require_relative '../lib/gemini'
 GeminiAI.load_env
 
 class ModelChecker
-  BASE_URL = 'https://generativelanguage.googleapis.com/v1/models'
+  BASE_URL = 'https://generativelanguage.googleapis.com/v1beta/models'
 
-  # New Gemini 2.5 models from the image
-  NEW_MODELS = {
-    'gemini-2.5-pro' => 'Gemini 2.5 Pro',
-    'gemini-2.5-flash' => 'Gemini 2.5 Flash',
-    'gemini-2.5-flash-lite' => 'Gemini 2.5 Flash-Lite'
-  }.freeze
+  APP_MODEL = ENV.fetch('VESPER_GEMINI_MODEL', 'gemini-3.5-flash')
 
   def initialize(api_key = nil)
     @api_key = api_key || ENV.fetch('GEMINI_API_KEY', nil)
@@ -45,8 +40,13 @@ class ModelChecker
     available_models.each { |model| puts "  * #{model}" }
     puts
 
-    puts 'Checking new Gemini 2.5 models:'
-    NEW_MODELS.each do |model_id, model_name|
+    check_models = { APP_MODEL => 'Vesper app default' }
+    GeminiAI::Client::MODELS.each do |key, model_id|
+      check_models[model_id] ||= "Ruby client :#{key}"
+    end
+
+    puts 'Checking configured models:'
+    check_models.each do |model_id, model_name|
       if available_models.include?(model_id)
         puts "  [AVAILABLE] #{model_name} (#{model_id})"
         test_model(model_id, model_name)
@@ -56,11 +56,6 @@ class ModelChecker
     end
 
     puts
-    puts 'Current client supported models:'
-    GeminiAI::Client::MODELS.each do |key, model_id|
-      status = available_models.include?(model_id) ? '[OK]' : '[ERROR]'
-      puts "  #{status} #{key}: #{model_id}"
-    end
   end
 
   private

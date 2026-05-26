@@ -1,4 +1,4 @@
-# Vesper - Usage Guide
+# Usage
 
 ## Getting Started
 
@@ -26,7 +26,7 @@ GEMINI_API_KEY=your_api_key_here
 ### Simple Text Generation
 
 ```ruby
-require_relative 'src/gemini'
+require 'vesper'
 
 # Load environment variables
 GeminiAI.load_env
@@ -78,13 +78,17 @@ factual_response = client.generate_text(
 ### Different Models
 
 ```ruby
-# Default Flash model (balanced)
+# Default model
+pro_client = GeminiAI::Client.new
+
+# Fast model
 flash_client = GeminiAI::Client.new(model: :flash)
 
 # Flash Lite model (faster, lighter)
 lite_client = GeminiAI::Client.new(model: :flash_lite)
 
 # Compare responses
+pro_response = pro_client.generate_text("Explain AI")
 flash_response = flash_client.generate_text("Explain AI")
 lite_response = lite_client.generate_text("Explain AI")
 ```
@@ -114,7 +118,7 @@ client = GeminiAI::Client.new
 prompts = [
   "Write a haiku about coding",
   "Explain recursion briefly",
-  "What is the best programming language?"
+  "Compare Ruby and Python."
 ]
 
 prompts.each_with_index do |prompt, index|
@@ -173,7 +177,8 @@ This starts an interactive session where you can have a conversation with the AI
 
 | Model | Speed | Quality | Use Case |
 |-------|-------|---------|----------|
-| `:flash` | Medium | High | General purpose |
+| `:pro` | Medium | High | Default |
+| `:flash` | Fast | Good | General purpose |
 | `:flash_lite` | Fast | Good | Quick responses |
 
 ## Best Practices
@@ -251,20 +256,20 @@ top_k: 20-30
    - Check internet connection
    - API has 30-second timeout built-in
 
-### Debug Mode
+### Debug Logging
 
-Enable debug logging to see detailed request/response information:
+Enable debug logging to see request and response details:
 
 ```ruby
 GeminiAI::Utils::Logger.instance.level = Logger::DEBUG
 ```
 
-## Performance Tips
+## Request Tips
 
-1. **Use Flash Lite for speed**: When you need quick responses
-2. **Adjust max_tokens**: Lower values for faster responses
-3. **Batch similar requests**: Process multiple prompts in sequence
-4. **Cache responses**: Store frequently used responses locally
+1. **Use Flash Lite for lower latency** when the task is small
+2. **Adjust max_tokens** to limit response length
+3. **Batch related requests** in sequence
+4. **Cache repeated responses** locally
 
 ## Integration Examples
 
@@ -290,7 +295,7 @@ end
 
 ```ruby
 require 'sinatra'
-require_relative 'src/gemini'
+require 'vesper'
 
 GeminiAI.load_env
 

@@ -53,7 +53,7 @@
       <section>
         <h2>Architecture</h2>
         <p>
-          Vesper runs in two modes: a legacy GitHub Actions workflow and a recommended webhook deployment (Vercel).
+          Vesper runs in two modes: a legacy GitHub Actions workflow and a webhook deployment (Vercel).
           Webhook mode uses GitHub App installation tokens (scoped, short-lived) and the <code>google-genai</code>
           client for Gemini requests.
         </p>
@@ -82,7 +82,7 @@
           <li><span></span>Webhook events matter: <code>Issue comment</code> vs <code>Pull request review comment</code></li>
           <li><span></span>Skip empty PR reviews when there are no inline suggestions</li>
           <li><span></span>Optional range comments: enable "comment on lines +X to +Y" for block feedback</li>
-          <li><span></span><code>/apply</code> needs robust parsing (simplified diff blocks + deletions)</li>
+          <li><span></span><code>/apply</code> needs diff block parsing with deletions</li>
           <li><span></span><code>/apply</code> is intentionally permission-gated: authoring must be enabled and the commenter must have write/admin access</li>
           <li><span></span>Per-PR controls: <code>/pause</code>, <code>/resume</code>, <code>/status</code></li>
           <li><span></span>Quota handling: temporary cooldown on auto-runs with manual override via <code>/analyze</code></li>

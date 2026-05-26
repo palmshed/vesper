@@ -13,19 +13,25 @@ require_relative '../utils/moderation'
 module GeminiAI
   # Core client class for Gemini AI API communication
   class Client
-    BASE_URL = 'https://generativelanguage.googleapis.com/v1/models'
-    # Model mappings
-    # Current supported models
+    BASE_URL = 'https://generativelanguage.googleapis.com/v1beta/models'
+    # generateContent text model aliases.
     MODELS = {
-      # Gemini 2.5 models (latest)
-      pro: 'gemini-2.5-pro',
-      flash: 'gemini-2.5-flash',
+      flash_latest: 'gemini-flash-latest',
+      pro_latest: 'gemini-pro-latest',
+      flash_3_5: 'gemini-3.5-flash',
 
-      # Gemini 2.0 models
+      pro_3_preview: 'gemini-3-pro-preview',
+      flash_3_preview: 'gemini-3-flash-preview',
+      pro_3_1_preview: 'gemini-3.1-pro-preview',
+      flash_3_1_lite: 'gemini-3.1-flash-lite',
+      pro_2_5: 'gemini-2.5-pro',
+      flash_2_5: 'gemini-2.5-flash',
       flash_2_0: 'gemini-2.0-flash',
-      flash_lite: 'gemini-2.0-flash-lite',
 
-      # Legacy aliases for backward compatibility
+      # Short aliases.
+      pro: 'gemini-pro-latest',
+      flash: 'gemini-3.5-flash',
+      flash_lite: 'gemini-3.1-flash-lite',
       pro_2_0: 'gemini-2.0-flash'
     }.freeze
 
@@ -141,7 +147,7 @@ module GeminiAI
     def resolve_model(model)
       if DEPRECATED_MODELS.key?(model)
         self.class.logger.warn("Model #{model} (#{DEPRECATED_MODELS[model]}) is deprecated and has been removed. " \
-                               'Defaulting to :pro (gemini-2.5-pro). Please update your code to use supported models.')
+                               'Defaulting to :pro (gemini-pro-latest). Please update your code to use supported models.')
         MODELS[:pro]
       else
         MODELS.fetch(model) do

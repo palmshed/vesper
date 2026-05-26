@@ -60,7 +60,7 @@ class TestAPI < Minitest::Test
 
   def test_different_models
     # Test with default model (pro)
-    stub_request(:post, 'https://generativelanguage.googleapis.com/v1/models/gemini-2.5-pro:generateContent')
+    stub_request(:post, 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro-latest:generateContent')
       .with(query: { key: @api_key })
       .to_return(
         status: 200,
@@ -82,7 +82,7 @@ class TestAPI < Minitest::Test
     assert_equal 'Test response from Gemini AI', response
 
     # Test with flash model
-    stub_request(:post, 'https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent')
+    stub_request(:post, 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent')
       .with(query: { key: @api_key })
       .to_return(
         status: 200,
@@ -122,7 +122,7 @@ class TestAPI < Minitest::Test
       }
     }
 
-    stub_request(:post, "https://generativelanguage.googleapis.com/v1/models/gemini-2.5-pro:generateContent?key=#{@api_key}")
+    stub_request(:post, "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro-latest:generateContent?key=#{@api_key}")
       .with(
         body: lambda { |actual_body|
           actual = JSON.parse(actual_body, symbolize_names: true)

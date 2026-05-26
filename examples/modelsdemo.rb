@@ -9,7 +9,7 @@ require_relative '../lib/gemini'
 # Load environment variables
 GeminiAI.load_env
 
-puts 'Gemini AI Ruby Client - New Models Demo'
+puts 'Models demo'
 puts '=' * 50
 
 # Check if API key is available
@@ -23,10 +23,11 @@ prompt = 'Explain what makes you special in exactly one sentence.'
 
 # Test different models
 models_to_demo = [
-  { key: :pro, name: 'Gemini 2.5 Pro', description: 'Latest and most capable model' },
-  { key: :flash, name: 'Gemini 2.5 Flash', description: 'Fast and efficient latest model' },
-  { key: :flash_2_0, name: 'Gemini 2.0 Flash', description: 'Previous generation fast model' },
-  { key: :flash_lite, name: 'Gemini 2.0 Flash Lite', description: 'Lightweight model' }
+  { key: :pro, name: 'Pro', description: 'Default model' },
+  { key: :flash, name: 'Flash', description: 'Fast general-purpose model' },
+  { key: :pro_3_1_preview, name: 'Gemini 3.1 Pro Preview', description: 'Preview Pro model' },
+  { key: :flash_3_1_lite, name: 'Gemini 3.1 Flash Lite', description: 'Lightweight text model' },
+  { key: :flash_2_0, name: 'Gemini 2.0 Flash', description: 'Pinned 2.0 model' }
 ]
 
 models_to_demo.each do |model_info|
@@ -62,10 +63,10 @@ end
 
 puts "\n#{'=' * 50}"
 puts 'Model Selection Guide:'
-puts '* Use :pro (Gemini 2.5 Pro) for complex reasoning and analysis'
-puts '* Use :flash (Gemini 2.5 Flash) for fast, general-purpose tasks'
-puts '* Use :flash_2_0 (Gemini 2.0 Flash) for compatibility with older workflows'
-puts '* Use :flash_lite (Gemini 2.0 Flash Lite) for simple, lightweight tasks'
+puts '* Use :pro for the default Pro alias'
+puts '* Use :flash for fast, general-purpose tasks'
+puts '* Use :flash_3_1_lite for lighter requests'
+puts '* Use :flash_2_0 when that exact model is required'
 
 puts "\nAvailable model keys:"
 GeminiAI::Client::MODELS.each do |key, model_id|
@@ -74,7 +75,7 @@ end
 
 puts "\nUsage example:"
 puts <<~RUBY
-  # Use the latest and best model (default)
+  # Use the default model
   client = GeminiAI::Client.new(model: :pro)
 
   # Use the fastest model

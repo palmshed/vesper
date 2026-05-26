@@ -30,6 +30,7 @@ QUOTA_COOLDOWN_SECONDS = int(os.getenv("VESPER_QUOTA_COOLDOWN_SECONDS", "1800"))
 QUOTA_UNTIL_MARKER_RE = re.compile(r"vesper-quota-until:\s*(\d+)")
 REVIEW_HISTORY_START = "<!-- vesper-history-start -->"
 REVIEW_HISTORY_END = "<!-- vesper-history-end -->"
+DEFAULT_GEMINI_MODEL = os.getenv("VESPER_GEMINI_MODEL", "gemini-3.5-flash")
 
 try:
     from .rag import fetch_rag_context
@@ -243,7 +244,7 @@ Provide a concise code review analysis in this format:
 
     default_config = {
         "focus": "all",
-        "model": "gemini-2.5-flash",
+        "model": DEFAULT_GEMINI_MODEL,
         "max_diff_length": 4000,
         "temperature": 0.2,
         "max_output_tokens": 8192,
@@ -255,6 +256,9 @@ Provide a concise code review analysis in this format:
         "auto_commit_suggestions": False,
         "create_improvement_prs": False,
         "improvement_branch_pattern": "vesper-improvements-{timestamp}",
+        "enable_rag": False,
+        "rag_sources": ["pypi", "npm", "rubygems", "security", "github", "docs"],
+        "rag_max_items": 3,
         "prompt": default_prompt,
         "safety_settings": [
             {"category": "HARM_CATEGORY_HARASSMENT", "threshold": "BLOCK_NONE"},
@@ -269,7 +273,10 @@ Provide a concise code review analysis in this format:
         with open(config_path, "r") as f:
             try:
                 user_config = yaml.safe_load(f) or {}
-                return {**default_config, **user_config}
+                config = {**default_config, **user_config}
+                if os.getenv("VESPER_GEMINI_MODEL"):
+                    config["model"] = os.getenv("VESPER_GEMINI_MODEL")
+                return config
             except yaml.YAMLError as e:
                 logging.error(f"Error loading config.yaml: {e}")
                 return default_config
@@ -280,7 +287,7 @@ def analyze_with_gemini(client, pr_details):
     """Analyze the PR using Gemini API."""
     try:
         config = load_config()
-        model_name = config.get("model", "gemini-2.5-flash")
+        model_name = config.get("model", DEFAULT_GEMINI_MODEL)
         focus = config.get("focus", "all")
         max_diff = config.get("max_diff_length", 4000)
         temperature = config.get("temperature", 0.2)
@@ -291,8 +298,8 @@ def analyze_with_gemini(client, pr_details):
         diff_length = len(pr_details["diff"])
         num_files = len(pr_details["files_changed"])
         if diff_length > 10000 or num_files > 10:
-            model_name = "gemini-2.5-flash"  # More powerful model for complex PRs
-        # For simple PRs, use the configured model (default gemini-2.5-flash)
+            model_name = config.get("complex_model", model_name)
+        # For other PRs, use the configured model.
 
         # Use client for selected model
 
@@ -300,7 +307,7 @@ def analyze_with_gemini(client, pr_details):
         focus_instructions = {
             "security": "Focus primarily on security concerns, authentication, data handling, and potential vulnerabilities.",
             "performance": "Focus primarily on performance optimizations, efficiency, and potential bottlenecks.",
-            "quality": "Focus primarily on code quality, maintainability, readability, and best practices.",
+            "quality": "Focus primarily on code quality, maintainability, and readability.",
         }
         focus_instruction = focus_instructions.get(focus, "")
 
@@ -1626,7 +1633,7 @@ def get_quota_cooldown_until(pr) -> int | None:
 
 
 def ensure_label_exists(repo, name: str):
-    """Ensure a repository label exists (best-effort)."""
+    """Ensure a repository label exists when possible."""
     try:
         # If it already exists, GitHub will return 422 on create; swallow it.
         repo.create_label(name=name, color="6e7681", description="Vesper control label")

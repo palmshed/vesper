@@ -4,10 +4,10 @@ Gem::Specification.new do |spec|
   spec.authors     = ['Niladri Das']
   spec.email       = ['bniladridas@gmail.com']
   spec.summary     = "A Ruby gem for interacting with Google's Gemini AI models"
-  spec.description = "Provides easy text generation capabilities using Google's Gemini AI models"
+  spec.description = "Provides text generation with Google's Gemini AI models"
   spec.homepage    = 'https://github.com/bniladridas/vesper'
   spec.license     = 'MIT'
-  spec.required_ruby_version = '>= 3.1.0'
+  spec.required_ruby_version = '>= 3.3.0'
 
   spec.files = Dir['lib/**/*', 'LICENSE', 'README.md']
   spec.require_paths = ['lib']

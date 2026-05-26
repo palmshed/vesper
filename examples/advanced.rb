@@ -10,7 +10,7 @@ require_relative '../lib/gemini'
 GeminiAI.load_env
 
 # Advanced configuration example
-def advanced_configuration
+def configuration_example
   puts '=== Advanced Configuration ==='
 
   client = GeminiAI::Client.new
@@ -67,7 +67,7 @@ def batch_processing
   prompts = [
     'Write a haiku about coding',
     'Explain recursion briefly',
-    'What is the best programming language?'
+    'Compare Ruby and Python.'
   ]
 
   prompts.each_with_index do |prompt, index|
@@ -79,9 +79,9 @@ def batch_processing
   end
 end
 
-# Run advanced examples
+# Run examples
 begin
-  advanced_configuration
+  configuration_example
   error_handling_example
   batch_processing
 rescue StandardError => e

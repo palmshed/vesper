@@ -120,10 +120,10 @@ jobs:
       - name: Check Vesper secrets
         id: vesper-secrets
         env:
-          VESPER_APP_ID: ${{ secrets.VESPER_APP_ID }}
+          VESPER_CLIENT_ID: ${{ secrets.VESPER_CLIENT_ID }}
           VESPER_PRIVATE_KEY: ${{ secrets.VESPER_PRIVATE_KEY }}
         run: |
-          if [ -n "$VESPER_APP_ID" ] && [ -n "$VESPER_PRIVATE_KEY" ]; then
+          if [ -n "$VESPER_CLIENT_ID" ] && [ -n "$VESPER_PRIVATE_KEY" ]; then
             echo "available=true" >> "$GITHUB_OUTPUT"
           else
             echo "available=false" >> "$GITHUB_OUTPUT"
@@ -135,7 +135,7 @@ jobs:
         id: app-token
         uses: actions/create-github-app-token@v3
         with:
-          app-id: ${{ secrets.VESPER_APP_ID }}
+          client-id: ${{ secrets.VESPER_CLIENT_ID }}
           private-key: ${{ secrets.VESPER_PRIVATE_KEY }}
 
       # Run Vesper to analyze PR with Gemini AI

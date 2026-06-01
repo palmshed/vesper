@@ -1,26 +1,40 @@
 # Resources
 
+<br>
+
 Additional resources, links, and references for Vesper.
 
-## Official Documentation
+<br>
 
-### Google AI Documentation
+# Official Documentation
+
+<br>
+
+# Google AI Documentation
 - [Google AI Studio](https://aistudio.google.com/) - Create and manage API keys
 - [Gemini API Documentation](https://ai.google.dev/docs) - Official API reference
 - [Model Documentation](https://ai.google.dev/models/gemini) - Gemini model details
 - [API Pricing](https://ai.google.dev/pricing) - Current pricing information
 
-### Vesper Documentation
+<br>
+
+# Vesper Documentation
 - [GitHub Repository](https://github.com/bniladridas/vesper) - Source code and issues
 - [RubyGems](https://rubygems.org/gems/friday_gemini_ai) - Gem installation and versions
 - [`API Reference`](../reference/api.md) - Complete method documentation
 - [`Usage Guide`](../reference/usage.md) - Comprehensive examples
 
-## Migration Guides
+<br>
 
-### From Other AI Libraries
+# Migration Guides
 
-#### From OpenAI Ruby
+<br>
+
+# From Other AI Libraries
+
+<br>
+
+# From OpenAI Ruby
 ```ruby
 # OpenAI Ruby
 client = OpenAI::Client.new(access_token: "your-token")
@@ -40,7 +54,9 @@ response = client.generate_text(
 )
 ```
 
-#### From Anthropic Ruby
+<br>
+
+# From Anthropic Ruby
 ```ruby
 # Anthropic Ruby
 client = Anthropic::Client.new(api_key: "your-key")
@@ -56,7 +72,9 @@ messages = [{ role: 'user', content: 'Hello' }]
 response = client.chat(messages, max_tokens: 100)
 ```
 
-### From Direct HTTP Requests
+<br>
+
+# From Direct HTTP Requests
 ```ruby
 # Direct HTTP with Net::HTTP
 require 'net/http'
@@ -81,9 +99,13 @@ client = GeminiAI::Client.new
 response = client.generate_text("Hello")
 ```
 
-## Release Notes
+<br>
 
-### Version 1.0.0 (Current)
+# Release Notes
+
+<br>
+
+# Version 1.0.0 (Current)
 - Initial release
 - Text generation support
 - Chat conversation support
@@ -93,21 +115,31 @@ response = client.generate_text("Hello")
 - Environment variable support
 - Detailed logging with API key masking
 
-### Planned Features
+<br>
+
+# Planned Features
 - Image analysis support
 - Streaming responses
 - Function calling
 - Batch processing optimization
 - Advanced caching strategies
 
-## API Troubleshooting
+<br>
 
-### Common HTTP Status Codes
+# API Troubleshooting
 
-#### 200 OK
+<br>
+
+# Common HTTP Status Codes
+
+<br>
+
+# 200 OK
 Request successful, response contains generated content.
 
-#### 400 Bad Request
+<br>
+
+# 400 Bad Request
 Invalid request format or parameters.
 ```ruby
 # Common causes:
@@ -116,7 +148,9 @@ Invalid request format or parameters.
 # - Malformed request body
 ```
 
-#### 401 Unauthorized
+<br>
+
+# 401 Unauthorized
 Invalid or missing API key.
 ```ruby
 # Solutions:
@@ -125,7 +159,9 @@ Invalid or missing API key.
 # - Ensure proper environment variable setup
 ```
 
-#### 403 Forbidden
+<br>
+
+# 403 Forbidden
 API key doesn't have required permissions.
 ```ruby
 # Solutions:
@@ -134,7 +170,9 @@ API key doesn't have required permissions.
 # - Ensure API is enabled for your project
 ```
 
-#### 429 Too Many Requests
+<br>
+
+# 429 Too Many Requests
 Rate limit exceeded.
 ```ruby
 # Current limits:
@@ -143,7 +181,9 @@ Rate limit exceeded.
 # - 1,500 requests per day
 ```
 
-#### 500 Internal Server Error
+<br>
+
+# 500 Internal Server Error
 Server-side error on Google's end.
 ```ruby
 # Solutions:
@@ -152,19 +192,27 @@ Server-side error on Google's end.
 # - Try again later
 ```
 
-### Rate Limits and Quotas
+<br>
 
-#### Free Tier Limits
+# Rate Limits and Quotas
+
+<br>
+
+# Free Tier Limits
 - 15 requests per minute
 - 1 million tokens per day
 - 1,500 requests per day
 
-#### Paid Tier Limits
+<br>
+
+# Paid Tier Limits
 - 60 requests per minute
 - 4 million tokens per day
 - Higher daily request limits
 
-#### Best Practices
+<br>
+
+# Best Practices
 ```ruby
 # Implement exponential backoff
 def with_retry(max_retries: 3)
@@ -189,15 +237,21 @@ prompts.each_slice(10) do |batch|
 end
 ```
 
-## Fine-tuning
+<br>
 
-### When to Consider Fine-tuning
+# Fine-tuning
+
+<br>
+
+# When to Consider Fine-tuning
 - Specific domain knowledge required
 - Consistent output format needed
 - Performance optimization for specific tasks
 - Custom behavior patterns
 
-### Alternatives to Fine-tuning
+<br>
+
+# Alternatives to Fine-tuning
 ```ruby
 # Use detailed prompts
 prompt = <<~PROMPT
@@ -216,42 +270,60 @@ messages = [
 ]
 ```
 
-## Google AI Studio
+<br>
 
-### Getting Started
+# Google AI Studio
+
+<br>
+
+# Getting Started
 1. Visit [Google AI Studio](https://aistudio.google.com/)
 2. Sign in with Google account
 3. Create new project (if needed)
 4. Generate API key
 5. Test prompts in the playground
 
-### API Key Management
+<br>
+
+# API Key Management
 - Create separate keys for development/production
 - Rotate keys regularly
 - Monitor usage in the dashboard
 - Set up billing alerts
 
-### Prompt Engineering
+<br>
+
+# Prompt Engineering
 - Use the playground to test prompts
 - Experiment with different parameters
 - Save successful prompt templates
 - Share prompts with team members
 
-## Community Resources
+<br>
 
-### Ruby AI Community
+# Community Resources
+
+<br>
+
+# Ruby AI Community
 - [Ruby AI Discord](https://discord.gg/ruby-ai) - Community discussions
 - [Ruby AI Subreddit](https://reddit.com/r/ruby_ai) - News and discussions
 - [Ruby Weekly](https://rubyweekly.com/) - Ruby news including AI developments
 
-### AI/ML Resources
+<br>
+
+# AI/ML Resources
 - [Prompt Engineering Guide](https://www.promptingguide.ai/) - Comprehensive prompting techniques
 - [AI Safety Guidelines](https://ai.google.dev/docs/safety_guidance) - Responsible AI practices
 - [Machine Learning Mastery](https://machinelearningmastery.com/) - ML tutorials and guides
 
-## Contributing
+<br>
 
-### Development Setup
+# Contributing
+
+<br>
+
+# Development Setup
 ```bash
 # Clone repository
 git clone https://github.com/bniladridas/vesper.git
@@ -267,13 +339,17 @@ ruby tests/test_runner.rb
 ./bin/gemini test
 ```
 
-### Code Style
+<br>
+
+# Code Style
 - Follow Ruby Style Guide
 - Use RuboCop for linting
 - Write tests for changed behavior
 - Document public methods
 
-### Submitting Issues
+<br>
+
+# Submitting Issues
 Include:
 - Ruby version
 - Gem version
@@ -281,7 +357,9 @@ Include:
 - Minimal reproduction code
 - Expected vs actual behavior
 
-### Pull Requests
+<br>
+
+# Pull Requests
 1. Fork the repository
 2. Create feature branch
 3. Write tests for new features
@@ -289,9 +367,13 @@ Include:
 5. Update documentation
 6. Submit pull request
 
-## Security
+<br>
 
-### API Key Security
+# Security
+
+<br>
+
+# API Key Security
 ```ruby
 # Good practices
 # - Use environment variables
@@ -306,7 +388,9 @@ Include:
 # - Logging API keys
 ```
 
-### Input Validation
+<br>
+
+# Input Validation
 ```ruby
 # Sanitize user input
 def sanitize_prompt(input)
@@ -323,7 +407,9 @@ def validate_prompt(prompt)
 end
 ```
 
-### Rate Limiting
+<br>
+
+# Rate Limiting
 ```ruby
 # Implement user-level rate limiting
 class UserRateLimiter
@@ -348,29 +434,41 @@ class UserRateLimiter
 end
 ```
 
-## Legal and Compliance
+<br>
 
-### Terms of Service
+# Legal and Compliance
+
+<br>
+
+# Terms of Service
 - Review [Google AI Terms of Service](https://ai.google.dev/terms)
 - Understand usage restrictions
 - Comply with content policies
 - Respect rate limits and quotas
 
-### Privacy Considerations
+<br>
+
+# Privacy Considerations
 - Don't send personal data to AI models
 - Implement data retention policies
 - Consider GDPR/CCPA compliance
 - Log and audit AI usage
 
-### Content Policies
+<br>
+
+# Content Policies
 - Prohibited content types
 - Safety filtering
 - Content moderation
 - User-generated content handling
 
-## Performance Optimization
+<br>
 
-### Caching Strategies
+# Performance Optimization
+
+<br>
+
+# Caching Strategies
 ```ruby
 # Redis caching
 class CachedGeminiClient
@@ -393,7 +491,9 @@ class CachedGeminiClient
 end
 ```
 
-### Monitoring
+<br>
+
+# Monitoring
 ```ruby
 # Application monitoring
 class MonitoredGeminiClient
@@ -429,18 +529,26 @@ class MonitoredGeminiClient
 end
 ```
 
-## Support
+<br>
 
-### Getting Help
+# Support
+
+<br>
+
+# Getting Help
 1. Check this documentation
 2. Search existing GitHub issues
 3. Create new issue with reproduction steps
 4. Join community discussions
 
-### Commercial Support
+<br>
+
+# Commercial Support
 For enterprise support, custom integrations, or consulting services, contact the maintainers through the GitHub repository.
 
-### Training and Workshops
+<br>
+
+# Training and Workshops
 - Ruby AI workshops
 - Custom team training
 - Integration consulting

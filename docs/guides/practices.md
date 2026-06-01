@@ -1,15 +1,25 @@
 # Best Practices
 
+<br>
+
 Comprehensive guides for getting the most out of Vesper.
+
+<br>
 
 > [!IMPORTANT]
 > Following these practices ensures secure, efficient, and reliable use of the Gemini AI API.
 
-## Security Best Practices
+<br>
 
-### API Key Management
+# Security Best Practices
 
-#### Environment Variables (Recommended)
+<br>
+
+# API Key Management
+
+<br>
+
+# Environment Variables (Recommended)
 ```ruby
 # Good - Use environment variables
 export GEMINI_API_KEY="your_api_key_here"
@@ -18,7 +28,9 @@ export GEMINI_API_KEY="your_api_key_here"
 client = GeminiAI::Client.new  # Automatically uses ENV['GEMINI_API_KEY']
 ```
 
-#### .env Files
+<br>
+
+# .env Files
 ```ruby
 # Good - Use .env files for development
 # .env file:
@@ -29,7 +41,11 @@ GeminiAI.load_env
 client = GeminiAI::Client.new
 ```
 
-#### What to Avoid
+<br>
+
+# What to Avoid
+
+<br>
 
 | Anti-pattern | Reason | Alternative |
 | ------------ | ------ | ----------- |
@@ -37,9 +53,13 @@ client = GeminiAI::Client.new
 | API keys in version control | Accidental exposure | Use .env files (gitignored) |
 | API keys in logs | Logging sensitive data | Use masked logging |
 
-### Input Validation
+<br>
 
-#### Sanitize User Input
+# Input Validation
+
+<br>
+
+# Sanitize User Input
 ```ruby
 def safe_prompt(user_input)
   # Remove potentially harmful characters
@@ -60,7 +80,9 @@ safe_input = safe_prompt(user_prompt)
 response = client.generate_text(safe_input)
 ```
 
-#### Rate Limiting
+<br>
+
+# Rate Limiting
 ```ruby
 class RateLimitedClient
   def initialize
@@ -83,11 +105,17 @@ class RateLimitedClient
 end
 ```
 
-## Performance Optimization
+<br>
 
-### Response Caching
+# Performance Optimization
 
-#### Simple Memory Cache
+<br>
+
+# Response Caching
+
+<br>
+
+# Simple Memory Cache
 ```ruby
 class CachedGeminiClient
   def initialize
@@ -107,7 +135,9 @@ class CachedGeminiClient
 end
 ```
 
-#### Redis Cache
+<br>
+
+# Redis Cache
 ```ruby
 require 'redis'
 
@@ -133,9 +163,13 @@ class RedisGeminiClient
 end
 ```
 
-### Batch Processing
+<br>
 
-#### Sequential Processing
+# Batch Processing
+
+<br>
+
+# Sequential Processing
 ```ruby
 def process_prompts(prompts)
   client = GeminiAI::Client.new
@@ -158,7 +192,9 @@ def process_prompts(prompts)
 end
 ```
 
-#### Parallel Processing with Thread Pool
+<br>
+
+# Parallel Processing with Thread Pool
 ```ruby
 require 'concurrent-ruby'
 
@@ -189,9 +225,13 @@ def process_prompts_parallel(prompts, max_threads: 5)
 end
 ```
 
-## Error Handling Strategies
+<br>
 
-### Comprehensive Error Handling
+# Error Handling Strategies
+
+<br>
+
+# Comprehensive Error Handling
 ```ruby
 def generate_with_retry(prompt, max_retries: 3)
   retries = 0
@@ -239,7 +279,9 @@ def generate_with_retry(prompt, max_retries: 3)
 end
 ```
 
-### Circuit Breaker Pattern
+<br>
+
+# Circuit Breaker Pattern
 ```ruby
 class CircuitBreakerClient
   def initialize(failure_threshold: 5, timeout: 60)
@@ -284,11 +326,17 @@ class CircuitBreakerClient
 end
 ```
 
-## Prompt Engineering
+<br>
 
-### Effective Prompt Structure
+# Prompt Engineering
 
-#### Clear Instructions
+<br>
+
+# Effective Prompt Structure
+
+<br>
+
+# Clear Instructions
 ```ruby
 # Good - Clear and specific
 prompt = "Write a Ruby method that takes an array of integers and returns the sum. Include error handling for non-integer values."
@@ -297,7 +345,9 @@ prompt = "Write a Ruby method that takes an array of integers and returns the su
 prompt = "Write some Ruby code"
 ```
 
-#### Context and Examples
+<br>
+
+# Context and Examples
 ```ruby
 # Good - Provide context and examples
 prompt = <<~PROMPT
@@ -316,7 +366,9 @@ PROMPT
 response = client.generate_text(prompt, temperature: 0.3)
 ```
 
-#### Role-Based Prompts
+<br>
+
+# Role-Based Prompts
 ```ruby
 # Technical documentation
 tech_prompt = "You are a technical writer. Explain how Ruby blocks work to a beginner programmer."
@@ -328,9 +380,13 @@ review_prompt = "You are a senior Ruby developer. Review this code for issues an
 creative_prompt = "You are a creative writing assistant. Help improve this story opening: #{story_text}"
 ```
 
-### Parameter Tuning Guide
+<br>
 
-#### For Different Use Cases
+# Parameter Tuning Guide
+
+<br>
+
+# For Different Use Cases
 ```ruby
 # Factual/Technical Content
 factual_params = {
@@ -357,11 +413,17 @@ balanced_params = {
 }
 ```
 
-## Integration Patterns
+<br>
 
-### Rails Application Integration
+# Integration Patterns
 
-#### Service Object Pattern
+<br>
+
+# Rails Application Integration
+
+<br>
+
+# Service Object Pattern
 ```ruby
 # app/services/ai_content_service.rb
 class AiContentService
@@ -390,7 +452,9 @@ class AiContentService
 end
 ```
 
-#### Background Job Integration
+<br>
+
+# Background Job Integration
 ```ruby
 # app/jobs/content_generation_job.rb
 class ContentGenerationJob < ApplicationJob
@@ -420,7 +484,9 @@ class ContentGenerationJob < ApplicationJob
 end
 ```
 
-### API Wrapper
+<br>
+
+# API Wrapper
 ```ruby
 # app/controllers/api/v1/ai_controller.rb
 class Api::V1::AiController < ApplicationController
@@ -476,9 +542,13 @@ class Api::V1::AiController < ApplicationController
 end
 ```
 
-## Testing Strategies
+<br>
 
-### Unit Testing
+# Testing Strategies
+
+<br>
+
+# Unit Testing
 ```ruby
 # spec/services/ai_content_service_spec.rb
 RSpec.describe AiContentService do
@@ -512,7 +582,9 @@ RSpec.describe AiContentService do
 end
 ```
 
-### Integration Testing
+<br>
+
+# Integration Testing
 ```ruby
 # spec/integration/ai_integration_spec.rb
 RSpec.describe 'AI Integration', type: :request do
@@ -551,9 +623,13 @@ RSpec.describe 'AI Integration', type: :request do
 end
 ```
 
-## Monitoring and Observability
+<br>
 
-### Request Logging
+# Monitoring and Observability
+
+<br>
+
+# Request Logging
 ```ruby
 class LoggedGeminiClient
   def initialize
@@ -594,7 +670,9 @@ class LoggedGeminiClient
 end
 ```
 
-### Metrics Collection
+<br>
+
+# Metrics Collection
 ```ruby
 class MetricsGeminiClient
   def initialize

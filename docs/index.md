@@ -1,22 +1,38 @@
 # Vesper
 
+<br>
+
 A Ruby interface to Google's Gemini AI models, designed for simplicity, security, and power.
 
-## Quick Start
+<br>
+
+# Quick Start
+
+<br>
 
 Install the gem:
+
+<br>
 
 ```bash
 gem install friday_gemini_ai
 ```
 
+<br>
+
 Set your API key:
+
+<br>
 
 ```bash
 export GEMINI_API_KEY="your-api-key-here"
 ```
 
+<br>
+
 Generate text:
+
+<br>
 
 ```ruby
 require 'vesper'
@@ -26,11 +42,19 @@ response = client.generate_text("Hello, Gemini!")
 puts response
 ```
 
-## PR Review
+<br>
+
+# PR Review
+
+<br>
 
 [`Vesper`](reference/vesper.md) automates code reviews using Gemini AI, analyzing PRs and providing feedback.
 
-## Documentation
+<br>
+
+# Documentation
+
+<br>
 
 - [`Quick Start`](start/quickstart.md)
 - [`API Reference`](reference/api.md)
@@ -38,7 +62,11 @@ puts response
 - [`Guides`](guides/community.md)
 - [`Testing`](reference/testing.md)
 
-## Links
+<br>
+
+# Links
+
+<br>
 
 - [RubyGems](https://rubygems.org/gems/friday_gemini_ai)
 - [Issues](https://github.com/bniladridas/vesper/issues)

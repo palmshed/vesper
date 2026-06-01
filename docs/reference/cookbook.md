@@ -1,10 +1,16 @@
 # Cookbook
 
+<br>
+
 Practical recipes and code examples for common Vesper use cases.
 
-## Content Generation
+<br>
 
-### Blog Post Generator
+# Content Generation
+
+<br>
+
+# Blog Post Generator
 ```ruby
 class BlogPostGenerator
   def initialize
@@ -66,7 +72,9 @@ post = generator.generate_post(
 puts post
 ```
 
-### Code Documentation Generator
+<br>
+
+# Code Documentation Generator
 ```ruby
 class CodeDocGenerator
   def initialize
@@ -123,9 +131,13 @@ documentation = doc_gen.document_method(code)
 explanation = doc_gen.explain_code(code)
 ```
 
-## Chatbot Implementation
+<br>
 
-### Simple Q&A Bot
+# Chatbot Implementation
+
+<br>
+
+# Simple Q&A Bot
 ```ruby
 class QABot
   def initialize(context: nil)
@@ -179,7 +191,9 @@ puts bot.ask("How do I install it?")
 puts bot.ask("What models does it support?")
 ```
 
-### Customer Support Bot
+<br>
+
+# Customer Support Bot
 ```ruby
 class SupportBot
   SUPPORT_CONTEXT = <<~CONTEXT
@@ -223,9 +237,13 @@ puts support.handle_query("I'm getting an 'API key is required' error")
 puts support.handle_query("How do I handle rate limiting?")
 ```
 
-## Data Processing
+<br>
 
-### Text Summarizer
+# Data Processing
+
+<br>
+
+# Text Summarizer
 ```ruby
 class TextSummarizer
   def initialize
@@ -292,7 +310,9 @@ summary = summarizer.summarize(long_article, length: 'medium', style: 'bullet_po
 key_points = summarizer.extract_key_points(long_article, count: 3)
 ```
 
-### Language Translator
+<br>
+
+# Language Translator
 ```ruby
 class LanguageHelper
   def initialize
@@ -344,9 +364,13 @@ rough_text = "this is not good writing with bad grammar"
 improved_text = helper.improve_writing(rough_text, style: 'professional')
 ```
 
-## Creative Applications
+<br>
 
-### Story Generator
+# Creative Applications
+
+<br>
+
+# Story Generator
 ```ruby
 class StoryGenerator
   def initialize
@@ -422,7 +446,9 @@ continuation = generator.continue_story(
 )
 ```
 
-### Marketing Copy Generator
+<br>
+
+# Marketing Copy Generator
 ```ruby
 class MarketingCopyGenerator
   def initialize
@@ -500,9 +526,13 @@ subject_lines = marketing.generate_email_subject_lines(
 )
 ```
 
-## Integration Patterns
+<br>
 
-### Rails Service Integration
+# Integration Patterns
+
+<br>
+
+# Rails Service Integration
 ```ruby
 # app/services/ai_content_service.rb
 class AiContentService
@@ -604,7 +634,9 @@ class AiContentsController < ApplicationController
 end
 ```
 
-### Background Job Processing
+<br>
+
+# Background Job Processing
 ```ruby
 # app/jobs/bulk_content_generation_job.rb
 class BulkContentGenerationJob < ApplicationJob
@@ -687,9 +719,13 @@ batch = ContentBatch.create!(
 BulkContentGenerationJob.perform_later(batch.id, prompts)
 ```
 
-## Testing Patterns
+<br>
 
-### RSpec Testing
+# Testing Patterns
+
+<br>
+
+# RSpec Testing
 ```ruby
 # spec/services/ai_content_service_spec.rb
 RSpec.describe AiContentService do
@@ -747,5 +783,7 @@ RSpec.configure do |config|
   config.include GeminiAIHelpers
 end
 ```
+
+<br>
 
 This cookbook provides practical, ready-to-use code examples for common scenarios. Each recipe includes complete working code that developers can adapt for their specific needs.

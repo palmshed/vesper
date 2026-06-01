@@ -1,6 +1,10 @@
 # Models
 
+<br>
+
 Vesper maps Ruby symbols to Gemini `generateContent` text model IDs.
+
+<br>
 
 | Symbol | Model | Use |
 | --- | --- | --- |
@@ -19,7 +23,11 @@ Vesper maps Ruby symbols to Gemini `generateContent` text model IDs.
 | `:flash_lite` | `gemini-3.1-flash-lite` | Short alias |
 | `:pro_2_0` | `gemini-2.0-flash` | Legacy alias |
 
-## Usage
+<br>
+
+# Usage
+
+<br>
 
 ```ruby
 require 'vesper'
@@ -28,13 +36,23 @@ client = GeminiAI::Client.new
 fast_client = GeminiAI::Client.new(model: :flash)
 ```
 
+<br>
+
 Unknown model symbols fall back to `:pro`.
+
+<br>
 
 Deprecated `1.5` aliases log a warning and also fall back to `:pro`.
 
-## Options
+<br>
+
+# Options
+
+<br>
 
 Generation options are passed per request:
+
+<br>
 
 ```ruby
 client.generate_text(
@@ -45,5 +63,7 @@ client.generate_text(
   top_k: 40
 )
 ```
+
+<br>
 
 Use lower temperature for factual output and higher temperature for more varied responses.

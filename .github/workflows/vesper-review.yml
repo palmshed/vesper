@@ -25,7 +25,7 @@ jobs:
         name: Create Vesper Review app token
         uses: actions/create-github-app-token@v3
         with:
-          app-id: ${{ secrets.VESPER_APP_ID }}
+          client-id: ${{ secrets.VESPER_CLIENT_ID }}
           private-key: ${{ secrets.VESPER_PRIVATE_KEY }}
           permission-statuses: write
           permission-pull-requests: read

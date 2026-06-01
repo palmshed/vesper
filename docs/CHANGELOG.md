@@ -1,18 +1,29 @@
 # Changelog
 
+<br>
+
 All notable changes are tracked here.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: [SemVer](https://semver.org/spec/v2.0.0.html)
 
-## [1.7.0](https://github.com/bniladridas/vesper/compare/friday_gemini_ai/v1.6.0...friday_gemini_ai/v1.7.0) (2026-05-22)
+<br>
 
+# [1.7.0](https://github.com/bniladridas/vesper/compare/friday_gemini_ai/v1.6.0...friday_gemini_ai/v1.7.0) (2026-05-22)
 
-### Features
+<br>
+
+# Features
+
+<br>
 
 * include development dependencies ([bd9b7a5](https://github.com/bniladridas/vesper/commit/bd9b7a5cb9241b1218d9270e1d04716a9eeeeeb9))
 * introduce rag-based context retrieval ([#171](https://github.com/bniladridas/vesper/issues/171)) ([3e9b520](https://github.com/bniladridas/vesper/commit/3e9b520d38ce6886403438f665ff4d985b7c11ef))
 
-## [1.6.0](https://github.com/bniladridas/vesper/compare/friday_gemini_ai/v1.5.0...friday_gemini_ai/v1.6.0) (2026-04-13)
-### Features
+<br>
+
+# [1.6.0](https://github.com/bniladridas/vesper/compare/friday_gemini_ai/v1.5.0...friday_gemini_ai/v1.6.0) (2026-04-13)
+# Features
+
+<br>
 
 * /analyze --force-review ([45c4f7d](https://github.com/bniladridas/vesper/commit/45c4f7d5ca2d0b220db4ec4f9cd5f3e094f7fa68))
 * create gem publish workflow ([422a03a](https://github.com/bniladridas/vesper/commit/422a03acc069cf80b1183b1db50124768118e084))
@@ -25,8 +36,11 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: 
 * show build in status ([ce7ca91](https://github.com/bniladridas/vesper/commit/ce7ca9181d0b8ebb67f0f833e8cf5e3311c6e360))
 * trademark page ([6e20ccc](https://github.com/bniladridas/vesper/commit/6e20cccfab9f5b914b790d817731e1f9b781a940))
 
+<br>
 
-### Bug Fixes
+# Bug Fixes
+
+<br>
 
 * /analyze in file comments ([c4ef4d9](https://github.com/bniladridas/vesper/commit/c4ef4d927a48bbb1130f00bf8926f9381db543ba))
 * align sanitizer with gemini output budget ([#158](https://github.com/bniladridas/vesper/issues/158)) ([d55fd3f](https://github.com/bniladridas/vesper/commit/d55fd3f518d0f475353f3998078b5121988e943b))
@@ -48,21 +62,31 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: 
 * update version to 1.5.0 ([338e2ff](https://github.com/bniladridas/vesper/commit/338e2ff44e2b5572a5e6245dc66d63a66b34caf6))
 * use v4 for artifact actions ([805e7a0](https://github.com/bniladridas/vesper/commit/805e7a071b8dd52279f61f2e09800b2376289d6f))
 
+<br>
 
-### Documentation
+# Documentation
+
+<br>
 
 * explain quota cooldown ([a6f28da](https://github.com/bniladridas/vesper/commit/a6f28da4e5ba6814386b2e9bfec1d07816996632))
 * fix setup-vesper ([0042a7a](https://github.com/bniladridas/vesper/commit/0042a7a4b858ce5b82e831eb4526da6e5029757b))
 * publish l2 support page ([868b15e](https://github.com/bniladridas/vesper/commit/868b15ed4dc00e3f82ecd34365990241cbbcf5c7))
 * show rebase 405 details ([4cc3d9f](https://github.com/bniladridas/vesper/commit/4cc3d9f514e5ed4b6b662e6f6e69bd1ac924d6d7))
 
+<br>
 
-### Code Refactoring
+# Code Refactoring
+
+<br>
 
 * website nav and cookie removal ([ce928e7](https://github.com/bniladridas/vesper/commit/ce928e7555004b326e93d347a7abfbadae837e66))
 
-## [1.5.0](https://github.com/bniladridas/vesper/compare/friday_gemini_ai/v1.4.1...friday_gemini_ai/v1.5.0) (2026-03-16)
-### Features
+<br>
+
+# [1.5.0](https://github.com/bniladridas/vesper/compare/friday_gemini_ai/v1.4.1...friday_gemini_ai/v1.5.0) (2026-03-16)
+# Features
+
+<br>
 
 * add /apply comment handler in separate file ([4b85767](https://github.com/bniladridas/vesper/commit/4b857674a36aa4915e699b71d098b07bb8d5ef6d))
 * add base64 gem and unfreeze bundle ([b45511c](https://github.com/bniladridas/vesper/commit/b45511c023e0962376ebb3dfe87f2f3c1ca9f456))
@@ -93,8 +117,11 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: 
 * update prompt for changed lines ([904e603](https://github.com/bniladridas/vesper/commit/904e603c3a0d7ac3867e6f1e7a7c18f9b20ad381))
 * use direct api for suggestions ([40634f2](https://github.com/bniladridas/vesper/commit/40634f26a052979e09f3835c7378a9bd657ed7b9))
 
+<br>
 
-### Bug Fixes
+# Bug Fixes
+
+<br>
 
 * add --force to brakeman to scan ruby gem ([c8a2f1d](https://github.com/bniladridas/vesper/commit/c8a2f1de6eae8b52fbe07a97f4546d2c89b4707d))
 * add back event comment ([a541645](https://github.com/bniladridas/vesper/commit/a541645f87c965929cd139af3d5fe9bd7e9ff35d))
@@ -202,8 +229,11 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: 
 * use string find to avoid polynomial regex alert ([ba16662](https://github.com/bniladridas/vesper/commit/ba16662cd42e5a433eded25830d04d466f9b8538))
 * webhook for vercel compatibility ([e6cb0d8](https://github.com/bniladridas/vesper/commit/e6cb0d8887f90a20d8f0cd39d807b37c4e66ce0b))
 
+<br>
 
-### Documentation
+# Documentation
+
+<br>
 
 * add changelog entry for vesper model fix ([bc203a9](https://github.com/bniladridas/vesper/commit/bc203a9d22c003a939d7312b4b13f97af3be41c0))
 * add comment explaining coverage handling ([a6131ad](https://github.com/bniladridas/vesper/commit/a6131adf42c980e1d9b84977821bb023ab5e0e87))
@@ -244,8 +274,11 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: 
 * update references from .vesper to vesper ([8222a06](https://github.com/bniladridas/vesper/commit/8222a06c0c1c03846153b895eca0687fc3c41907))
 * update webhook app and security ([6a5492b](https://github.com/bniladridas/vesper/commit/6a5492b6de794acf23d0a38f04bc9b8340a83668))
 
+<br>
 
-### Code Refactoring
+# Code Refactoring
+
+<br>
 
 * add comments and remove duplicate names ([f1ed58b](https://github.com/bniladridas/vesper/commit/f1ed58bbb27c9ec77ff781800043602ee8d70210))
 * consolidate dependency installations in codebot.ym ([f441aa7](https://github.com/bniladridas/vesper/commit/f441aa7dedb846ce45e909ec33edac4eaa1e21eb))
@@ -261,25 +294,39 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: 
 * standardize workflow names and update conditions ([b6f7e5a](https://github.com/bniladridas/vesper/commit/b6f7e5abd891a49f923171070dfcc5fdfb62ae3b))
 * update all codebot references to vesper ([7a53ab9](https://github.com/bniladridas/vesper/commit/7a53ab940ae058262ae965838e690cb5b54e6065))
 
-## [1.4.1](https://github.com/bniladridas/vesper/compare/friday_gemini_ai/v1.4.0...friday_gemini_ai/v1.4.1) (2026-03-16)
-### Bug Fixes
+<br>
+
+# [1.4.1](https://github.com/bniladridas/vesper/compare/friday_gemini_ai/v1.4.0...friday_gemini_ai/v1.4.1) (2026-03-16)
+# Bug Fixes
+
+<br>
 
 * handle missing repo field ([bc52c31](https://github.com/bniladridas/vesper/commit/bc52c31f10c6407386109ca0f4052787549cb4cd))
 
-## [1.4.0](https://github.com/bniladridas/vesper/compare/friday_gemini_ai/v1.3.0...friday_gemini_ai/v1.4.0) (2026-03-15)
-### Features
+<br>
+
+# [1.4.0](https://github.com/bniladridas/vesper/compare/friday_gemini_ai/v1.3.0...friday_gemini_ai/v1.4.0) (2026-03-15)
+# Features
+
+<br>
 
 * process sync events in webhook ([02beaa5](https://github.com/bniladridas/vesper/commit/02beaa54d5a8f07bdf976340ef2ae141cc01d1ff))
 
+<br>
 
-### Bug Fixes
+# Bug Fixes
+
+<br>
 
 * avoid user lookup with app tokens ([776583a](https://github.com/bniladridas/vesper/commit/776583ae75d6af11a4a54d2dab11cbca6a67420d))
 * use auth token for bot clients ([2218823](https://github.com/bniladridas/vesper/commit/221882346a183050b3ac5e3e727d9ed46fb17f63))
 * webhook for vercel compatibility ([e6cb0d8](https://github.com/bniladridas/vesper/commit/e6cb0d8887f90a20d8f0cd39d807b37c4e66ce0b))
 
+<br>
 
-### Documentation
+# Documentation
+
+<br>
 
 * clarify vesper webhook notes ([06d8fc1](https://github.com/bniladridas/vesper/commit/06d8fc1b48809658e3eed32bf7207277c949b6d5))
 * mention webhook events ([23ddc60](https://github.com/bniladridas/vesper/commit/23ddc60c05dc073663802eda0ab339af9cebbcba))
@@ -290,23 +337,36 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: 
 * update app link ([0a5280c](https://github.com/bniladridas/vesper/commit/0a5280c5f45175bb5e2dc157ec3bb1c13039b6f1))
 * update webhook app and security ([6a5492b](https://github.com/bniladridas/vesper/commit/6a5492b6de794acf23d0a38f04bc9b8340a83668))
 
-## [1.3.0](https://github.com/bniladridas/vesper/compare/friday_gemini_ai/v1.2.2...friday_gemini_ai/v1.3.0) (2026-03-11)
-### Features
+<br>
+
+# [1.3.0](https://github.com/bniladridas/vesper/compare/friday_gemini_ai/v1.2.2...friday_gemini_ai/v1.3.0) (2026-03-11)
+# Features
+
+<br>
 
 * ui & vesper updates (wip) ([#143](https://github.com/bniladridas/vesper/issues/143)) ([1e40065](https://github.com/bniladridas/vesper/commit/1e40065964b0a17e83d3720e347066928769d192))
 
+<br>
 
-### Bug Fixes
+# Bug Fixes
+
+<br>
 
 * update lock workflow and vesper imports ([#141](https://github.com/bniladridas/vesper/issues/141)) ([b3dec6c](https://github.com/bniladridas/vesper/commit/b3dec6cdb1ea00c075e838efde8c7851319b758d))
 
-## [1.2.2](https://github.com/bniladridas/vesper/compare/friday_gemini_ai/v1.2.1...friday_gemini_ai/v1.2.2) (2026-01-26)
-### Bug Fixes
-## [1.2.1](https://github.com/bniladridas/vesper/compare/friday_gemini_ai/v1.2.0...friday_gemini_ai/v1.2.1) (2026-01-26)
-### Bug Fixes
+<br>
 
-## [1.2.0](https://github.com/bniladridas/vesper/compare/friday_gemini_ai/v1.1.1...friday_gemini_ai/v1.2.0) (2026-01-26)
-### Features
+# [1.2.2](https://github.com/bniladridas/vesper/compare/friday_gemini_ai/v1.2.1...friday_gemini_ai/v1.2.2) (2026-01-26)
+# Bug Fixes
+# [1.2.1](https://github.com/bniladridas/vesper/compare/friday_gemini_ai/v1.2.0...friday_gemini_ai/v1.2.1) (2026-01-26)
+# Bug Fixes
+
+<br>
+
+# [1.2.0](https://github.com/bniladridas/vesper/compare/friday_gemini_ai/v1.1.1...friday_gemini_ai/v1.2.0) (2026-01-26)
+# Features
+
+<br>
 
 * add /apply comment handler in separate file ([4b85767](https://github.com/bniladridas/vesper/commit/4b857674a36aa4915e699b71d098b07bb8d5ef6d))
 * add base64 gem and unfreeze bundle ([b45511c](https://github.com/bniladridas/vesper/commit/b45511c023e0962376ebb3dfe87f2f3c1ca9f456))
@@ -337,8 +397,11 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: 
 * update workflow name from codebot to vesper ([d049146](https://github.com/bniladridas/vesper/commit/d0491460b9a508df4803626adc79482c29ee48e9))
 * use direct api for suggestions ([40634f2](https://github.com/bniladridas/vesper/commit/40634f26a052979e09f3835c7378a9bd657ed7b9))
 
+<br>
 
-### Bug Fixes
+# Bug Fixes
+
+<br>
 
 * add --force to brakeman to scan ruby gem ([c8a2f1d](https://github.com/bniladridas/vesper/commit/c8a2f1de6eae8b52fbe07a97f4546d2c89b4707d))
 * add back event comment ([a541645](https://github.com/bniladridas/vesper/commit/a541645f87c965929cd139af3d5fe9bd7e9ff35d))
@@ -430,8 +493,11 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: 
 * use REQUEST_CHANGES event ([f92a52e](https://github.com/bniladridas/vesper/commit/f92a52ee11d263c369b52f3c63216675076ca5b3))
 * use string find to avoid polynomial regex alert ([ba16662](https://github.com/bniladridas/vesper/commit/ba16662cd42e5a433eded25830d04d466f9b8538))
 
+<br>
 
-### Documentation
+# Documentation
+
+<br>
 
 * add changelog entry for vesper model fix ([bc203a9](https://github.com/bniladridas/vesper/commit/bc203a9d22c003a939d7312b4b13f97af3be41c0))
 * add comment explaining coverage handling ([a6131ad](https://github.com/bniladridas/vesper/commit/a6131adf42c980e1d9b84977821bb023ab5e0e87))
@@ -471,8 +537,11 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: 
 * update readme doc links ([5aa4a64](https://github.com/bniladridas/vesper/commit/5aa4a644944ecc91a06362c4af9991fb239a9944))
 * update references from .vesper to vesper ([8222a06](https://github.com/bniladridas/vesper/commit/8222a06c0c1c03846153b895eca0687fc3c41907))
 
+<br>
 
-### Code Refactoring
+# Code Refactoring
+
+<br>
 
 * add comments and remove duplicate names ([f1ed58b](https://github.com/bniladridas/vesper/commit/f1ed58bbb27c9ec77ff781800043602ee8d70210))
 * consolidate dependency installations in codebot.ym ([f441aa7](https://github.com/bniladridas/vesper/commit/f441aa7dedb846ce45e909ec33edac4eaa1e21eb))
@@ -488,29 +557,45 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: 
 * standardize workflow names and update conditions ([b6f7e5a](https://github.com/bniladridas/vesper/commit/b6f7e5abd891a49f923171070dfcc5fdfb62ae3b))
 * update all codebot references to vesper ([7a53ab9](https://github.com/bniladridas/vesper/commit/7a53ab940ae058262ae965838e690cb5b54e6065))
 
-## [1.1.0](https://github.com/bniladridas/vesper/compare/friday_gemini_ai/v1.0.1...friday_gemini_ai/v1.1.0) (2026-01-21)
-### Features
+<br>
+
+# [1.1.0](https://github.com/bniladridas/vesper/compare/friday_gemini_ai/v1.0.1...friday_gemini_ai/v1.1.0) (2026-01-21)
+# Features
+
+<br>
 
 * add content moderation capability to client responses ([#130](https://github.com/bniladridas/vesper/issues/130)) ([6340330](https://github.com/bniladridas/vesper/commit/6340330e4fb2851cd8fc30479115005e1a4e724b))
 * add per-repo API key override and merge commands ([#133](https://github.com/bniladridas/vesper/issues/133)) ([a4b2bc5](https://github.com/bniladridas/vesper/commit/a4b2bc55bfc6ff74b0b2f085e2439c1345bd13d7))
 
+<br>
 
-### Bug Fixes
+# Bug Fixes
+
+<br>
 
 * enable /analyze comment trigger ([597f1df](https://github.com/bniladridas/vesper/commit/597f1dfa8453d07c57c6d5a2863659f8732ecc3b))
 * update version to 1.0.1 ([3dc02db](https://github.com/bniladridas/vesper/commit/3dc02db2fc2cdb76f22a01eb29659912a36287fe))
 
-## [1.0.1](https://github.com/bniladridas/vesper/compare/friday_gemini_ai/v1.0.0...friday_gemini_ai/v1.0.1) (2026-01-06)
-### Bug Fixes
+<br>
+
+# [1.0.1](https://github.com/bniladridas/vesper/compare/friday_gemini_ai/v1.0.0...friday_gemini_ai/v1.0.1) (2026-01-06)
+# Bug Fixes
+
+<br>
 
 * add tag creation on pr merge ([e4a5abf](https://github.com/bniladridas/vesper/commit/e4a5abfcf0fe1583f131704c9fdfec384c7ac0ff))
 * update ci workflow indentation ([8ead6cd](https://github.com/bniladridas/vesper/commit/8ead6cdede4142164f34995e05df523bfe814f0b))
 * update token in changelog workflow ([ec4ebfa](https://github.com/bniladridas/vesper/commit/ec4ebfa98d1f56a5eb47521732e9281a0241b5e2))
 
-## 1.0.0 (2026-01-06)
+<br>
 
+# 1.0.0 (2026-01-06)
 
-### Features
+<br>
+
+# Features
+
+<br>
 
 * add /apply comment handler in separate file ([4b85767](https://github.com/bniladridas/vesper/commit/4b857674a36aa4915e699b71d098b07bb8d5ef6d))
 * add base64 gem and unfreeze bundle ([b45511c](https://github.com/bniladridas/vesper/commit/b45511c023e0962376ebb3dfe87f2f3c1ca9f456))
@@ -541,8 +626,11 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: 
 * update workflow name from codebot to vesper ([d049146](https://github.com/bniladridas/vesper/commit/d0491460b9a508df4803626adc79482c29ee48e9))
 * use direct api for suggestions ([40634f2](https://github.com/bniladridas/vesper/commit/40634f26a052979e09f3835c7378a9bd657ed7b9))
 
+<br>
 
-### Bug Fixes
+# Bug Fixes
+
+<br>
 
 * add --force to brakeman to scan ruby gem ([c8a2f1d](https://github.com/bniladridas/vesper/commit/c8a2f1de6eae8b52fbe07a97f4546d2c89b4707d))
 * add back event comment ([a541645](https://github.com/bniladridas/vesper/commit/a541645f87c965929cd139af3d5fe9bd7e9ff35d))
@@ -630,8 +718,11 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: 
 * use REQUEST_CHANGES event ([f92a52e](https://github.com/bniladridas/vesper/commit/f92a52ee11d263c369b52f3c63216675076ca5b3))
 * use string find to avoid polynomial regex alert ([ba16662](https://github.com/bniladridas/vesper/commit/ba16662cd42e5a433eded25830d04d466f9b8538))
 
+<br>
 
-### Documentation
+# Documentation
+
+<br>
 
 * add changelog entry for vesper model fix ([bc203a9](https://github.com/bniladridas/vesper/commit/bc203a9d22c003a939d7312b4b13f97af3be41c0))
 * add comment explaining coverage handling ([a6131ad](https://github.com/bniladridas/vesper/commit/a6131adf42c980e1d9b84977821bb023ab5e0e87))
@@ -677,8 +768,11 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: 
 * update readme with current github actions workflow det ([86705aa](https://github.com/bniladridas/vesper/commit/86705aadeffcb0739d3a6b7f8ea94a4a5d01eae8))
 * update references from .vesper to vesper ([8222a06](https://github.com/bniladridas/vesper/commit/8222a06c0c1c03846153b895eca0687fc3c41907))
 
+<br>
 
-### Code Refactoring
+# Code Refactoring
+
+<br>
 
 * add comments and remove duplicate names ([f1ed58b](https://github.com/bniladridas/vesper/commit/f1ed58bbb27c9ec77ff781800043602ee8d70210))
 * consolidate dependency installations in codebot.ym ([f441aa7](https://github.com/bniladridas/vesper/commit/f441aa7dedb846ce45e909ec33edac4eaa1e21eb))
@@ -694,16 +788,28 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: 
 * standardize workflow names and update conditions ([b6f7e5a](https://github.com/bniladridas/vesper/commit/b6f7e5abd891a49f923171070dfcc5fdfb62ae3b))
 * update all codebot references to vesper ([7a53ab9](https://github.com/bniladridas/vesper/commit/7a53ab940ae058262ae965838e690cb5b54e6065))
 
-## [Unreleased]
+<br>
 
-### Added
+# [Unreleased]
+
+<br>
+
+# Added
+
+<br>
 
 - MkDocs documentation site with comprehensive guides and references
 - Vesper documentation integrated into docs
 
-## [0.1.5] – 2025-08-24
+<br>
 
-### Added
+# [0.1.5] – 2025-08-24
+
+<br>
+
+# Added
+
+<br>
 
 - Gemini 2.5 models
 - Legacy alias
@@ -711,7 +817,11 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: 
 - Rate limiting
 - API validation
 
-### Changed
+<br>
+
+# Changed
+
+<br>
 
 - Test suite reliability
 - Error messages
@@ -719,33 +829,57 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: 
 - GitHub Actions permissions
 - Release workflow
 
-### Fixed
+<br>
+
+# Fixed
+
+<br>
 
 - Ruby 3.1 compatibility
 - Syntax errors
 - Rate limiting stability
 
+<br>
+
 ---
 
-## [0.1.4] – 2025-08-24
+<br>
 
-### Added
+# [0.1.4] – 2025-08-24
+
+<br>
+
+# Added
+
+<br>
 
 - MFA auth
 - Manual release workflow
 - Release helper script
 
-### Changed
+<br>
+
+# Changed
+
+<br>
 
 - Workflow permissions
 - Gem publishing handling
 - Release MFA support
 
+<br>
+
 ---
 
-## [0.1.3] – 2025-03-03
+<br>
 
-### Added
+# [0.1.3] – 2025-03-03
+
+<br>
+
+# Added
+
+<br>
 
 - First release
 - Gemini models

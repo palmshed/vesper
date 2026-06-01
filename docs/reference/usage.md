@@ -1,29 +1,49 @@
 # Usage
 
-## Getting Started
+<br>
 
-### 1. Installation
+# Getting Started
+
+<br>
+
+# 1. Installation
+
+<br>
 
 ```bash
 gem install friday_gemini_ai
 ```
 
-### 2. Get API Key
+<br>
+
+# 2. Get API Key
+
+<br>
 
 1. Visit [Google AI Studio](https://aistudio.google.com/app/apikey)
 2. Create a new API key
 3. Set it as environment variable or in .env file
 
-### 3. Basic Setup
+<br>
+
+# 3. Basic Setup
+
+<br>
 
 Create a `.env` file:
 ```
 GEMINI_API_KEY=your_api_key_here
 ```
 
-## Basic Usage
+<br>
 
-### Simple Text Generation
+# Basic Usage
+
+<br>
+
+# Simple Text Generation
+
+<br>
 
 ```ruby
 require 'vesper'
@@ -37,7 +57,11 @@ response = client.generate_text("Write a haiku about programming")
 puts response
 ```
 
-### Chat Conversations
+<br>
+
+# Chat Conversations
+
+<br>
 
 ```ruby
 client = GeminiAI::Client.new
@@ -51,9 +75,15 @@ response = client.chat(messages)
 puts response
 ```
 
-## Advanced Usage
+<br>
 
-### Custom Parameters
+# Advanced Usage
+
+<br>
+
+# Custom Parameters
+
+<br>
 
 ```ruby
 # Creative writing (high temperature)
@@ -75,7 +105,11 @@ factual_response = client.generate_text(
 )
 ```
 
-### Different Models
+<br>
+
+# Different Models
+
+<br>
 
 ```ruby
 # Default model
@@ -93,7 +127,11 @@ flash_response = flash_client.generate_text("Explain AI")
 lite_response = lite_client.generate_text("Explain AI")
 ```
 
-### Error Handling
+<br>
+
+# Error Handling
+
+<br>
 
 ```ruby
 begin
@@ -111,7 +149,11 @@ rescue GeminiAI::Error => e
 end
 ```
 
-### Batch Processing
+<br>
+
+# Batch Processing
+
+<br>
 
 ```ruby
 client = GeminiAI::Client.new
@@ -132,48 +174,82 @@ prompts.each_with_index do |prompt, index|
 end
 ```
 
-## CLI Usage
+<br>
 
-### Test Connection
+# CLI Usage
+
+<br>
+
+# Test Connection
+
+<br>
 
 ```bash
 ./bin/gemini test
 ```
 
-### Generate Text
+<br>
+
+# Generate Text
+
+<br>
 
 ```bash
 ./bin/gemini generate "Write a joke about programming"
 ```
 
-### Interactive Chat
+<br>
+
+# Interactive Chat
+
+<br>
 
 ```bash
 ./bin/gemini chat
 ```
 
+<br>
+
 This starts an interactive session where you can have a conversation with the AI.
 
-### Help
+<br>
+
+# Help
+
+<br>
 
 ```bash
 ./bin/gemini help
 ```
 
-## Configuration Options
+<br>
 
-### Environment Variables
+# Configuration Options
+
+<br>
+
+# Environment Variables
+
+<br>
 
 - `GEMINI_API_KEY`: Your API key (required)
 - `RAILS_ENV` / `RACK_ENV`: Environment detection for logging levels
 
-### Logging Levels
+<br>
+
+# Logging Levels
+
+<br>
 
 - **Production**: ERROR only
 - **Test**: WARN and above
 - **Development**: DEBUG (all messages)
 
-### Model Options
+<br>
+
+# Model Options
+
+<br>
 
 | Model | Speed | Quality | Use Case |
 |-------|-------|---------|----------|
@@ -181,9 +257,15 @@ This starts an interactive session where you can have a conversation with the AI
 | `:flash` | Fast | Good | General purpose |
 | `:flash_lite` | Fast | Good | Quick responses |
 
-## Best Practices
+<br>
 
-### 1. API Key Security
+# Best Practices
+
+<br>
+
+# 1. API Key Security
+
+<br>
 
 ```ruby
 # Good - Use environment variables
@@ -193,7 +275,11 @@ client = GeminiAI::Client.new
 client = GeminiAI::Client.new('AIza...')
 ```
 
-### 2. Error Handling
+<br>
+
+# 2. Error Handling
+
+<br>
 
 ```ruby
 # Good - Handle specific errors
@@ -213,7 +299,11 @@ rescue => e
 end
 ```
 
-### 3. Parameter Tuning
+<br>
+
+# 3. Parameter Tuning
+
+<br>
 
 ```ruby
 # For creative tasks
@@ -227,7 +317,11 @@ top_p: 0.8-0.9
 top_k: 20-30
 ```
 
-### 4. Prompt Engineering
+<br>
+
+# 4. Prompt Engineering
+
+<br>
 
 ```ruby
 # Good - Clear, specific prompts
@@ -237,43 +331,71 @@ top_k: 20-30
 "Write something about Ruby"
 ```
 
-## Troubleshooting
+<br>
 
-### Common Issues
+# Troubleshooting
+
+<br>
+
+# Common Issues
+
+<br>
 
 1. **"API key is required"**
    - Set `GEMINI_API_KEY` environment variable
    - Check .env file is loaded with `GeminiAI.load_env`
 
+<br>
+
 2. **"Invalid API key format"**
    - Ensure API key starts with "AIza"
    - Check for extra spaces or characters
 
+<br>
+
 3. **"Prompt cannot be empty"**
    - Provide non-empty string to `generate_text`
+
+<br>
 
 4. **Network timeouts**
    - Check internet connection
    - API has 30-second timeout built-in
 
-### Debug Logging
+<br>
+
+# Debug Logging
+
+<br>
 
 Enable debug logging to see request and response details:
+
+<br>
 
 ```ruby
 GeminiAI::Utils::Logger.instance.level = Logger::DEBUG
 ```
 
-## Request Tips
+<br>
+
+# Request Tips
+
+<br>
 
 1. **Use Flash Lite for lower latency** when the task is small
 2. **Adjust max_tokens** to limit response length
 3. **Batch related requests** in sequence
 4. **Cache repeated responses** locally
 
-## Integration Examples
+<br>
 
-### Rails Application
+# Integration Examples
+
+<br>
+
+# Rails Application
+
+<br>
 
 ```ruby
 # app/services/ai_service.rb
@@ -291,7 +413,11 @@ class AiService
 end
 ```
 
-### Sinatra Application
+<br>
+
+# Sinatra Application
+
+<br>
 
 ```ruby
 require 'sinatra'

@@ -1,16 +1,28 @@
 # Versions
 
+<br>
+
 The gem is currently `1.7.0`.
+
+<br>
 
 The published gem name is `friday_gemini_ai`. The runtime entrypoint is `vesper`.
 
+<br>
+
 Gem releases use tags such as `friday_gemini_ai/v1.7.0`. The Vesper Review app is deployed from `main` and is identified by its build commit rather than a gem release tag.
+
+<br>
 
 ```ruby
 gem 'friday_gemini_ai', require: 'vesper'
 ```
 
-## Compatibility
+<br>
+
+# Compatibility
+
+<br>
 
 | Area | Current support |
 | --- | --- |
@@ -20,9 +32,15 @@ gem 'friday_gemini_ai', require: 'vesper'
 | Default model | `gemini-pro-latest` |
 | Fast model | `gemini-3.5-flash` |
 
+<br>
+
 Ruby support follows maintained Ruby branches. The gem currently requires Ruby 3.3 or later; older EOL Rubies are not supported.
 
-## Public API
+<br>
+
+# Public API
+
+<br>
 
 ```ruby
 require 'vesper'
@@ -34,14 +52,22 @@ client.generate_text('Hello')
 client.chat([{ role: 'user', content: 'Hello' }])
 ```
 
+<br>
+
 Images can be sent as base64 data:
+
+<br>
 
 ```ruby
 image = Base64.strict_encode64(File.binread('image.jpg'))
 client.generate_image_text(image, 'Describe this image')
 ```
 
-## Models
+<br>
+
+# Models
+
+<br>
 
 | Symbol | Model |
 | --- | --- |
@@ -60,19 +86,33 @@ client.generate_image_text(image, 'Describe this image')
 | `:flash_lite` | `gemini-3.1-flash-lite` |
 | `:pro_2_0` | `gemini-2.0-flash` |
 
+<br>
+
 Removed aliases resolve to `:pro` with a warning.
 
-## Updating Versions
+<br>
+
+# Updating Versions
+
+<br>
 
 The gem version lives in `lib/core/version.rb`.
 
+<br>
+
 Build locally before publishing:
+
+<br>
 
 ```bash
 gem build friday_gemini_ai.gemspec
 ```
 
+<br>
+
 Install the built gem when you need a local package check:
+
+<br>
 
 ```bash
 gem install friday_gemini_ai-*.gem

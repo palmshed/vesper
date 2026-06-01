@@ -1,20 +1,34 @@
 # API Reference
 
+<br>
+
 Ruby interface to Google's Gemini AI models.
 
-## Installation
+<br>
+
+# Installation
+
+<br>
 
 ```ruby
 gem install friday_gemini_ai
 ```
 
+<br>
+
 Or in Gemfile:
+
+<br>
 
 ```ruby
 gem 'friday_gemini_ai', require: 'vesper'
 ```
 
-## Quick Start
+<br>
+
+# Quick Start
+
+<br>
 
 ```ruby
 require 'vesper'
@@ -24,19 +38,31 @@ response = client.generate_text("Hello, world!")
 puts response
 ```
 
-## Client Class
+<br>
 
-### Constructor
+# Client Class
+
+<br>
+
+# Constructor
+
+<br>
 
 ```ruby
 GeminiAI::Client.new(api_key = nil, model: :pro)
 ```
 
+<br>
+
 Parameters:
 - `api_key`: API key string (optional, uses ENV if not provided)
 - `model`: Model symbol (optional, default :pro)
 
+<br>
+
 Examples:
+
+<br>
 
 ```ruby
 client = GeminiAI::Client.new
@@ -44,15 +70,25 @@ client = GeminiAI::Client.new('your_key')
 client = GeminiAI::Client.new(model: :flash)
 ```
 
-### Methods
+<br>
 
-#### generate_text(prompt, options = {})
+# Methods
+
+<br>
+
+# generate_text(prompt, options = {})
+
+<br>
 
 Generate text from prompt.
+
+<br>
 
 Parameters:
 - `prompt`: String prompt
 - `options`: Hash of options
+
+<br>
 
 Options:
 - `temperature`: Float (0.0-1.0, default 0.7)
@@ -60,22 +96,36 @@ Options:
 - `top_p`: Float (default 0.9)
 - `top_k`: Integer (default 40)
 
+<br>
+
 Returns: String response
 
+<br>
+
 Examples:
+
+<br>
 
 ```ruby
 response = client.generate_text("Write a haiku")
 response = client.generate_text("Explain AI", temperature: 0.3)
 ```
 
-##### `chat(messages, options = {})`
+<br>
+
+# `chat(messages, options = {})`
+
+<br>
 
 Conduct a multi-turn conversation.
+
+<br>
 
 **Parameters:**
 - `messages` (Array): Array of message hashes
 - `options` (Hash, optional): Same as `generate_text`
+
+<br>
 
 **Message Format:**
 ```ruby
@@ -85,7 +135,11 @@ Conduct a multi-turn conversation.
 }
 ```
 
+<br>
+
 **Returns:** String - AI response
+
+<br>
 
 **Example:**
 ```ruby
@@ -98,16 +152,26 @@ messages = [
 response = client.chat(messages)
 ```
 
-##### `generate_image_text(image_base64, prompt, options = {})`
+<br>
+
+# `generate_image_text(image_base64, prompt, options = {})`
+
+<br>
 
 Analyze an image with a text prompt.
+
+<br>
 
 **Parameters:**
 - `image_base64` (String): Base64 encoded image data
 - `prompt` (String): Text prompt about the image
 - `options` (Hash, optional): Same as `generate_text`
 
+<br>
+
 **Returns:** String - Analysis response
+
+<br>
 
 **Example:**
 ```ruby
@@ -115,7 +179,11 @@ image_data = Base64.encode64(File.read('image.jpg'))
 response = client.generate_image_text(image_data, "What's in this image?")
 ```
 
-## Error Classes
+<br>
+
+# Error Classes
+
+<br>
 
 | Error Class | Description |
 | ----------- | ----------- |
@@ -126,11 +194,19 @@ response = client.generate_image_text(image_data, "What's in this image?")
 | `GeminiAI::InvalidRequestError` | Raised when request parameters are invalid |
 | `GeminiAI::NetworkError` | Raised when network communication fails |
 
-## Utility Classes
+<br>
 
-### `GeminiAI::Utils::Loader`
+# Utility Classes
+
+<br>
+
+# `GeminiAI::Utils::Loader`
+
+<br>
 
 Utility for loading environment variables from .env files.
+
+<br>
 
 ```ruby
 GeminiAI::Utils::Loader.load('.env')
@@ -138,18 +214,30 @@ GeminiAI::Utils::Loader.load('.env')
 GeminiAI.load_env('.env')
 ```
 
-### `GeminiAI::Utils::Logger`
+<br>
+
+# `GeminiAI::Utils::Logger`
+
+<br>
 
 Centralized logging utility with API key masking.
+
+<br>
 
 ```ruby
 GeminiAI::Utils::Logger.info("Message")
 GeminiAI::Utils::Logger.debug("Debug info")
 ```
 
-## Models
+<br>
 
-### Available Models
+# Models
+
+<br>
+
+# Available Models
+
+<br>
 
 | Symbol | Model ID | Description |
 | ------ | -------- | ----------- |
@@ -168,7 +256,11 @@ GeminiAI::Utils::Logger.debug("Debug info")
 | `:flash_lite` | `gemini-3.1-flash-lite` | Short alias |
 | `:pro_2_0` | `gemini-2.0-flash` | Legacy alias |
 
-### Model Selection
+<br>
+
+# Model Selection
+
+<br>
 
 ```ruby
 # Default (pro/flash)
@@ -178,27 +270,43 @@ client = GeminiAI::Client.new
 client = GeminiAI::Client.new(model: :flash_lite)
 ```
 
-## Configuration
+<br>
 
-### Environment Variables
+# Configuration
+
+<br>
+
+# Environment Variables
+
+<br>
 
 | Variable | Description | Required |
 | -------- | ----------- | -------- |
 | `GEMINI_API_KEY` | Your Google Gemini API key | Yes |
 
-### .env File Support
+<br>
+
+# .env File Support
+
+<br>
 
 Create a `.env` file in your project root:
 ```
 GEMINI_API_KEY=your_api_key_here
 ```
 
+<br>
+
 Load it in your code:
 ```ruby
 GeminiAI.load_env
 ```
 
-## Error Handling
+<br>
+
+# Error Handling
+
+<br>
 
 ```ruby
 begin
@@ -213,9 +321,15 @@ rescue GeminiAI::Error => e
 end
 ```
 
-## CLI Usage
+<br>
+
+# CLI Usage
+
+<br>
 
 The gem includes a command-line interface:
+
+<br>
 
 ```bash
 # Test connection
@@ -231,7 +345,11 @@ The gem includes a command-line interface:
 ./bin/gemini help
 ```
 
-## Examples
+<br>
+
+# Examples
+
+<br>
 
 See the `examples/` directory for usage examples:
 - `examples/basic_usage.rb` - Basic text generation and chat

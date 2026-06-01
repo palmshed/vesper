@@ -1,25 +1,39 @@
 # Setup Guide
 
-## API Key Configuration
+<br>
 
-### For Development
+# API Key Configuration
+
+<br>
+
+# For Development
+
+<br>
 
 1. **Get your Gemini API Key:**
    - Visit [Google AI Studio](https://aistudio.google.com/app/apikey)
    - Create a new API key
    - Copy the key (it should start with `AIza`)
 
+<br>
+
 2. **Set the environment variable:**
    ```bash
    export GEMINI_API_KEY="your_api_key_here"
    ```
+
+<br>
 
    Or create a `.env` file in the project root:
    ```
    GEMINI_API_KEY=your_api_key_here
    ```
 
-### For CI/CD (GitHub Actions)
+<br>
+
+# For CI/CD (GitHub Actions)
+
+<br>
 
 1. **Add the API key as a repository secret:**
    - Go to your repository on GitHub
@@ -28,15 +42,25 @@
    - Name: `GEMINI_API_KEY`
    - Value: Your actual API key
 
+<br>
+
 2. **The workflow is already configured** to use this secret in `.github/workflows/ci.yml`
 
-### Testing
+<br>
+
+# Testing
+
+<br>
 
 - **All tests** use HTTParty stubbing and don't require a real API key
 - Tests run completely offline with mocked responses
 - No external dependencies or API keys needed for the full test suite
 
-## Running Tests
+<br>
+
+# Running Tests
+
+<br>
 
 ```bash
 # Install dependencies

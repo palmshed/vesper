@@ -1,18 +1,28 @@
 # Capabilities
 
+<br>
+
 Vesper provides a Ruby interface for Gemini text generation, chat, and image input.
 
-## Text Generation
+<br>
+
+# Text Generation
+
+<br>
 
 Generate text with request options for temperature, token limits, and sampling.
 
-### Basic Text Generation
+<br>
+
+# Basic Text Generation
 ```ruby
 client = GeminiAI::Client.new
 response = client.generate_text("Explain quantum computing")
 ```
 
-### Creative Writing
+<br>
+
+# Creative Writing
 ```ruby
 creative_response = client.generate_text(
   "Write a mystery story opening",
@@ -22,7 +32,9 @@ creative_response = client.generate_text(
 )
 ```
 
-### Technical Documentation
+<br>
+
+# Technical Documentation
 ```ruby
 technical_response = client.generate_text(
   "Document this Ruby method: def calculate_fibonacci(n)",
@@ -32,11 +44,17 @@ technical_response = client.generate_text(
 )
 ```
 
-## Chat Conversations
+<br>
+
+# Chat Conversations
+
+<br>
 
 Build interactive conversational experiences with context awareness and multi-turn dialogue support.
 
-### Simple Chat
+<br>
+
+# Simple Chat
 ```ruby
 messages = [
   { role: 'user', content: 'Hello! How are you?' },
@@ -47,7 +65,9 @@ messages = [
 response = client.chat(messages)
 ```
 
-### Contextual Conversations
+<br>
+
+# Contextual Conversations
 ```ruby
 # Build conversation history
 conversation = []
@@ -67,7 +87,9 @@ conversation << { role: 'user', content: 'How does inheritance work in that exam
 response3 = client.chat(conversation)
 ```
 
-### Specialized Chat Roles
+<br>
+
+# Specialized Chat Roles
 ```ruby
 # Technical assistant
 tech_messages = [
@@ -84,11 +106,17 @@ creative_messages = [
 ]
 ```
 
-## Long Context Processing
+<br>
+
+# Long Context Processing
+
+<br>
 
 Handle large amounts of text and maintain context across extended conversations.
 
-### Document Analysis
+<br>
+
+# Document Analysis
 ```ruby
 long_document = File.read('large_document.txt')
 analysis = client.generate_text(
@@ -97,7 +125,9 @@ analysis = client.generate_text(
 )
 ```
 
-### Code Review
+<br>
+
+# Code Review
 ```ruby
 code_file = File.read('complex_application.rb')
 review = client.generate_text(
@@ -107,11 +137,17 @@ review = client.generate_text(
 )
 ```
 
-## Structured Output
+<br>
+
+# Structured Output
+
+<br>
 
 Generate responses in specific formats for integration with other systems.
 
-### JSON Output
+<br>
+
+# JSON Output
 ```ruby
 json_response = client.generate_text(
   "Generate a JSON object with user profile data for a Ruby developer",
@@ -119,7 +155,9 @@ json_response = client.generate_text(
 )
 ```
 
-### Markdown Documentation
+<br>
+
+# Markdown Documentation
 ```ruby
 docs = client.generate_text(
   "Create markdown documentation for a Ruby gem that handles file uploads",
@@ -128,7 +166,9 @@ docs = client.generate_text(
 )
 ```
 
-### Code Generation
+<br>
+
+# Code Generation
 ```ruby
 ruby_code = client.generate_text(
   "Generate a Ruby class for handling HTTP requests with error handling",
@@ -137,9 +177,13 @@ ruby_code = client.generate_text(
 )
 ```
 
-## Advanced Features
+<br>
 
-### Parameter Optimization
+# Advanced Features
+
+<br>
+
+# Parameter Optimization
 ```ruby
 # For factual accuracy
 factual_client = GeminiAI::Client.new
@@ -160,7 +204,9 @@ creative_response = creative_client.generate_text(
 )
 ```
 
-### Batch Processing
+<br>
+
+# Batch Processing
 ```ruby
 prompts = [
   "Explain Ruby blocks",
@@ -173,7 +219,9 @@ responses = prompts.map do |prompt|
 end
 ```
 
-### Error Recovery
+<br>
+
+# Error Recovery
 ```ruby
 def generate_with_retry(prompt, retries: 3)
   attempt = 0
@@ -191,9 +239,13 @@ def generate_with_retry(prompt, retries: 3)
 end
 ```
 
-## Performance Optimization
+<br>
 
-### Response Caching
+# Performance Optimization
+
+<br>
+
+# Response Caching
 ```ruby
 class CachedClient
   def initialize
@@ -208,7 +260,9 @@ class CachedClient
 end
 ```
 
-### Streaming Responses (Conceptual)
+<br>
+
+# Streaming Responses (Conceptual)
 ```ruby
 # For long responses, process in chunks
 def process_long_response(prompt)
@@ -226,9 +280,13 @@ process_long_response("Write a detailed essay about Ruby") do |chunk|
 end
 ```
 
-## Integration Patterns
+<br>
 
-### Rails Integration
+# Integration Patterns
+
+<br>
+
+# Rails Integration
 ```ruby
 class AiController < ApplicationController
   def generate
@@ -241,7 +299,9 @@ class AiController < ApplicationController
 end
 ```
 
-### Background Jobs
+<br>
+
+# Background Jobs
 ```ruby
 class AiGenerationJob < ApplicationJob
   def perform(prompt, user_id)
@@ -258,7 +318,9 @@ class AiGenerationJob < ApplicationJob
 end
 ```
 
-### Webhook Processing
+<br>
+
+# Webhook Processing
 ```ruby
 class WebhookProcessor
   def process_content(webhook_data)
@@ -275,9 +337,13 @@ class WebhookProcessor
 end
 ```
 
-## Security Considerations
+<br>
 
-### Input Sanitization
+# Security Considerations
+
+<br>
+
+# Input Sanitization
 ```ruby
 def safe_generate(user_input)
   # Sanitize input
@@ -290,7 +356,9 @@ def safe_generate(user_input)
 end
 ```
 
-### API Key Protection
+<br>
+
+# API Key Protection
 ```ruby
 # Good - Environment variables
 client = GeminiAI::Client.new
@@ -307,9 +375,13 @@ rescue GeminiAI::AuthenticationError
 end
 ```
 
-## Monitoring and Logging
+<br>
 
-### Request Tracking
+# Monitoring and Logging
+
+<br>
+
+# Request Tracking
 ```ruby
 class TrackedClient
   def initialize
@@ -331,7 +403,9 @@ class TrackedClient
 end
 ```
 
-### Error Monitoring
+<br>
+
+# Error Monitoring
 ```ruby
 def monitored_generation(prompt)
   client.generate_text(prompt)

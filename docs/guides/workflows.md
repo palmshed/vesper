@@ -1,6 +1,10 @@
 # Workflows
 
+<br>
+
 This repository uses GitHub Actions for tests, security checks, release tasks, site deployment, and Vesper.
+
+<br>
 
 | Workflow | File | Purpose |
 | --- | --- | --- |
@@ -13,9 +17,15 @@ This repository uses GitHub Actions for tests, security checks, release tasks, s
 | Release | `.github/workflows/release.yml` | Handles release automation |
 | Publish Gem | `.github/workflows/publish-gem.yml` | Builds and publishes package artifacts |
 
-## Local Checks
+<br>
+
+# Local Checks
+
+<br>
 
 Run the same core checks locally before opening a pull request:
+
+<br>
 
 ```bash
 bundle exec ruby test/runner.rb
@@ -23,14 +33,22 @@ bundle exec rubocop
 gem build friday_gemini_ai.gemspec
 ```
 
-## Secrets
+<br>
+
+# Secrets
+
+<br>
 
 Common workflow secrets are:
+
+<br>
 
 | Secret | Used for |
 | --- | --- |
 | `GEMINI_API_KEY` | Gemini API tests and Vesper |
 | `RUBYGEMS_API_KEY` | RubyGems publishing |
 | `CODECOV_TOKEN` | Coverage upload |
+
+<br>
 
 Vesper may also require GitHub App credentials when running in app mode. See [`Vesper`](../reference/vesper.md).

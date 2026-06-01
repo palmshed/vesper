@@ -1,6 +1,10 @@
 # Workflows
 
+<br>
+
 This directory holds the GitHub Actions workflows for the repository.
+
+<br>
 
 | File | Purpose |
 | --- | --- |
@@ -22,5 +26,7 @@ This directory holds the GitHub Actions workflows for the repository.
 | `lock-merged-prs.yml` | Locks merged pull requests when configured |
 | `pr-title.yml` | Checks pull request titles |
 | `fix-changelog.yml` | Maintains changelog formatting |
+
+<br>
 
 Common secrets are `GEMINI_API_KEY`, `RUBYGEMS_API_KEY`, and `CODECOV_TOKEN`.

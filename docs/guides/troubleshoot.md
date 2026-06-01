@@ -1,12 +1,22 @@
 # Troubleshooting
 
+<br>
+
 Common issues and solutions when using Vesper.
 
-## API Key Issues
+<br>
 
-### "API key is required"
+# API Key Issues
+
+<br>
+
+# "API key is required"
+
+<br>
 
 **Problem**: The client cannot find your API key.
+
+<br>
 
 **Solutions**:
 1. **Check environment variable**:
@@ -14,15 +24,21 @@ Common issues and solutions when using Vesper.
    echo $GEMINI_API_KEY
    ```
 
+<br>
+
 2. **Set environment variable**:
    ```bash
    export GEMINI_API_KEY="your_api_key_here"
    ```
 
+<br>
+
 3. **Use .env file**:
    ```bash
    echo "GEMINI_API_KEY=your_api_key_here" > .env
    ```
+
+<br>
 
    Then in your Ruby code:
    ```ruby
@@ -30,19 +46,29 @@ Common issues and solutions when using Vesper.
    client = GeminiAI::Client.new
    ```
 
+<br>
+
 4. **Pass API key directly** (avoid in production):
    ```ruby
    client = GeminiAI::Client.new('your_api_key_here')
    ```
 
-### "Invalid API key format"
+<br>
+
+# "Invalid API key format"
+
+<br>
 
 **Problem**: Your API key doesn't match the expected format.
+
+<br>
 
 **Symptoms**:
 - API key doesn't start with "AIza"
 - Extra spaces or characters in the key
 - Truncated or incomplete key
+
+<br>
 
 **Solutions**:
 1. **Verify API key format**:
@@ -52,10 +78,14 @@ Common issues and solutions when using Vesper.
    puts "Key length: #{api_key.length}"
    ```
 
+<br>
+
 2. **Get a new API key**:
    - Visit [Google AI Studio](https://aistudio.google.com/app/apikey)
    - Create a new API key
    - Copy the complete key
+
+<br>
 
 3. **Check for hidden characters**:
    ```bash
@@ -63,9 +93,15 @@ Common issues and solutions when using Vesper.
    cat -A .env
    ```
 
-### "Authentication failed"
+<br>
+
+# "Authentication failed"
+
+<br>
 
 **Problem**: API key is invalid or expired.
+
+<br>
 
 **Solutions**:
 1. **Test API key manually**:
@@ -75,19 +111,31 @@ Common issues and solutions when using Vesper.
         "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=YOUR_API_KEY"
    ```
 
+<br>
+
 2. **Generate new API key**:
    - Old keys may expire or be revoked
    - Create a fresh key in Google AI Studio
+
+<br>
 
 3. **Check API key permissions**:
    - Ensure the key has access to Gemini models
    - Verify billing is set up if required
 
-## Network Issues
+<br>
 
-### "Connection timeout"
+# Network Issues
+
+<br>
+
+# "Connection timeout"
+
+<br>
 
 **Problem**: Network requests are timing out.
+
+<br>
 
 **Solutions**:
 1. **Check internet connection**:
@@ -95,14 +143,20 @@ Common issues and solutions when using Vesper.
    ping google.com
    ```
 
+<br>
+
 2. **Test API endpoint**:
    ```bash
    curl -I https://generativelanguage.googleapis.com
    ```
 
+<br>
+
 3. **Check firewall/proxy settings**:
    - Corporate firewalls may block API requests
    - Configure proxy if needed
+
+<br>
 
 4. **Increase timeout** (if using custom HTTP client):
    ```ruby
@@ -110,9 +164,15 @@ Common issues and solutions when using Vesper.
    # This is usually sufficient
    ```
 
-### "SSL certificate verification failed"
+<br>
+
+# "SSL certificate verification failed"
+
+<br>
 
 **Problem**: SSL/TLS certificate issues.
+
+<br>
 
 **Solutions**:
 1. **Update system certificates**:
@@ -124,6 +184,8 @@ Common issues and solutions when using Vesper.
    sudo apt-get update && sudo apt-get install ca-certificates
    ```
 
+<br>
+
 2. **Check Ruby SSL setup**:
    ```ruby
    require 'openssl'
@@ -131,17 +193,29 @@ Common issues and solutions when using Vesper.
    puts OpenSSL::X509::DEFAULT_CERT_DIR
    ```
 
-## Rate Limiting
+<br>
 
-### "Rate limit exceeded"
+# Rate Limiting
+
+<br>
+
+# "Rate limit exceeded"
+
+<br>
 
 **Problem**: Too many requests in a short time period.
 
+<br>
+
 Limits depend on your key, billing state, region, and selected model.
+
+<br>
 
 **Solutions**:
 1. **Let the client retry**:
    The client retries HTTP 429 responses three times with exponential backoff.
+
+<br>
 
 2. **Add delays between requests**:
    ```ruby
@@ -150,6 +224,8 @@ Limits depend on your key, billing state, region, and selected model.
      sleep(1)
    end
    ```
+
+<br>
 
 3. **Handle final failure**:
    ```ruby
@@ -164,6 +240,8 @@ Limits depend on your key, billing state, region, and selected model.
    end
    ```
 
+<br>
+
 4. **Use smaller batches**:
    ```ruby
    prompts.each_slice(10) do |batch|
@@ -172,11 +250,19 @@ Limits depend on your key, billing state, region, and selected model.
    end
    ```
 
-## Request Issues
+<br>
 
-### "Prompt cannot be empty"
+# Request Issues
+
+<br>
+
+# "Prompt cannot be empty"
+
+<br>
 
 **Problem**: Empty or nil prompt passed to generate_text.
+
+<br>
 
 **Solutions**:
 1. **Validate input**:
@@ -190,6 +276,8 @@ Limits depend on your key, billing state, region, and selected model.
    end
    ```
 
+<br>
+
 2. **Provide default prompts**:
    ```ruby
    prompt = user_input.to_s.strip
@@ -197,15 +285,23 @@ Limits depend on your key, billing state, region, and selected model.
    response = client.generate_text(prompt)
    ```
 
-### "Prompt too long"
+<br>
+
+# "Prompt too long"
+
+<br>
 
 **Problem**: Prompt exceeds the client guard of 8192 characters.
+
+<br>
 
 **Solutions**:
 1. **Check prompt length**:
    ```ruby
    puts "Prompt characters: #{prompt.length}"
    ```
+
+<br>
 
 2. **Truncate long prompts**:
    ```ruby
@@ -215,6 +311,8 @@ Limits depend on your key, billing state, region, and selected model.
      prompt = prompt[0...MAX_PROMPT_LENGTH]
    end
    ```
+
+<br>
 
 3. **Split large documents**:
    ```ruby
@@ -227,11 +325,19 @@ Limits depend on your key, billing state, region, and selected model.
    end
    ```
 
-## Response Issues
+<br>
 
-### "Empty response"
+# Response Issues
+
+<br>
+
+# "Empty response"
+
+<br>
 
 **Problem**: API returns empty or nil response.
+
+<br>
 
 **Solutions**:
 1. **Check response handling**:
@@ -244,6 +350,8 @@ Limits depend on your key, billing state, region, and selected model.
    end
    ```
 
+<br>
+
 2. **Adjust generation parameters**:
    ```ruby
    # Try different parameters
@@ -255,9 +363,15 @@ Limits depend on your key, billing state, region, and selected model.
    )
    ```
 
-### "Unexpected response format"
+<br>
+
+# "Unexpected response format"
+
+<br>
 
 **Problem**: Response doesn't match expected format.
+
+<br>
 
 **Solutions**:
 1. **Add response validation**:
@@ -275,6 +389,8 @@ Limits depend on your key, billing state, region, and selected model.
    end
    ```
 
+<br>
+
 2. **Handle JSON responses** (if expecting structured data):
    ```ruby
    begin
@@ -284,20 +400,34 @@ Limits depend on your key, billing state, region, and selected model.
    end
    ```
 
-## CLI Issues
+<br>
 
-### "Permission denied" when running CLI
+# CLI Issues
+
+<br>
+
+# "Permission denied" when running CLI
+
+<br>
 
 **Problem**: CLI script is not executable.
+
+<br>
 
 **Solution**:
 ```bash
 chmod +x bin/gemini
 ```
 
-### "Command not found"
+<br>
+
+# "Command not found"
+
+<br>
 
 **Problem**: CLI script path issues.
+
+<br>
 
 **Solutions**:
 1. **Run from project root**:
@@ -305,10 +435,14 @@ chmod +x bin/gemini
    ./bin/gemini test
    ```
 
+<br>
+
 2. **Check file exists**:
    ```bash
    ls -la bin/gemini
    ```
+
+<br>
 
 3. **Check shebang line**:
    ```bash
@@ -316,11 +450,19 @@ chmod +x bin/gemini
    # Should show: #!/usr/bin/env ruby
    ```
 
-## Installation Issues
+<br>
 
-### "Gem not found"
+# Installation Issues
+
+<br>
+
+# "Gem not found"
+
+<br>
 
 **Problem**: Gem installation or loading issues.
+
+<br>
 
 **Solutions**:
 1. **Install gem**:
@@ -328,10 +470,14 @@ chmod +x bin/gemini
    gem install friday_gemini_ai
    ```
 
+<br>
+
 2. **Check gem path**:
    ```bash
    gem which vesper
    ```
+
+<br>
 
 3. **Use bundle if using Gemfile**:
    ```bash
@@ -339,11 +485,19 @@ chmod +x bin/gemini
    bundle exec ruby your_script.rb
    ```
 
-### "Ruby version compatibility"
+<br>
+
+# "Ruby version compatibility"
+
+<br>
 
 **Problem**: Ruby version too old.
 
+<br>
+
 **Requirements**: Ruby 3.3 or higher
+
+<br>
 
 **Solutions**:
 1. **Check Ruby version**:
@@ -351,11 +505,15 @@ chmod +x bin/gemini
    ruby --version
    ```
 
+<br>
+
 2. **Update Ruby** (using rbenv):
    ```bash
    rbenv install 3.3.11
    rbenv global 3.3.11
    ```
+
+<br>
 
 3. **Update Ruby** (using RVM):
    ```bash
@@ -363,9 +521,15 @@ chmod +x bin/gemini
    rvm use 3.3.11 --default
    ```
 
-## Debugging
+<br>
 
-### Enable Debug Logging
+# Debugging
+
+<br>
+
+# Enable Debug Logging
+
+<br>
 
 ```ruby
 require 'logger'
@@ -376,7 +540,11 @@ client = GeminiAI::Client.new
 response = client.generate_text("Test prompt")
 ```
 
-### Test API Connection
+<br>
+
+# Test API Connection
+
+<br>
 
 ```ruby
 # Test basic connectivity
@@ -389,7 +557,11 @@ rescue GeminiAI::Error => e
 end
 ```
 
-### Inspect Request Details
+<br>
+
+# Inspect Request Details
+
+<br>
 
 ```ruby
 require 'logger'
@@ -405,16 +577,26 @@ response = client.generate_text("Test")
 # - Response body
 ```
 
-## Getting Help
+<br>
 
-### Check Logs
+# Getting Help
+
+<br>
+
+# Check Logs
+
+<br>
 
 Look for detailed error messages in your application logs:
 ```ruby
 Rails.logger.error "Gemini AI Error: #{e.message}"
 ```
 
-### Test with CLI
+<br>
+
+# Test with CLI
+
+<br>
 
 Use the CLI to isolate issues:
 ```bash
@@ -425,7 +607,11 @@ Use the CLI to isolate issues:
 ./bin/gemini generate "Simple test prompt"
 ```
 
-### Minimal Reproduction
+<br>
+
+# Minimal Reproduction
+
+<br>
 
 Create a minimal script to reproduce the issue:
 ```ruby
@@ -444,13 +630,19 @@ rescue => e
 end
 ```
 
-### Common Error Patterns
+<br>
+
+# Common Error Patterns
+
+<br>
 
 1. **Authentication errors** → Check API key
 2. **Network errors** → Check connectivity
 3. **Rate limit errors** → Add delays/retry logic
 4. **Empty responses** → Check prompt and parameters
 5. **Installation errors** → Check Ruby version and dependencies
+
+<br>
 
 If you're still having issues after trying these solutions, please check the project's GitHub issues or create a new issue with:
 - Ruby version

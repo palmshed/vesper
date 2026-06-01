@@ -1,18 +1,34 @@
 # Mac Utils
 
+<br>
+
 This module provides macOS-specific utilities for the vesper gem.
 
-## Methods
+<br>
 
-### `GeminiAI::MacUtils.mac?`
+# Methods
+
+<br>
+
+# `GeminiAI::MacUtils.mac?`
+
+<br>
 
 Returns `true` if the current platform is macOS (Darwin), `false` otherwise.
 
-### `GeminiAI::MacUtils.version`
+<br>
+
+# `GeminiAI::MacUtils.version`
+
+<br>
 
 Returns the macOS version string (e.g., "14.1") if running on macOS, `nil` otherwise.
 
-## Usage
+<br>
+
+# Usage
+
+<br>
 
 ```ruby
 require 'mac/mac_utils'

@@ -22,7 +22,7 @@ Gem::Specification.new do |spec|
   # spec.add_development_dependency 'simplecov-lcov', '~> 0.9.0'
 
   # Documentation
-  spec.add_development_dependency 'github-markup', '~> 5.0'
+  spec.add_development_dependency 'github-markup', '~> 6.0'
   spec.add_development_dependency 'redcarpet', '~> 3.6' # For markdown in YARD
   spec.add_development_dependency 'yard', '~> 0.9.34'
 

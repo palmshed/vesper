@@ -23,7 +23,7 @@ GEM
       rexml
     csv (3.3.5)
     dotenv (3.2.0)
-    github-markup (5.0.1)
+    github-markup (6.0.0)
     hashdiff (1.2.1)
     httparty (0.24.2)
       csv
@@ -95,7 +95,7 @@ DEPENDENCIES
   bundler-audit (~> 0.9)
   dotenv (~> 3.2)
   friday_gemini_ai!
-  github-markup (~> 5.0)
+  github-markup (~> 6.0)
   httparty (>= 0.21, < 0.25)
   logger
   minitest (~> 5.0)

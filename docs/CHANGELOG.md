@@ -1,5 +1,40 @@
 # Changelog
 
+## [1.7.1](https://github.com/palmshed/vesper/compare/friday_gemini_ai/v1.7.0...friday_gemini_ai/v1.7.1) (2026-06-08)
+
+
+### Bug Fixes
+
+* align pages favicon path ([112fa3f](https://github.com/palmshed/vesper/commit/112fa3f7ffb0d86fdf229680f0b617aa2dcca998))
+* enable apply authoring ([b76771c](https://github.com/palmshed/vesper/commit/b76771c167784e1989fe5d368d65ea985eb22f97))
+* explain inline suggestions ([42ba833](https://github.com/palmshed/vesper/commit/42ba833418895fe3db57f76933042100eaf0b8af))
+* include pages favicon ico ([7cfb5fb](https://github.com/palmshed/vesper/commit/7cfb5fb496ffae853987aa4f82641c6e663493dd))
+* preserve analysis on api outage ([7984c38](https://github.com/palmshed/vesper/commit/7984c38be78fbf344ab8cc3272ec3cd549471bbe))
+* quiet command feedback ([1702b49](https://github.com/palmshed/vesper/commit/1702b49f13a3c01c0935e1960fad58a14945e916))
+* quiet command replies ([6d3208f](https://github.com/palmshed/vesper/commit/6d3208f69cb2b1d6768191cbaa3dbb1b25636a14))
+* refresh website favicon ([eb6c9bc](https://github.com/palmshed/vesper/commit/eb6c9bce9babba2dd08debdd442a050127e3f07c))
+* release the gem identity ([5c72f13](https://github.com/palmshed/vesper/commit/5c72f13d64c140bdef3921e2299a8de5df366671))
+* update vesper review comment ([62ad6e7](https://github.com/palmshed/vesper/commit/62ad6e7e933a477b7353b49249cf1358817eab69))
+* use static favicon ([95ec924](https://github.com/palmshed/vesper/commit/95ec924c9add8d19109f616a321bad7c79aefcdd))
+* use unique favicon files ([b01bdf5](https://github.com/palmshed/vesper/commit/b01bdf59c257fcaccd7343fa6c3b5258e9a57537))
+
+
+### Documentation
+
+* fix contributing links ([4841add](https://github.com/palmshed/vesper/commit/4841add45d7630225a3df489ff57ee488839d08b))
+* fix security page ([e7381e5](https://github.com/palmshed/vesper/commit/e7381e51d4ec12fd1074171fe9e7aaa3bfe21517))
+* include codex state notes ([1b76719](https://github.com/palmshed/vesper/commit/1b76719458c600f16ed89b2659c79cc9129c84b1))
+* include quiet terms ([e66d7b1](https://github.com/palmshed/vesper/commit/e66d7b1ff93452c6fc342291957b7a679e5e1061))
+* include vesper review link ([30485fa](https://github.com/palmshed/vesper/commit/30485faaa0254c3a3a1e0a5663b3d4f44392b0de))
+* keep command cues in one place ([0dd3134](https://github.com/palmshed/vesper/commit/0dd31340f7990eaa992d05fb42671e000cf1f0f7))
+* prioritize codex memory ([b626ba5](https://github.com/palmshed/vesper/commit/b626ba55fba1bda83e086dc81502ed2a35e53a2a))
+* quiet contributing links ([5edb629](https://github.com/palmshed/vesper/commit/5edb6290fae86880b1e74d67f663a828852cb6ad))
+* quiet repo links ([7fe657c](https://github.com/palmshed/vesper/commit/7fe657cf89694d5f48da25ef4cd99500d90e82be))
+* quiet website command copy ([9539510](https://github.com/palmshed/vesper/commit/953951048052bb998140fda6fc47ef4528f9eb4f))
+* use plain wording ([969cbc2](https://github.com/palmshed/vesper/commit/969cbc234264efbda1c2f67a444b622ae2ce9f76))
+
+## Changelog
+
 <br>
 
 All notable changes are tracked here.
@@ -7,11 +42,11 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: 
 
 <br>
 
-# [1.7.0](https://github.com/bniladridas/vesper/compare/friday_gemini_ai/v1.6.0...friday_gemini_ai/v1.7.0) (2026-05-22)
+## [1.7.0](https://github.com/bniladridas/vesper/compare/friday_gemini_ai/v1.6.0...friday_gemini_ai/v1.7.0) (2026-05-22)
 
 <br>
 
-# Features
+## Features
 
 <br>
 
@@ -20,8 +55,8 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: 
 
 <br>
 
-# [1.6.0](https://github.com/bniladridas/vesper/compare/friday_gemini_ai/v1.5.0...friday_gemini_ai/v1.6.0) (2026-04-13)
-# Features
+## [1.6.0](https://github.com/bniladridas/vesper/compare/friday_gemini_ai/v1.5.0...friday_gemini_ai/v1.6.0) (2026-04-13)
+## Features
 
 <br>
 
@@ -38,7 +73,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: 
 
 <br>
 
-# Bug Fixes
+## Bug Fixes
 
 <br>
 
@@ -64,7 +99,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: 
 
 <br>
 
-# Documentation
+## Documentation
 
 <br>
 
@@ -75,7 +110,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: 
 
 <br>
 
-# Code Refactoring
+## Code Refactoring
 
 <br>
 
@@ -83,8 +118,8 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: 
 
 <br>
 
-# [1.5.0](https://github.com/bniladridas/vesper/compare/friday_gemini_ai/v1.4.1...friday_gemini_ai/v1.5.0) (2026-03-16)
-# Features
+## [1.5.0](https://github.com/bniladridas/vesper/compare/friday_gemini_ai/v1.4.1...friday_gemini_ai/v1.5.0) (2026-03-16)
+## Features
 
 <br>
 
@@ -119,7 +154,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: 
 
 <br>
 
-# Bug Fixes
+## Bug Fixes
 
 <br>
 
@@ -231,7 +266,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: 
 
 <br>
 
-# Documentation
+## Documentation
 
 <br>
 
@@ -276,7 +311,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: 
 
 <br>
 
-# Code Refactoring
+## Code Refactoring
 
 <br>
 
@@ -296,8 +331,8 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: 
 
 <br>
 
-# [1.4.1](https://github.com/bniladridas/vesper/compare/friday_gemini_ai/v1.4.0...friday_gemini_ai/v1.4.1) (2026-03-16)
-# Bug Fixes
+## [1.4.1](https://github.com/bniladridas/vesper/compare/friday_gemini_ai/v1.4.0...friday_gemini_ai/v1.4.1) (2026-03-16)
+## Bug Fixes
 
 <br>
 
@@ -305,8 +340,8 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: 
 
 <br>
 
-# [1.4.0](https://github.com/bniladridas/vesper/compare/friday_gemini_ai/v1.3.0...friday_gemini_ai/v1.4.0) (2026-03-15)
-# Features
+## [1.4.0](https://github.com/bniladridas/vesper/compare/friday_gemini_ai/v1.3.0...friday_gemini_ai/v1.4.0) (2026-03-15)
+## Features
 
 <br>
 
@@ -314,7 +349,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: 
 
 <br>
 
-# Bug Fixes
+## Bug Fixes
 
 <br>
 
@@ -324,7 +359,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: 
 
 <br>
 
-# Documentation
+## Documentation
 
 <br>
 
@@ -339,8 +374,8 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: 
 
 <br>
 
-# [1.3.0](https://github.com/bniladridas/vesper/compare/friday_gemini_ai/v1.2.2...friday_gemini_ai/v1.3.0) (2026-03-11)
-# Features
+## [1.3.0](https://github.com/bniladridas/vesper/compare/friday_gemini_ai/v1.2.2...friday_gemini_ai/v1.3.0) (2026-03-11)
+## Features
 
 <br>
 
@@ -348,7 +383,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: 
 
 <br>
 
-# Bug Fixes
+## Bug Fixes
 
 <br>
 
@@ -356,15 +391,15 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: 
 
 <br>
 
-# [1.2.2](https://github.com/bniladridas/vesper/compare/friday_gemini_ai/v1.2.1...friday_gemini_ai/v1.2.2) (2026-01-26)
-# Bug Fixes
-# [1.2.1](https://github.com/bniladridas/vesper/compare/friday_gemini_ai/v1.2.0...friday_gemini_ai/v1.2.1) (2026-01-26)
-# Bug Fixes
+## [1.2.2](https://github.com/bniladridas/vesper/compare/friday_gemini_ai/v1.2.1...friday_gemini_ai/v1.2.2) (2026-01-26)
+## Bug Fixes
+## [1.2.1](https://github.com/bniladridas/vesper/compare/friday_gemini_ai/v1.2.0...friday_gemini_ai/v1.2.1) (2026-01-26)
+## Bug Fixes
 
 <br>
 
-# [1.2.0](https://github.com/bniladridas/vesper/compare/friday_gemini_ai/v1.1.1...friday_gemini_ai/v1.2.0) (2026-01-26)
-# Features
+## [1.2.0](https://github.com/bniladridas/vesper/compare/friday_gemini_ai/v1.1.1...friday_gemini_ai/v1.2.0) (2026-01-26)
+## Features
 
 <br>
 
@@ -399,7 +434,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: 
 
 <br>
 
-# Bug Fixes
+## Bug Fixes
 
 <br>
 
@@ -495,7 +530,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: 
 
 <br>
 
-# Documentation
+## Documentation
 
 <br>
 
@@ -539,7 +574,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: 
 
 <br>
 
-# Code Refactoring
+## Code Refactoring
 
 <br>
 
@@ -559,8 +594,8 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: 
 
 <br>
 
-# [1.1.0](https://github.com/bniladridas/vesper/compare/friday_gemini_ai/v1.0.1...friday_gemini_ai/v1.1.0) (2026-01-21)
-# Features
+## [1.1.0](https://github.com/bniladridas/vesper/compare/friday_gemini_ai/v1.0.1...friday_gemini_ai/v1.1.0) (2026-01-21)
+## Features
 
 <br>
 
@@ -569,7 +604,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: 
 
 <br>
 
-# Bug Fixes
+## Bug Fixes
 
 <br>
 
@@ -578,8 +613,8 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: 
 
 <br>
 
-# [1.0.1](https://github.com/bniladridas/vesper/compare/friday_gemini_ai/v1.0.0...friday_gemini_ai/v1.0.1) (2026-01-06)
-# Bug Fixes
+## [1.0.1](https://github.com/bniladridas/vesper/compare/friday_gemini_ai/v1.0.0...friday_gemini_ai/v1.0.1) (2026-01-06)
+## Bug Fixes
 
 <br>
 
@@ -589,11 +624,11 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: 
 
 <br>
 
-# 1.0.0 (2026-01-06)
+## 1.0.0 (2026-01-06)
 
 <br>
 
-# Features
+## Features
 
 <br>
 
@@ -628,7 +663,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: 
 
 <br>
 
-# Bug Fixes
+## Bug Fixes
 
 <br>
 
@@ -720,7 +755,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: 
 
 <br>
 
-# Documentation
+## Documentation
 
 <br>
 
@@ -770,7 +805,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: 
 
 <br>
 
-# Code Refactoring
+## Code Refactoring
 
 <br>
 
@@ -790,11 +825,11 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: 
 
 <br>
 
-# [Unreleased]
+## [Unreleased]
 
 <br>
 
-# Added
+## Added
 
 <br>
 
@@ -803,11 +838,11 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: 
 
 <br>
 
-# [0.1.5] – 2025-08-24
+## [0.1.5] – 2025-08-24
 
 <br>
 
-# Added
+## Added
 
 <br>
 
@@ -819,7 +854,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: 
 
 <br>
 
-# Changed
+## Changed
 
 <br>
 
@@ -831,7 +866,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: 
 
 <br>
 
-# Fixed
+## Fixed
 
 <br>
 
@@ -845,11 +880,11 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: 
 
 <br>
 
-# [0.1.4] – 2025-08-24
+## [0.1.4] – 2025-08-24
 
 <br>
 
-# Added
+## Added
 
 <br>
 
@@ -859,7 +894,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: 
 
 <br>
 
-# Changed
+## Changed
 
 <br>
 
@@ -873,11 +908,11 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versioning: 
 
 <br>
 
-# [0.1.3] – 2025-03-03
+## [0.1.3] – 2025-03-03
 
 <br>
 
-# Added
+## Added
 
 <br>
 
